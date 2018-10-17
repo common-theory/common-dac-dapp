@@ -24,11 +24,11 @@ export default class Header extends React.Component<any> {
   render() {
     return (
       <HeaderBackground>
-        <LogoText>Common Theory: NetworkID {this.props.ethStore.networkId} : {this.props.dacStore.totalVotingMembers}</LogoText>
-        <div>
+        <LogoText>Common Theory</LogoText>
+        <span>
           <HeaderLink to="/">Home</HeaderLink>
           <HeaderLink to="/about">About</HeaderLink>
-        </div>
+        </span>
       </HeaderBackground>
     );
   }

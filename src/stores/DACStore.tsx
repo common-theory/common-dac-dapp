@@ -24,7 +24,7 @@ export default class DACStore {
       console.log('Error loading contract ABI, ensure that it\'s present');
       throw err;
     }
-    this.contract = new web3.eth.Contract(ABI, '0xb01e10f5917d4a68e2b498ed61739d52fc97352a');
+    this.contract = new web3.eth.Contract(ABI, '0x265369a96693b47b28645ec2cb34c15d52b1d190');
     this.loadVotingMembers();
     this.loadTotalOwnership();
     this.loadCurrentVoteCycle();
