@@ -7,6 +7,16 @@ interface Member {
   website: string
 }
 
+interface Proposal {
+  number: number,
+  voteCycle: number,
+  updateMember: boolean,
+  memberAddress: string,
+  newOwnership: number,
+  newContractAddress: string,
+  updateContract: boolean
+}
+
 export default class DACStore {
 
   private blockHeaderSubscription: any;
@@ -21,6 +31,9 @@ export default class DACStore {
   @observable votePeriod: number = 0;
   // The timestamp of contract creation
   @observable genesisBlockTimestamp: number = 0;
+
+  @observable proposals: any[] = [];
+  @observable proposalCount: number = 0;
 
   constructor() {
     let ABI: any;
@@ -45,7 +58,7 @@ export default class DACStore {
       return '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d';
     } else if (id === 5777) {
       // ganache <3
-      return '0x265369a96693b47b28645ec2cb34c15d52b1d190';
+      return '0x26ab7a9fb21a55035de62650b62f80fb03337555';
     }
   }
 
@@ -73,6 +86,7 @@ export default class DACStore {
       this.contract.methods.votePeriod().call(),
       this.contract.methods.genesisBlockTimestamp().call(),
       this.loadCurrentVoteCycle(),
+      this.loadProposals()
     ]);
     this.totalVotingMembers = _totalVotingMembers;
     this.totalOwnership = _totalOwnership;
@@ -83,6 +97,23 @@ export default class DACStore {
 
   async loadCurrentVoteCycle() {
     this.currentVoteCycle = await this.contract.methods.currentVoteCycle().call();
+  }
+
+  async loadProposals() {
+    this.proposalCount = await this.contract.methods.proposalCount().call();
+    if (this.proposalCount === 0) {
+      this.proposals = [];
+      return;
+    }
+    const promiseArr = [];
+    for (let x = 0; x < this.proposalCount; x++) {
+      promiseArr.push(this.loadProposal(x));
+    }
+    this.proposals = await Promise.all(promiseArr);
+  }
+
+  async loadProposal(index: number) {
+    return await this.contract.methods.proposals(index).call();
   }
 
 }

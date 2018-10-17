@@ -70,7 +70,7 @@ export default class Header extends React.Component<{
           </RightText>
           <RightText>
             <HeaderA href={this.props.ethStore.etherscanUrl()} target="_blank">
-              {this.props.ethStore.accounts[0] || 'Unauthenticated!'}
+              {this.props.ethStore.activeAddress() || 'Unauthenticated!'}
             </HeaderA>
           </RightText>
         </HeaderContentContainer>

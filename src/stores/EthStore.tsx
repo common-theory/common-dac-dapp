@@ -25,7 +25,8 @@ export default class EthStore {
     this.loadAccounts();
   }
 
-  etherscanUrl(address: string = this.accounts[0]): string {
+  etherscanUrl(_address?: string): string {
+    const address = _address || this.activeAddress();
     if (this.networkId === 1) {
       // mainnet
       return `https://etherscan.io/address/${address}`;
@@ -34,6 +35,10 @@ export default class EthStore {
     } else {
       return `https://etherscan.io/address/${address}`;
     }
+  }
+
+  activeAddress() {
+    return this.accounts.length && this.accounts[0];
   }
 
   async loadAccounts() {
