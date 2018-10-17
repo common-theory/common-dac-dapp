@@ -34,6 +34,9 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'static'),
     publicPath: '/',
-    compress: true
+    compress: true,
+    historyApiFallback: {
+      index: 'index.html'
+    }
   }
 };
