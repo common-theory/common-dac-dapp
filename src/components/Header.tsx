@@ -12,10 +12,19 @@ const HeaderBackground = styled.div`
 const LogoText = styled.span`
   color: white;
   font-family: Helvetica;
+  font-size: 20pt;
+`;
+
+const LinkContainer = styled.div`
+  padding-top: 8px;
+
 `;
 
 const HeaderLink = styled(Link)`
   color: white;
+  font-family: Helvetica;
+  margin-right: 8px;
+  text-decoration: none;
 `;
 
 @inject('ethStore', 'dacStore')
@@ -25,10 +34,10 @@ export default class Header extends React.Component<any> {
     return (
       <HeaderBackground>
         <LogoText>Common Theory</LogoText>
-        <span>
+        <LinkContainer>
           <HeaderLink to="/">Home</HeaderLink>
           <HeaderLink to="/about">About</HeaderLink>
-        </span>
+        </LinkContainer>
       </HeaderBackground>
     );
   }
