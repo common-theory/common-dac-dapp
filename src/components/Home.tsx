@@ -3,6 +3,7 @@ import Header from './Header';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import DACStore from '../stores/DACStore';
+import ProposalCell from './ProposalCell';
 
 const Container = styled.div`
   padding: 8px;
@@ -48,6 +49,13 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
           </div>
           <div>
             Proposal Count: {this.props.dacStore.proposalCount}
+          </div>
+          <div>
+            {this.props.dacStore.proposals.map(proposal => {
+              return (
+                <ProposalCell key={proposal.number} proposal={proposal} />
+              );
+            })}
           </div>
         </Container>
       </>

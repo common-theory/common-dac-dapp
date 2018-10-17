@@ -7,7 +7,7 @@ interface Member {
   website: string
 }
 
-interface Proposal {
+export interface Proposal {
   number: number,
   voteCycle: number,
   updateMember: boolean,
@@ -15,6 +15,9 @@ interface Proposal {
   newOwnership: number,
   newContractAddress: string,
   updateContract: boolean
+  totalAcceptingVotes: number,
+  totalRejectingVotes: number,
+  applied: boolean
 }
 
 export default class DACStore {
@@ -32,7 +35,7 @@ export default class DACStore {
   // The timestamp of contract creation
   @observable genesisBlockTimestamp: number = 0;
 
-  @observable proposals: any[] = [];
+  @observable proposals: Proposal[] = [];
   @observable proposalCount: number = 0;
 
   constructor() {
@@ -129,7 +132,7 @@ export default class DACStore {
     for (let x = 0; x < this.proposalCount; x++) {
       promiseArr.push(this.loadProposal(x));
     }
-    this.proposals = await Promise.all(promiseArr);
+    this.proposals = await Promise.all(promiseArr) as Proposal[];
   }
 
   async loadProposal(index: number) {
