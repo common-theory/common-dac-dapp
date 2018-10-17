@@ -6,6 +6,12 @@ import DACStore from '../stores/DACStore';
 import ProposalCell from './ProposalCell';
 import { Container, BlockElement } from './Shared';
 
+const HeaderText = styled.div`
+  font-family: Helvetica;
+  font-size: 20pt;
+  text-align: center;
+`;
+
 @inject('dacStore')
 @observer
 export default class Home extends React.Component<{ dacStore: DACStore }> {
@@ -32,6 +38,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
       <>
         <Header />
         <Container>
+          <HeaderText>Contract Information</HeaderText>
           <BlockElement>
             <div>
               Total Members: {this.props.dacStore.totalVotingMembers}
@@ -49,6 +56,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
               Proposal Count: {this.props.dacStore.proposalCount}
             </div>
           </BlockElement>
+          <HeaderText>Proposals</HeaderText>
           <div>
             {this.props.dacStore.proposals.map(proposal => {
               return (
