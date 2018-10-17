@@ -17,7 +17,6 @@ const LogoText = styled.span`
 
 const LinkContainer = styled.div`
   padding-top: 8px;
-
 `;
 
 const HeaderLink = styled(Link)`
