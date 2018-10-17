@@ -62,7 +62,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
               if (member.ownership === '0') return;
               return (
                 <div key={member.name}>
-                  {member.name}, {member.github}, {member.ownership}
+                  {member.name}, <a href={`https://github.com/${member.github}`}>{member.github}</a>, {member.ownership}
                 </div>
               )
             })}
