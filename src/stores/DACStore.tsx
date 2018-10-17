@@ -103,6 +103,14 @@ export default class DACStore {
     });
   }
 
+  async voteForProposal(id: number, accept: boolean) {
+    const accounts = await web3.eth.getAccounts();
+    if (!accounts.length) return;
+    await this.contract.methods.vote(id, accept).send({
+      from: accounts[0]
+    });
+  }
+
   addressForNetworkId(id: number) {
     if (id === 1) {
     } else if (id === 4) {

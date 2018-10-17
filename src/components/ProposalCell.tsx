@@ -22,24 +22,32 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
           <div>
             Vote cycle {this.props.proposal.voteCycle}
           </div>
-          {
-            this.props.proposal.updateMember && (
-              <>
-                <div>
-                  Updating {this.props.proposal.memberAddress}
-                </div>
-                <div>
-                  Old ownership: {member.ownership}
-                </div>
-                <div>
-                  New ownership: {this.props.proposal.newOwnership}
-                </div>
-                <div>
-                  Applied: {this.props.proposal.applied ? 'YES' : 'NO'}
-                </div>
-              </>
-            ) || null
-          }
+          <div>
+            Updating {this.props.proposal.memberAddress}
+          </div>
+          <div>
+            Old ownership: {member.ownership}
+          </div>
+          <div>
+            New ownership: {this.props.proposal.newOwnership}
+          </div>
+          <div>
+            Applied: {this.props.proposal.applied ? 'YES' : 'NO'}
+          </div>
+          {this.props.dacStore.currentVoteCycle === this.props.proposal.voteCycle ? (
+            <>
+              <button onClick={() => {
+                this.props.dacStore.voteForProposal(this.props.proposal.number, true);
+              }} title="Accept">
+               Accept
+              </button>
+              <button onClick={() => {
+                this.props.dacStore.voteForProposal(this.props.proposal.number, false);
+              }} title="Reject">
+              Reject
+              </button>
+            </>
+          ) : null}
         </div>
       </BlockElement>
     );

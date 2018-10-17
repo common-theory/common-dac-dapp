@@ -69,7 +69,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
           </BlockElement>
           <HeaderText>Proposals</HeaderText>
           <div>
-            {this.props.dacStore.proposals.map(proposal => {
+            {[...this.props.dacStore.proposals].reverse().map(proposal => {
               return (
                 <ProposalCell key={proposal.number} proposal={proposal} />
               );
