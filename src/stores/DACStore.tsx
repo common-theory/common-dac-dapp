@@ -52,6 +52,26 @@ export default class DACStore {
     });
   }
 
+  async createProposal(config: {
+    updateMember: boolean,
+    memberAddress: string,
+    newOwnership: number,
+    newContractAddress: string,
+    updateContract: boolean
+  }) {
+    const accounts = await web3.eth.getAccounts();
+    if (!accounts.length) return;
+    this.contract.methods.createProposal(
+      config.updateMember,
+      config.memberAddress || '0x0',
+      config.newOwnership,
+      config.newContractAddress || '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d',
+      config.updateContract
+    ).send({
+      from: accounts[0]
+    });
+  }
+
   addressForNetworkId(id: number) {
     if (id === 1) {
     } else if (id === 4) {

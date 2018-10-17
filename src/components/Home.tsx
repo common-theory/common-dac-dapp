@@ -46,6 +46,9 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
           <div>
             Cycle Time Remaining: {this.state.cycleTimeRemaining} seconds
           </div>
+          <div>
+            Proposal Count: {this.props.dacStore.proposalCount}
+          </div>
         </Container>
       </>
     );
