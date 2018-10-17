@@ -18,13 +18,13 @@ const HeaderLink = styled(Link)`
   color: white;
 `;
 
-@inject('ethStore')
+@inject('ethStore', 'dacStore')
 @observer
 export default class Header extends React.Component<any> {
   render() {
     return (
       <HeaderBackground>
-        <LogoText>Common Theory: NetworkID {this.props.ethStore.networkId} : Current Block Height {this.props.ethStore.currentBlockNumber}</LogoText>
+        <LogoText>Common Theory: NetworkID {this.props.ethStore.networkId} : {this.props.dacStore.totalVotingMembers}</LogoText>
         <div>
           <HeaderLink to="/">Home</HeaderLink>
           <HeaderLink to="/about">About</HeaderLink>
