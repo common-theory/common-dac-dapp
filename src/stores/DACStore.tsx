@@ -106,7 +106,7 @@ export default class DACStore {
   addressForNetworkId(id: number) {
     if (id === 1) {
     } else if (id === 4) {
-      return '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d';
+      return '0xa2c3f6c0b734d1e7ee3ac163f91f3430f7def3fe';
     } else if (id === 5777) {
       // ganache <3
       return '0x9177d007c1d419be312922bc55cccb438a2f698e';
