@@ -11,16 +11,22 @@ const Container = styled.div`
 @inject('dacStore')
 @observer
 export default class Home extends React.Component<{ dacStore: DACStore }> {
+  timeout: NodeJS.Timeout;
   state = {
-    cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
+    cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining(),
+    timer: 0
   };
 
   componentDidMount() {
-    setInterval(() => {
+    this.timeout = setInterval(() => {
       this.setState({
         cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
       });
     }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timeout);
   }
 
   render() {
