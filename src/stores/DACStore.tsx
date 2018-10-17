@@ -17,7 +17,14 @@ export default class DACStore {
   @observable contractUpdated: boolean = false;
 
   constructor() {
-    this.contract = new web3.eth.Contract(require('./DAC.json'), '0xb01e10f5917d4a68e2b498ed61739d52fc97352a');
+    let ABI;
+    try {
+      ABI = require('../../CommonDAC.abi.json');
+    } catch (err) {
+      console.log('Error loading contract ABI, ensure that it\'s present');
+      throw err;
+    }
+    this.contract = new web3.eth.Contract(ABI, '0xb01e10f5917d4a68e2b498ed61739d52fc97352a');
     this.loadVotingMembers();
     this.loadTotalOwnership();
     this.loadCurrentVoteCycle();
