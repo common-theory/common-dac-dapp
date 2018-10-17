@@ -23,18 +23,30 @@ export default class DACStore {
   @observable genesisBlockTimestamp: number = 0;
 
   constructor() {
-    let ABI;
+    let ABI: any;
     try {
       ABI = require('../../CommonDAC.abi.json');
     } catch (err) {
       console.log('Error loading contract ABI, ensure that it\'s present');
       throw err;
     }
-    this.contract = new web3.eth.Contract(ABI, '0x265369a96693b47b28645ec2cb34c15d52b1d190');
-    this.load();
-    this.blockHeaderSubscription = web3.eth.subscribe('newBlockHeaders');
-    this.blockHeaderSubscription.on('data', () => this.load());
-    this.blockHeaderSubscription.on('error', console.error);
+    web3.eth.net.getId().then((id: number) => {
+      this.contract = new web3.eth.Contract(ABI, this.addressForNetworkId(id));
+      this.load();
+      this.blockHeaderSubscription = web3.eth.subscribe('newBlockHeaders');
+      this.blockHeaderSubscription.on('data', () => this.load());
+      this.blockHeaderSubscription.on('error', console.error);
+    });
+  }
+
+  addressForNetworkId(id: number) {
+    if (id === 1) {
+    } else if (id === 4) {
+      return '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d';
+    } else if (id === 5777) {
+      // ganache <3
+      return '0x265369a96693b47b28645ec2cb34c15d52b1d190';
+    }
   }
 
   /**

@@ -6,7 +6,7 @@ if (typeof web3 !== 'undefined') {
   global.web3 = new Web3(web3.currentProvider);
 } else {
   // Set the provider you want from Web3.providers
-  global.web3 = new Web3(new Web3.providers.HttpProvider('http://commontheory.io:4545'));
+  global.web3 = new Web3(new Web3.providers.HttpProvider('http://local.commontheory.io:8545'));
 }
 
 import React from 'react';
