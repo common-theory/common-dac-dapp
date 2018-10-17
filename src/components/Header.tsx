@@ -2,11 +2,31 @@ import React from 'react';
 import styled from 'styled-components';
 import { observer, inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
+import EthStore from '../stores/EthStore';
 
 const HeaderBackground = styled.div`
   width: 100%;
-  padding: 8px;
   background-color: #00F;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const HeaderContentContainer = styled.div`
+  margin: 8px;
+  color: white;
+  font-family: Helvetica;
+`;
+
+const RightText = styled.div`
+  margin-top: 4px;
+  font-size: 10pt;
+  text-align: right;
+`;
+
+const HeaderA = styled.a`
+  color: white;
+  font-family: Helvetica;
+  text-decoration: none;
 `;
 
 const LogoText = styled.span`
@@ -26,17 +46,34 @@ const HeaderLink = styled(Link)`
   text-decoration: none;
 `;
 
-@inject('ethStore', 'dacStore')
+@inject('ethStore')
 @observer
-export default class Header extends React.Component<any> {
+export default class Header extends React.Component<{
+  ethStore: EthStore
+}> {
   render() {
     return (
       <HeaderBackground>
-        <LogoText>Common Theory</LogoText>
-        <LinkContainer>
-          <HeaderLink to="/">Home</HeaderLink>
-          <HeaderLink to="/about">About</HeaderLink>
-        </LinkContainer>
+        <HeaderContentContainer>
+          <LogoText>Common Theory</LogoText>
+          <LinkContainer>
+            <HeaderLink to="/">Home</HeaderLink>
+            <HeaderLink to="/about">About</HeaderLink>
+          </LinkContainer>
+        </HeaderContentContainer>
+        <HeaderContentContainer>
+          <RightText>
+            Network ID: {this.props.ethStore.networkId}
+          </RightText>
+          <RightText>
+            Current Block: {this.props.ethStore.currentBlockNumber}
+          </RightText>
+          <RightText>
+            <HeaderA href={this.props.ethStore.etherscanUrl()} target="_blank">
+              {this.props.ethStore.accounts[0] || 'Unauthenticated!'}
+            </HeaderA>
+          </RightText>
+        </HeaderContentContainer>
       </HeaderBackground>
     );
   }

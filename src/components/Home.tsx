@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
+import DACStore from '../stores/DACStore';
 
 const Container = styled.div`
   padding: 8px;
@@ -9,8 +10,8 @@ const Container = styled.div`
 
 @inject('dacStore')
 @observer
-export default class Home extends React.Component {
-  state: {} = {
+export default class Home extends React.Component<{ dacStore: DACStore }> {
+  state = {
     cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
   };
 
@@ -21,6 +22,7 @@ export default class Home extends React.Component {
       });
     }, 1000);
   }
+
   render() {
     return (
       <>
