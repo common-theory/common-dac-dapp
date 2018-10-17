@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './Home';
 import About from './About';
-import AppStore from './AppStore';
+import EthStore from './EthStore';
 import { Provider } from 'mobx-react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const stores = {
-  appStore: new AppStore()
+  ethStore: new EthStore()
 };
 
 ReactDOM.render(
