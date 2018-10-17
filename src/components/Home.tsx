@@ -10,6 +10,17 @@ const Container = styled.div`
 @inject('dacStore')
 @observer
 export default class Home extends React.Component {
+  state: {} = {
+    cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
+  };
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
+      });
+    }, 1000);
+  }
   render() {
     return (
       <>
@@ -23,6 +34,9 @@ export default class Home extends React.Component {
           </div>
           <div>
             Current Vote Cycle: {this.props.dacStore.currentVoteCycle}
+          </div>
+          <div>
+            Cycle Time Remaining: {this.state.cycleTimeRemaining} seconds
           </div>
         </Container>
       </>
