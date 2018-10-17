@@ -3,12 +3,12 @@ import Header from './Header';
 import { observer } from 'mobx-react';
 
 @observer
-export default class App extends React.Component<any, any> {
+export default class Home extends React.Component {
   render() {
     return (
       <div>
         <Header />
-        <div>text</div>
+        <div>The homepage</div>
       </div>
     );
   }

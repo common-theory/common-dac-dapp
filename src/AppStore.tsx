@@ -12,7 +12,7 @@ export default class AppStore {
 
   @observable networkId: number = -1;
 
-  @observable commonDacContract: any = web3.eth.Contract(require('../contracts/CommonDAC.abi.json'), '0x41c51d39498f21f780dc94cae7359e2567b2b6f2');
+  // @observable commonDacContract: any = web3.eth.Contract(require('../contracts/CommonDAC.abi.json'), '0x41c51d39498f21f780dc94cae7359e2567b2b6f2');
   @observable dacVotingMembers: number = 0;
   @observable dacTotalOwnership: number = 0;
   @observable dacVotingCycle: number = 0;
@@ -27,8 +27,8 @@ export default class AppStore {
 
   @action
   async loadDacInfo() {
-    this.commonDacContract.methods.call({
-      from: ''
-    })
+    // this.commonDacContract.methods.call({
+    //   from: ''
+    // })
   }
 }

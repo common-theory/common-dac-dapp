@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { observer, inject } from 'mobx-react';
+import { Link } from 'react-router-dom';
 
 const HeaderBackground = styled.div`
   width: 100%;
@@ -13,9 +14,13 @@ const LogoText = styled.span`
   font-family: Helvetica;
 `;
 
+const HeaderLink = styled(Link)`
+  color: white;
+`;
+
 @inject('appStore')
 @observer
-export default class Header extends React.Component {
+export default class Header extends React.Component<any> {
   componentDidMount() {
     this.props.appStore.loadNetworkId();
   }
@@ -24,6 +29,10 @@ export default class Header extends React.Component {
     return (
       <HeaderBackground>
         <LogoText>Common Theory: NetworkID {this.props.appStore.networkId}</LogoText>
+        <div>
+          <HeaderLink to="/">Home</HeaderLink>
+          <HeaderLink to="/about">About</HeaderLink>
+        </div>
       </HeaderBackground>
     );
   }
