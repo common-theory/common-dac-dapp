@@ -37,6 +37,9 @@ export default class DACStore {
 
   @observable proposals: Proposal[] = [];
   @observable proposalCount: number = 0;
+  @observable members: {
+    [address: string]: Member
+  } = {};
 
   constructor() {
     let ABI: any;
@@ -53,6 +56,10 @@ export default class DACStore {
       this.blockHeaderSubscription.on('data', () => this.load());
       this.blockHeaderSubscription.on('error', console.error);
     });
+  }
+
+  async loadMember(address: string) {
+    this.members[address] = await this.contract.methods.members(address).call();
   }
 
   async createProposal(config: {
