@@ -2,16 +2,13 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import { Proposal } from '../stores/DACStore';
-
-const Container = styled.div`
-  padding: 8px;
-`;
+import { BlockElement } from './Shared';
 
 @observer
 export default class ProposalCell extends React.Component<{ proposal: Proposal }> {
   render() {
     return (
-      <Container>
+      <BlockElement>
         <div>
           <div>
             Proposal #{this.props.proposal.number}
@@ -20,7 +17,7 @@ export default class ProposalCell extends React.Component<{ proposal: Proposal }
             Vote cycle {this.props.proposal.voteCycle}:
           </div>
         </div>
-      </Container>
+      </BlockElement>
     );
   }
 }
