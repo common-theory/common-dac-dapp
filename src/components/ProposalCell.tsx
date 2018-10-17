@@ -34,6 +34,9 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
                 <div>
                   New ownership: {this.props.proposal.newOwnership}
                 </div>
+                <div>
+                  Applied: {this.props.proposal.applied ? 'YES' : 'NO'}
+                </div>
               </>
             ) || null
           }

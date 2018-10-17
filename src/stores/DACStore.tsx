@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable } from 'mobx';
 
 interface Member {
   ownership: number,
@@ -37,6 +37,8 @@ export default class DACStore {
 
   @observable proposals: Proposal[] = [];
   @observable proposalCount: number = 0;
+  @observable memberAddresses: string[] = [];
+  @observable memberAddressCount: number = 0;
   @observable members: {
     [address: string]: Member
   } = {};
@@ -52,6 +54,7 @@ export default class DACStore {
     web3.eth.net.getId().then((id: number) => {
       this.contract = new web3.eth.Contract(ABI, this.addressForNetworkId(id));
       this.load();
+      this.loadMembers();
       this.blockHeaderSubscription = web3.eth.subscribe('newBlockHeaders');
       this.blockHeaderSubscription.on('data', () => this.load());
       this.blockHeaderSubscription.on('error', console.error);
@@ -60,6 +63,24 @@ export default class DACStore {
 
   async loadMember(address: string) {
     this.members[address] = await this.contract.methods.members(address).call();
+  }
+
+  async loadMembers() {
+    await this.loadMemberAddresses();
+    await Promise.all(this.memberAddresses.map(address => this.loadMember(address)));
+  }
+
+  async loadMemberAddresses() {
+    this.memberAddressCount = await this.contract.methods.memberAddressCount().call();
+    if (this.memberAddressCount === 0) {
+      this.memberAddresses = [];
+      return;
+    }
+    const promiseArr = [];
+    for (let x = 0; x < this.memberAddressCount; x++) {
+      promiseArr.push(this.contract.methods.memberAddresses(x).call());
+    }
+    this.memberAddresses = await Promise.all(promiseArr) as string[];
   }
 
   async createProposal(config: {
@@ -88,7 +109,7 @@ export default class DACStore {
       return '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d';
     } else if (id === 5777) {
       // ganache <3
-      return '0x26ab7a9fb21a55035de62650b62f80fb03337555';
+      return '0x9177d007c1d419be312922bc55cccb438a2f698e';
     }
   }
 

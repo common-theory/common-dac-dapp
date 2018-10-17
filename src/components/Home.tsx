@@ -56,6 +56,17 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
               Proposal Count: {this.props.dacStore.proposalCount}
             </div>
           </BlockElement>
+          <HeaderText>Members</HeaderText>
+          <BlockElement>
+            {Object.values(this.props.dacStore.members).map((member: any) => {
+              if (member.ownership === '0') return;
+              return (
+                <div key={member.name}>
+                  {member.name}, {member.github}, {member.ownership}
+                </div>
+              )
+            })}
+          </BlockElement>
           <HeaderText>Proposals</HeaderText>
           <div>
             {this.props.dacStore.proposals.map(proposal => {
