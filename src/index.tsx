@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from './Home';
-import About from './About';
-import EthStore from './EthStore';
+import Home from './components/Home';
+import About from './components/About';
+import EthStore from './stores/EthStore';
 import { Provider } from 'mobx-react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Web3 from 'web3';
-import DACStore from './DACStore';
+import DACStore from './stores/DACStore';
 
 /**
  * Initialize a global web3 from metamask or from a fallback source.
