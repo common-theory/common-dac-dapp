@@ -58,6 +58,7 @@ export default class Header extends React.Component<{
           <LogoText>Common Theory</LogoText>
           <LinkContainer>
             <HeaderLink to="/">Home</HeaderLink>
+            <HeaderLink to="/create">Create</HeaderLink>
             <HeaderLink to="/about">About</HeaderLink>
           </LinkContainer>
         </HeaderContentContainer>
