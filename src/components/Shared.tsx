@@ -9,4 +9,5 @@ export const BlockElement = styled.div`
   padding: 8px;
   border-radius: 10px;
   background-color: white;
+  border: 1px solid #eff0f4;
 `;

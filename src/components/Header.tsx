@@ -4,11 +4,20 @@ import { observer, inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import EthStore from '../stores/EthStore';
 
-const HeaderBackground = styled.div`
-  width: 100%;
-  background-color: #00F;
+const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const HeaderBackground = styled.div`
+  background-color: #00F;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 70px;
+  z-index: -1;
+  border-bottom: 1px solid #eff0f4;
 `;
 
 const HeaderContentContainer = styled.div`
@@ -53,7 +62,8 @@ export default class Header extends React.Component<{
 }> {
   render() {
     return (
-      <HeaderBackground>
+      <HeaderContainer>
+        <HeaderBackground />
         <HeaderContentContainer>
           <LogoText>Common Theory</LogoText>
           <LinkContainer>
@@ -75,7 +85,7 @@ export default class Header extends React.Component<{
             </HeaderA>
           </RightText>
         </HeaderContentContainer>
-      </HeaderBackground>
+      </HeaderContainer>
     );
   }
 }
