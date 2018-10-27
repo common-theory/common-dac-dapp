@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import DACStore from '../stores/DACStore';
 import ProposalCell from './ProposalCell';
 import { Container, BlockElement } from './Shared';
+import SpringSimulator from './SpringSimulator';
 
 const HeaderText = styled.div`
   font-family: Helvetica;
@@ -55,6 +56,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
             <div>
               Proposal Count: {this.props.dacStore.proposalCount}
             </div>
+            <SpringSimulator />
           </BlockElement>
           <HeaderText>Members</HeaderText>
           <BlockElement>
