@@ -1,11 +1,9 @@
 /**
- * This is a small module for simulating joints connecting springs.
- *
- *
+ * This is a small module for simulating connectors connecting springs.
  **/
 
 import React from 'react';
-import { Joint, Spring } from './physics';
+import { Connector, Spring } from './physics';
 import Vector2D from './vector2d';
 
 export default class SpringSimulator extends React.Component <{}, {}> {
@@ -15,7 +13,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   };
   canvasRef: React.RefObject<HTMLCanvasElement>;
 
-  entities: Joint[] = [];
+  connectors: Connector[] = [];
   springs: Spring[] = [];
   drawing: boolean;
   lastStep: number = 0;
@@ -41,7 +39,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     window.addEventListener('resize', this.updateDimensions);
     this.updateDimensions();
     for (let x = 0; x < 100; x++) {
-      this.entities.push(new Joint(Vector2D.random({
+      this.connectors.push(new Connector(Vector2D.random({
         floor: -100,
         ceiling: this.canvasRef.current.clientWidth + 100,
       }, {
@@ -49,16 +47,16 @@ export default class SpringSimulator extends React.Component <{}, {}> {
         ceiling: this.canvasRef.current.clientHeight + 100,
       }), Vector2D.randomScalar(10, 100)));
     }
-    const mover = new Joint({ x: this.canvasRef.current.clientWidth/2, y: this.canvasRef.current.clientHeight/2 }, Infinity);
-    this.entities.push(mover);
+    const mover = new Connector({ x: this.canvasRef.current.clientWidth/2, y: this.canvasRef.current.clientHeight/2 }, Infinity);
+    this.connectors.push(mover);
     for (let x = 0; x < 500; x++) {
-      const index1 = Vector2D.randomScalar(0, this.entities.length);
-      const index2 = Vector2D.randomScalar(0, this.entities.length);
-      const entity1 = this.entities[index1];
-      const entity2 = this.entities[index2];
-      const spring = new Spring(Vector2D.distanceScalar(entity1, entity2) + Vector2D.randomScalar(-500, 500), Math.random(), 0.0001);
-      spring.entity1 = entity1;
-      spring.entity2 = entity2;
+      const index1 = Vector2D.randomScalar(0, this.connectors.length);
+      const index2 = Vector2D.randomScalar(0, this.connectors.length);
+      const connector1 = this.connectors[index1];
+      const connector2 = this.connectors[index2];
+      const spring = new Spring(Vector2D.distanceScalar(connector1, connector2) + Vector2D.randomScalar(-500, 500), Math.random(), 0.0001);
+      spring.connector1 = connector1;
+      spring.connector2 = connector2;
       this.springs.push(spring);
     }
     this.startSimulating();
@@ -99,8 +97,8 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     let _scratchTime = time;
     while (_scratchTime > 0) {
       const stepTime = _scratchTime < MAX_STEP_TIME ? _scratchTime : MAX_STEP_TIME;
-      for (let entity of this.entities) {
-        entity.step(stepTime);
+      for (let connector of this.connectors) {
+        connector.step(stepTime);
       }
       _scratchTime -= stepTime;
     }
@@ -110,16 +108,16 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
     for (let spring of this.springs) {
       ctx.beginPath();
-      if (spring.entity1 && spring.entity2) {
-        ctx.moveTo(spring.entity1.x, spring.entity1.y);
-        ctx.lineTo(spring.entity2.x, spring.entity2.y);
+      if (spring.connector1 && spring.connector2) {
+        ctx.moveTo(spring.connector1.x, spring.connector1.y);
+        ctx.lineTo(spring.connector2.x, spring.connector2.y);
         ctx.strokeStyle = 'black';
         ctx.stroke();
       }
     }
-    for (let entity of this.entities) {
+    for (let connector of this.connectors) {
       ctx.beginPath();
-      ctx.arc(entity.x, entity.y, entity.radius, 0, 2 * Math.PI);
+      ctx.arc(connector.x, connector.y, connector.radius, 0, 2 * Math.PI);
       ctx.stroke();
       ctx.fillStyle = 'white';
       ctx.fill();

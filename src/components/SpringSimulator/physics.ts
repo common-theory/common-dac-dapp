@@ -4,7 +4,7 @@ import Vector2D, { IVector2D } from './vector2d';
  * A joining point between one or more springs. Rendered as a circle.
  *
  */
-export class Joint implements IVector2D {
+export class Connector implements IVector2D {
   x: number;
   y: number;
   position: Vector2D = new Vector2D();
@@ -20,12 +20,12 @@ export class Joint implements IVector2D {
   }
 
   /**
-   * Calculate and return the current acceleration of the entity.
+   * Calculate and return the current acceleration of the connector.
    **/
   get appliedAcceleration(): IVector2D {
     const accelerations: IVector2D[] = [];
     for (let spring of this.springs) {
-      const otherEntity = spring.entity1 === this ? spring.entity2 : spring.entity1;
+      const otherEntity = spring.connector1 === this ? spring.connector2 : spring.connector1;
       if (!otherEntity) continue;
       const currentLength = Vector2D.distanceScalar(this, otherEntity);
       const force = (currentLength - spring.restLength) * spring.stiffness;
@@ -73,8 +73,8 @@ export class Joint implements IVector2D {
  **/
 export class Spring {
   // Make these getters connecting an array to simplify logic below?
-  private _joint1?: Joint;
-  private _joint2?: Joint;
+  private _connector1?: Connector;
+  private _connector2?: Connector;
   stiffness: number;
   restLength: number;
   damping: number;
@@ -85,27 +85,27 @@ export class Spring {
     this.damping = _damping;
   }
 
-  get entity1() {
-    return this._joint1;
+  get connector1() {
+    return this._connector1;
   }
 
-  set entity1(entity) {
-    if (this._joint1) {
-      this._joint1.removeSpring(this);
+  set connector1(connector) {
+    if (this._connector1) {
+      this._connector1.removeSpring(this);
     }
-    this._joint1 = entity;
-    this._joint1.addSpring(this);
+    this._connector1 = connector;
+    this._connector1.addSpring(this);
   }
 
-  get entity2() {
-    return this._joint2;
+  get connector2() {
+    return this._connector2;
   }
 
-  set entity2(entity) {
-    if (this._joint2) {
-      this._joint2.removeSpring(this);
+  set connector2(connector) {
+    if (this._connector2) {
+      this._connector2.removeSpring(this);
     }
-    this._joint2 = entity;
-    this._joint2.addSpring(this);
+    this._connector2 = connector;
+    this._connector2.addSpring(this);
   }
 }
