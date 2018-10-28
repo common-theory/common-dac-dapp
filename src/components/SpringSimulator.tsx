@@ -10,8 +10,7 @@ class Entity implements Vector2D {
   y: number;
   velocity: Vector2D = { x: 0, y: 0, };
   mass: number;
-  get radius() { return 100 / this.mass; }
-  get massVector() { return { x: this.mass, y: this.mass, } as Vector2D; }
+  get radius() { return 10; }
   springs: Spring[] = [];
 
   constructor(position: Vector2D = { x: 0, y: 0 }, _mass: number = 10) {
@@ -27,11 +26,14 @@ class Entity implements Vector2D {
     const accelerations: Vector2D[] = [];
     for (let spring of this.springs) {
       const otherEntity = spring.entity1 === this ? spring.entity2 : spring.entity1;
+      if (!otherEntity) continue;
       const currentLength = distanceScalar(this, otherEntity);
       const force = (currentLength - spring.restLength) * spring.stiffness;
       const acceleration = force / this.mass;
       const forceAngle = angle(this, otherEntity);
-      accelerations.push(project2D(acceleration, forceAngle));
+      const vectorAcceleration = project2D(acceleration, forceAngle);
+      const dampedAcceleration = vectorSum(vectorAcceleration, vectorMultiply(this.velocity, spring.damping, -1));
+      accelerations.push(dampedAcceleration);
     }
     return vectorSum(...accelerations);
   }
@@ -40,13 +42,14 @@ class Entity implements Vector2D {
    * Step forward by time seconds.
    **/
   step(time: number) {
-    if (time > 0.25) {
+    if (time > 1) {
       console.log('Warning: Stepping by large time interval will cause inaccurate steps.')
     }
     const acceleration = vectorMultiply(this.appliedAcceleration, time);
-    this.velocity = vectorSum(acceleration, this.velocity);
+
     this.x += this.velocity.x * time;
     this.y += this.velocity.y * time;
+    this.velocity = vectorSum(this.velocity, acceleration);
   }
 
   addSpring(spring: Spring) {
@@ -68,10 +71,12 @@ class Spring {
   private _entity2?: Entity;
   stiffness: number;
   restLength: number;
+  damping: number;
 
-  constructor(_restLength: number, _stiffness = 0.1) {
+  constructor(_restLength: number, _stiffness = 0.1, _damping = 0.08) {
     this.restLength = _restLength;
     this.stiffness = _stiffness;
+    this.damping = _damping;
   }
 
   get entity1() {
@@ -126,6 +131,10 @@ function vectorMultiply(...args: (Vector2D | number)[]) {
   return product;
 }
 
+function vectorMagnitude(vector: Vector2D) {
+  return Math.sqrt(Math.pow(vector.x, 2) + Math.pow(vector.y, 2));
+}
+
 /**
  * Sum any vectors or numbers provided. Numbers are applied to both axes.
  **/
@@ -176,10 +185,14 @@ function distanceScalar(point1: Vector2D, point2: Vector2D): number {
   return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
 }
 
-function randomVector(floor: number = 0, ceiling: number = 500) {
+function randomScalar(floor: number = 0, ceiling: number = 500) {
+  return Math.floor(Math.random() * ceiling + floor);
+}
+
+function randomVector(v1?: {floor: number, ceiling: number}, v2?: {floor: number, ceiling: number}) {
   return {
-    x: Math.random() * ceiling + floor,
-    y: Math.random() * ceiling + floor,
+    x: randomScalar(v1 && v1.floor, v1 && v1.ceiling),
+    y: randomScalar(v2 && v2.floor, v2 && v2.ceiling),
   } as Vector2D;
 }
 
@@ -199,10 +212,18 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   }
 
   componentDidMount() {
+    const entities = [];
     for (let x = 0; x < 10; x++) {
-      const entity1 = new Entity(randomVector());
-      const entity2 = new Entity(randomVector());
-      const spring = new Spring(distanceScalar(entity1, entity2) - 5);
+      entities.push(new Entity(randomVector(), randomScalar(10, 100)));
+    }
+    const mover = new Entity({ x: 250, y: 250 }, Infinity);
+    entities.push(mover);
+    for (let x = 0; x < 50; x++) {
+      const index1 = randomScalar(0, entities.length);
+      const index2 = randomScalar(0, entities.length);
+      const entity1 = entities[index1];
+      const entity2 = entities[index2];
+      const spring = new Spring(distanceScalar(entity1, entity2) + randomScalar(-50, 50), Math.random(), 0.0001);
       spring.entity1 = entity1;
       spring.entity2 = entity2;
       this.entities.push(entity1, entity2);
@@ -215,7 +236,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     if (this._timer) {
       clearInterval(this._timer);
     }
-    this._timer = setInterval(this.draw, 1000 / 60);
+    this._timer = setInterval(this.draw, 1000 / 30);
   }
 
   stopSimulating = () => {
@@ -231,23 +252,20 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       return;
     }
     const time = (currentMs - this.lastStep) / 1000;
-    const SIM_TIME_PRECISION = .001;
-    let _scratchTime = time;
-    while (_scratchTime > 0) {
-      const stepTime = _scratchTime < SIM_TIME_PRECISION ? _scratchTime : SIM_TIME_PRECISION;
-      for (let entity of this.entities) {
-        entity.step(stepTime);
-      }
-      _scratchTime -= stepTime;
+    for (let entity of this.entities) {
+      entity.step(time);
     }
+    this.lastStep = currentMs;
 
     const ctx = this.canvasRef.current.getContext('2d');
     ctx.clearRect(0, 0, 1000, 1000);
     for (let spring of this.springs) {
       ctx.beginPath();
-      ctx.moveTo(spring.entity1.x, spring.entity1.y);
-      ctx.lineTo(spring.entity2.x, spring.entity2.y);
-      ctx.stroke();
+      if (spring.entity1 && spring.entity2) {
+        ctx.moveTo(spring.entity1.x, spring.entity1.y);
+        ctx.lineTo(spring.entity2.x, spring.entity2.y);
+        ctx.stroke();
+      }
     }
     for (let entity of this.entities) {
       ctx.beginPath();
