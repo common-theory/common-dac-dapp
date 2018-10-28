@@ -72,9 +72,7 @@ export class Connector implements IVector2D {
  * force = -(stiffness * (currentLengh - restLength)) - damping * velocity
  **/
 export class Spring {
-  // Make these getters connecting an array to simplify logic below?
-  private _connector1?: Connector;
-  private _connector2?: Connector;
+  private _connectors: [Connector?, Connector?] = [];
   stiffness: number;
   restLength: number;
   damping: number;
@@ -86,26 +84,36 @@ export class Spring {
   }
 
   get connector1() {
-    return this._connector1;
-  }
-
-  set connector1(connector) {
-    if (this._connector1) {
-      this._connector1.removeSpring(this);
-    }
-    this._connector1 = connector;
-    this._connector1.addSpring(this);
+    return this._connectors[0];
   }
 
   get connector2() {
-    return this._connector2;
+    return this._connectors[1];
   }
 
-  set connector2(connector) {
-    if (this._connector2) {
-      this._connector2.removeSpring(this);
+  set connector1(connector: Connector) {
+    this.replaceConnector(this.connector1, connector);
+  }
+
+  set connector2(connector: Connector) {
+    this.replaceConnector(this.connector2, connector);
+  }
+
+  /**
+   * Perform necessary logic for replacing a connector. This includes
+   * modifying the connector springs.
+   **/
+  private replaceConnector(currentConnector?: Connector, newConnector?: Connector) {
+    if (currentConnector) {
+      currentConnector.removeSpring(this);
     }
-    this._connector2 = connector;
-    this._connector2.addSpring(this);
+    if (currentConnector === this.connector1) {
+      this._connectors[0] = newConnector;
+    } else if (currentConnector === this.connector2) {
+      this._connectors[1] = newConnector;
+    }
+    if (newConnector) {
+      newConnector.addSpring(this);
+    }
   }
 }
