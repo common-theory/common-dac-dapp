@@ -237,7 +237,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
         ceiling: this.canvasRef.current.clientHeight + 100,
       }), randomScalar(10, 100)));
     }
-    const mover = new Entity({ x: 250, y: 250 }, Infinity);
+    const mover = new Entity({ x: this.canvasRef.current.clientWidth/2, y: this.canvasRef.current.clientHeight/2 }, Infinity);
     this.entities.push(mover);
     for (let x = 0; x < 500; x++) {
       const index1 = randomScalar(0, this.entities.length);
