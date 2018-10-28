@@ -10,7 +10,7 @@ class Entity implements Vector2D {
   y: number;
   velocity: Vector2D = { x: 0, y: 0, };
   mass: number;
-  get radius() { return 10; }
+  get radius() { return 5; }
   springs: Spring[] = [];
 
   constructor(position: Vector2D = { x: 0, y: 0 }, _mass: number = 10) {
@@ -226,13 +226,15 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.updateDimensions);
+    this.updateDimensions();
     for (let x = 0; x < 100; x++) {
       this.entities.push(new Entity(randomVector({
         floor: -100,
-        ceiling: 1000,
+        ceiling: this.canvasRef.current.clientWidth + 100,
       }, {
         floor: -100,
-        ceiling: 2000
+        ceiling: this.canvasRef.current.clientHeight + 100,
       }), randomScalar(10, 100)));
     }
     const mover = new Entity({ x: 250, y: 250 }, Infinity);
@@ -248,17 +250,24 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       this.springs.push(spring);
     }
     this.startSimulating();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
+  updateDimensions = () => {
     this.setState({
       width: this.canvasRef.current.clientWidth,
       height: this.canvasRef.current.clientHeight,
     });
-  }
+  };
 
   startSimulating = () => {
     if (this._timer) {
       clearInterval(this._timer);
     }
-    this._timer = setInterval(this.draw, 1000 / 30);
+    this._timer = setInterval(this.draw, 1000 / 60);
   }
 
   stopSimulating = () => {
@@ -274,8 +283,14 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       return;
     }
     const time = (currentMs - this.lastStep) / 1000;
-    for (let entity of this.entities) {
-      entity.step(time);
+    const MAX_STEP_TIME = 0.02;
+    let _scratchTime = time;
+    while (_scratchTime > 0) {
+      const stepTime = _scratchTime < MAX_STEP_TIME ? _scratchTime : MAX_STEP_TIME;
+      for (let entity of this.entities) {
+        entity.step(stepTime);
+      }
+      _scratchTime -= stepTime;
     }
     this.lastStep = currentMs;
 
@@ -286,6 +301,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       if (spring.entity1 && spring.entity2) {
         ctx.moveTo(spring.entity1.x, spring.entity1.y);
         ctx.lineTo(spring.entity2.x, spring.entity2.y);
+        ctx.strokeStyle = 'black';
         ctx.stroke();
       }
     }
@@ -293,10 +309,9 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       ctx.beginPath();
       ctx.arc(entity.x, entity.y, entity.radius, 0, 2 * Math.PI);
       ctx.stroke();
-      ctx.fillStyle = 'red';
+      ctx.fillStyle = 'white';
       ctx.fill();
     }
-
   }
 
   render() {
