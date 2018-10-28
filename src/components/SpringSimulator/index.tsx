@@ -5,9 +5,8 @@
  **/
 
 import React from 'react';
-import Joint from './joint';
-import Spring from './spring';
-import * as Vector from './vectormath';
+import { Joint, Spring } from './physics';
+import Vector2D from './vector2d';
 
 export default class SpringSimulator extends React.Component <{}, {}> {
   state = {
@@ -42,22 +41,22 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     window.addEventListener('resize', this.updateDimensions);
     this.updateDimensions();
     for (let x = 0; x < 100; x++) {
-      this.entities.push(new Joint(Vector.randomVector({
+      this.entities.push(new Joint(Vector2D.random({
         floor: -100,
         ceiling: this.canvasRef.current.clientWidth + 100,
       }, {
         floor: -100,
         ceiling: this.canvasRef.current.clientHeight + 100,
-      }), Vector.randomScalar(10, 100)));
+      }), Vector2D.randomScalar(10, 100)));
     }
     const mover = new Joint({ x: this.canvasRef.current.clientWidth/2, y: this.canvasRef.current.clientHeight/2 }, Infinity);
     this.entities.push(mover);
     for (let x = 0; x < 500; x++) {
-      const index1 = Vector.randomScalar(0, this.entities.length);
-      const index2 = Vector.randomScalar(0, this.entities.length);
+      const index1 = Vector2D.randomScalar(0, this.entities.length);
+      const index2 = Vector2D.randomScalar(0, this.entities.length);
       const entity1 = this.entities[index1];
       const entity2 = this.entities[index2];
-      const spring = new Spring(Vector.distanceScalar(entity1, entity2) + Vector.randomScalar(-500, 500), Math.random(), 0.0001);
+      const spring = new Spring(Vector2D.distanceScalar(entity1, entity2) + Vector2D.randomScalar(-500, 500), Math.random(), 0.0001);
       spring.entity1 = entity1;
       spring.entity2 = entity2;
       this.springs.push(spring);
