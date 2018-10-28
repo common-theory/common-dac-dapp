@@ -46,18 +46,21 @@ export default class SpringSimulator extends React.Component <{}, {}> {
 
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
-    this.updateDimensions();
+    this.updateDimensions(true);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions);
   }
 
-  updateDimensions = () => {
+  updateDimensions = (forceUpdate?: boolean) => {
     this.setState({
       width: this.canvasRef.current.clientWidth,
       height: this.canvasRef.current.clientHeight,
-    }, this.initializeSystem);
+    }, () => {
+      this.initializeSystem();
+      if (forceUpdate) this.initializeSystem.flush();
+    });
   };
 
   initializeSystem = debounce(() => {
@@ -67,7 +70,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     this.springs = [];
     this.connectors.push(new Connector({ x: 0, y: 0 }, Infinity));
     this.connectors.push(new Connector({ x: this.state.width, y: 0 }, Infinity));
-    this.connectors.push(new Connector({ x: this.state.height, y: this.state.height }, Infinity));
+    this.connectors.push(new Connector({ x: this.state.width, y: this.state.height }, Infinity));
     this.connectors.push(new Connector({ x: 0, y: this.state.height }, Infinity));
     for (let x = 0; x < 75; x++) {
       this.connectors.push(new Connector(Vector2D.random({
@@ -141,18 +144,19 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       if (spring.connector1 && spring.connector2) {
         ctx.moveTo(spring.connector1.x, spring.connector1.y);
         ctx.lineTo(spring.connector2.x, spring.connector2.y);
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
         ctx.stroke();
       }
     }
     for (let connector of this.connectors) {
       ctx.beginPath();
       ctx.arc(connector.x, connector.y, 5, 0, 2 * Math.PI);
-      ctx.fillStyle = '#9E3F6B';
+      ctx.fillStyle = 'rgba(252, 236, 82, 0.75)';
       ctx.fill();
     }
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    // ctx.fillStyle = 'rgba(45, 31, 29, 0.2)';
+    // ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
   }
 
   render() {
@@ -163,7 +167,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
         top: 0,
         width: '100%',
         height: '100%',
-        backgroundColor: '#444444',
+        backgroundColor: '#64BFDB',
         zIndex: -1
       }} ref={this.canvasRef} width={this.state.width} height={this.state.height} />
     );
