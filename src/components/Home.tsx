@@ -10,6 +10,7 @@ const HeaderText = styled.div`
   font-family: Helvetica;
   font-size: 20pt;
   text-align: center;
+  color: white;
 `;
 
 @inject('dacStore')
