@@ -10,6 +10,9 @@ export class Connector implements IVector2D {
   position: Vector2D = new Vector2D();
   velocity: Vector2D = new Vector2D();
   mass: number;
+  get isStatic() {
+    return this.mass === Infinity;
+  }
   get radius() { return 5; }
   springs: Spring[] = [];
 
