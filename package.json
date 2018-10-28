@@ -21,6 +21,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
+    "@types/debounce": "^3.0.0",
     "@types/node": "^10.11.7",
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
@@ -42,6 +43,7 @@
     "webpack-dev-server": "^3.1.9"
   },
   "dependencies": {
+    "debounce": "^1.2.0",
     "idx": "^2.4.0",
     "mobx": "^5.5.0",
     "mobx-react": "^5.3.1",

@@ -5,6 +5,7 @@
 import React from 'react';
 import { Connector, Spring } from './physics';
 import Vector2D from './vector2d';
+import { debounce } from 'debounce';
 
 export default class SpringSimulator extends React.Component <{}, {}> {
   state = {
@@ -46,17 +47,35 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
     this.updateDimensions();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    this.setState({
+      width: this.canvasRef.current.clientWidth,
+      height: this.canvasRef.current.clientHeight,
+    }, this.initializeSystem);
+  };
+
+  initializeSystem = debounce(() => {
+    this.initializeSystem.clear();
+    this.connectors.forEach(connector => connector.removeAllSprings());
+    this.connectors = [];
+    this.springs = [];
     this.connectors.push(new Connector({ x: 0, y: 0 }, Infinity));
-    this.connectors.push(new Connector({ x: this.canvasRef.current.clientWidth, y: 0 }, Infinity));
-    this.connectors.push(new Connector({ x: this.canvasRef.current.clientWidth, y: this.canvasRef.current.clientHeight }, Infinity));
-    this.connectors.push(new Connector({ x: 0, y: this.canvasRef.current.clientHeight }, Infinity));
+    this.connectors.push(new Connector({ x: this.state.width, y: 0 }, Infinity));
+    this.connectors.push(new Connector({ x: this.state.height, y: this.state.height }, Infinity));
+    this.connectors.push(new Connector({ x: 0, y: this.state.height }, Infinity));
     for (let x = 0; x < 75; x++) {
       this.connectors.push(new Connector(Vector2D.random({
         floor: -100,
-        ceiling: this.canvasRef.current.clientWidth + 100,
+        ceiling: this.state.width + 100,
       }, {
         floor: -100,
-        ceiling: this.canvasRef.current.clientHeight + 100,
+        ceiling: this.state.height + 100,
       }), Vector2D.randomScalar(20, 100)));
     }
     // Connect each to static connectors
@@ -82,18 +101,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       }
     }
     this.startSimulating();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
-  }
-
-  updateDimensions = () => {
-    this.setState({
-      width: this.canvasRef.current.clientWidth,
-      height: this.canvasRef.current.clientHeight,
-    });
-  };
+  }, 1);
 
   startSimulating = () => {
     if (this._timer) {
@@ -139,7 +147,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     }
     for (let connector of this.connectors) {
       ctx.beginPath();
-      ctx.arc(connector.x, connector.y, connector.radius, 0, 2 * Math.PI);
+      ctx.arc(connector.x, connector.y, 5, 0, 2 * Math.PI);
       ctx.fillStyle = '#9E3F6B';
       ctx.fill();
     }

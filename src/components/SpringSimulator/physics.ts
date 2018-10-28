@@ -13,7 +13,6 @@ export class Connector implements IVector2D {
   get isStatic() {
     return this.mass === Infinity;
   }
-  get radius() { return 5; }
   springs: Spring[] = [];
 
   constructor(position: IVector2D = new Vector2D(), _mass: number = 10) {
@@ -63,6 +62,14 @@ export class Connector implements IVector2D {
   removeSpring(spring: Spring) {
     const i = this.springs.findIndex(_spring => _spring === spring);
     if (i !== -1) this.springs.splice(i, 1);
+  }
+
+  removeAllSprings() {
+    for (let spring of this.springs) {
+      if (spring.connector1 === this) spring.connector1 = undefined;
+      if (spring.connector2 === this) spring.connector2 = undefined;
+    }
+    this.springs = [];
   }
 
 }
