@@ -38,6 +38,10 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions);
     this.updateDimensions();
+    this.connectors.push(new Connector({ x: 0, y: 0 }, Infinity));
+    this.connectors.push(new Connector({ x: this.canvasRef.current.clientWidth, y: 0 }, Infinity));
+    this.connectors.push(new Connector({ x: this.canvasRef.current.clientWidth, y: this.canvasRef.current.clientHeight }, Infinity));
+    this.connectors.push(new Connector({ x: 0, y: this.canvasRef.current.clientHeight }, Infinity));
     for (let x = 0; x < 100; x++) {
       this.connectors.push(new Connector(Vector2D.random({
         floor: -100,
@@ -54,7 +58,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       const index2 = Vector2D.randomScalar(0, this.connectors.length);
       const connector1 = this.connectors[index1];
       const connector2 = this.connectors[index2];
-      const spring = new Spring(Vector2D.distanceScalar(connector1, connector2) + Vector2D.randomScalar(-500, 500), Math.random(), 0.0001);
+      const spring = new Spring([Vector2D.sum(connector1, Vector2D.random()), Vector2D.sum(connector2, Vector2D.random())], Math.random(), 0.0001);
       spring.connector1 = connector1;
       spring.connector2 = connector2;
       this.springs.push(spring);
