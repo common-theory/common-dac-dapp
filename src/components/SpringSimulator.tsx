@@ -189,7 +189,7 @@ function randomScalar(floor: number = 0, ceiling: number = 500) {
   return Math.floor(Math.random() * ceiling + floor);
 }
 
-function randomVector(v1?: {floor: number, ceiling: number}, v2?: {floor: number, ceiling: number}) {
+function randomVector(v1?: {floor?: number, ceiling?: number}, v2?: {floor?: number, ceiling?: number}) {
   return {
     x: randomScalar(v1 && v1.floor, v1 && v1.ceiling),
     y: randomScalar(v2 && v2.floor, v2 && v2.ceiling),
@@ -197,7 +197,10 @@ function randomVector(v1?: {floor: number, ceiling: number}, v2?: {floor: number
 }
 
 export default class SpringSimulator extends React.Component <{}, {}> {
-  state = {};
+  state = {
+    width: 0,
+    height: 0,
+  };
   canvasRef: React.RefObject<HTMLCanvasElement>;
 
   entities: Entity[] = [];
@@ -211,25 +214,44 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     this.canvasRef = React.createRef();
   }
 
+  componentDidUpdate() {
+    const width = this.canvasRef.current.clientWidth;
+    const height = this.canvasRef.current.clientHeight;
+    if (this.state.width !== width || this.state.height !== height) {
+      this.setState({
+        width,
+        height,
+      });
+    }
+  }
+
   componentDidMount() {
-    const entities = [];
-    for (let x = 0; x < 10; x++) {
-      entities.push(new Entity(randomVector(), randomScalar(10, 100)));
+    for (let x = 0; x < 100; x++) {
+      this.entities.push(new Entity(randomVector({
+        floor: -100,
+        ceiling: 1000,
+      }, {
+        floor: -100,
+        ceiling: 2000
+      }), randomScalar(10, 100)));
     }
     const mover = new Entity({ x: 250, y: 250 }, Infinity);
-    entities.push(mover);
-    for (let x = 0; x < 50; x++) {
-      const index1 = randomScalar(0, entities.length);
-      const index2 = randomScalar(0, entities.length);
-      const entity1 = entities[index1];
-      const entity2 = entities[index2];
-      const spring = new Spring(distanceScalar(entity1, entity2) + randomScalar(-50, 50), Math.random(), 0.0001);
+    this.entities.push(mover);
+    for (let x = 0; x < 500; x++) {
+      const index1 = randomScalar(0, this.entities.length);
+      const index2 = randomScalar(0, this.entities.length);
+      const entity1 = this.entities[index1];
+      const entity2 = this.entities[index2];
+      const spring = new Spring(distanceScalar(entity1, entity2) + randomScalar(-500, 500), Math.random(), 0.0001);
       spring.entity1 = entity1;
       spring.entity2 = entity2;
-      this.entities.push(entity1, entity2);
       this.springs.push(spring);
     }
     this.startSimulating();
+    this.setState({
+      width: this.canvasRef.current.clientWidth,
+      height: this.canvasRef.current.clientHeight,
+    });
   }
 
   startSimulating = () => {
@@ -258,7 +280,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     this.lastStep = currentMs;
 
     const ctx = this.canvasRef.current.getContext('2d');
-    ctx.clearRect(0, 0, 1000, 1000);
+    ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
     for (let spring of this.springs) {
       ctx.beginPath();
       if (spring.entity1 && spring.entity2) {
@@ -278,6 +300,16 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   }
 
   render() {
-    return <canvas ref={this.canvasRef} width="500" height="500" />;
+    return (
+      <canvas style={{
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'blue',
+        zIndex: -1
+      }} ref={this.canvasRef} width={this.state.width} height={this.state.height} />
+    );
   }
 }
