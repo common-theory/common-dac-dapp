@@ -1,17 +1,18 @@
 const digitalocean = require('digitalocean');
 const client = digitalocean.client(process.env.DIGITAL_OCEAN_TOKEN);
-const IPFS = require('ipfs');
-const node = new IPFS();
 const fs = require('fs');
 const fetch = require('node-fetch');
+const { exec } = require('child_process');
+const pexec = promisify(exec);
 
 const DOMAIN = 'commontheory.io';
 const NAME = '@';
 
-node.on('ready', async () => {
+(async () => {
   try {
-    const [file] = await node.files.add(fs.readFileSync('./static/index.html'));
-    console.log(`Added file ${file.path}, ${file.size / 1024} KB`);
+    const daemon = exec('ipfs daemon');
+    const hash = await pexec('sleep 10 && ipfs add -r ./static -Q');
+    console.log(`Added static dir at ${hash}`);
     const domains = await client.domains.list();
     const records = await client.domains.listRecords(DOMAIN);
     const dnslinkRecord = records.find(record => {
@@ -25,13 +26,24 @@ node.on('ready', async () => {
       process.exit(1);
     }
     await client.domains.updateRecord(DOMAIN, dnslinkRecord.id, {
-      data: `dnslink=/ipfs/${file.hash}`
+      data: `dnslink=/ipfs/${hash}/index.html`
     });
     console.log('DNS record updated')
     // Pull the file across the ipfs servers so it's available for at least a bit
-    await fetch(`http://ipfs.io/ipfs/${file.hash}`);
+    await fetch(`http://ipfs.io/ipfs/${hash}`);
     process.exit(0);
   } catch (err) {
     console.log(err);
   }
-});
+})();
+
+function promisify(fn) {
+  return (...args) => {
+    return new Promise((rs, rj) => {
+      fn(...args, (err, ..._args) => {
+        if (err) return rj(err);
+        rs(..._args);
+      });
+    });
+  };
+}

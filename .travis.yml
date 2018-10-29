@@ -5,4 +5,9 @@ node_js:
   10
 
 script:
+  - wget https://github.com/ipfs/go-ipfs/releases/download/v0.4.17/go-ipfs_v0.4.17_linux-386.tar.gz
+  - tar xvfc go-ipfs_v0.4.17_linux-386.tar.gz
+  - mv go-ipfs/ipfs /usr/local/bin/ipfs
+  - rm -rf go-ipfs
+  - rm go-ipfs_v0.4.17_linux-386.tar.gz
   - npm run deploy
