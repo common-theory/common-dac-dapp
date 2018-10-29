@@ -10,14 +10,14 @@ const HeaderContainer = styled.div`
 `;
 
 const HeaderBackground = styled.div`
-  background-color: #00F;
+  // background-color: #00F;
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   height: 70px;
   z-index: -1;
-  border-bottom: 1px solid #eff0f4;
+  // border-bottom: 1px solid #eff0f4;
 `;
 
 const HeaderContentContainer = styled.div`
