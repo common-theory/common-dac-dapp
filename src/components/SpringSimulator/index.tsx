@@ -168,6 +168,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
         width: '100%',
         height: '100%',
         backgroundColor: '#64BFDB',
+        opacity: 0.75,
         zIndex: -10
       }} ref={this.canvasRef} width={this.state.width} height={this.state.height} />
     );
