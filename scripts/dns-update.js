@@ -10,7 +10,7 @@ const NAME = '@';
 
 (async () => {
   try {
-    const daemon = exec('ipfs daemon');
+    const daemon = exec('ipfs init && ipfs daemon');
     const hash = await pexec('sleep 10 && ipfs add -r ./static -Q');
     console.log(`Added static dir at ${hash}`);
     const domains = await client.domains.list();
