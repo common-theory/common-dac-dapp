@@ -25,6 +25,12 @@ const stores = {
   dacStore: new DACStore()
 };
 
+Object.assign(document.body.style, {
+  margin: 'auto',
+  'background-color': '#444444',
+  'max-width': '900px',
+});
+
 ReactDOM.render(
   <>
     <Provider { ...stores }>
