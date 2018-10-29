@@ -26,7 +26,7 @@ const NAME = '@';
       process.exit(1);
     }
     await client.domains.updateRecord(DOMAIN, dnslinkRecord.id, {
-      data: `dnslink=/ipfs/${hash}/index.html`
+      data: `dnslink=/ipfs/${hash}`
     });
     console.log('DNS record updated')
     // Pull the file across the ipfs servers so it's available for at least a bit
