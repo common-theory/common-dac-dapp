@@ -13,6 +13,10 @@ const HeaderText = styled.div`
   color: white;
 `;
 
+const Footer = styled.div`
+  text-align: center;
+`;
+
 @inject('dacStore')
 @observer
 export default class Home extends React.Component<{ dacStore: DACStore }> {
@@ -76,6 +80,9 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
               );
             })}
           </div>
+          <Footer>
+            <img src="https://ipfs.io/ipns/commontheory.io/github-logo-white.png" width="50px" height="50px" />
+          </Footer>
         </Container>
       </>
     );
