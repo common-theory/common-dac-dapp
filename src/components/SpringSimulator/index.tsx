@@ -139,6 +139,10 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     this.lastStep = currentMs;
 
     const ctx = this.canvasRef.current.getContext('2d');
+
+    // Don't draw if we're not visible
+    if (document.visibilityState !== 'visible') return;
+    
     ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
     for (let spring of this.springs) {
       // Don't draw if missing a connector, or is a spring with a static connector
@@ -168,7 +172,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   render() {
     return (
       <canvas style={{
-        position: 'absolute',
+        position: 'fixed',
         left: 0,
         top: 0,
         width: '100%',
