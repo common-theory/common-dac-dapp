@@ -81,7 +81,9 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
             })}
           </div>
           <Footer>
-            <img src="https://ipfs.io/ipns/commontheory.io/github-logo-white.png" width="50px" height="50px" />
+            <a href="https://github.com/common-theory/common-dac-dapp" target="_blank">
+              <img title="common-theory source code" src="https://ipfs.io/ipns/commontheory.io/github-logo-white.png" width="50px" height="50px" />
+            </a>
           </Footer>
         </Container>
       </>
