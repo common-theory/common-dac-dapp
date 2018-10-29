@@ -1,4 +1,4 @@
-# common-dac-dapp
+# common-dac-dapp [![Build Status](https://travis-ci.org/common-theory/common-dac-dapp.svg?branch=master)](https://travis-ci.org/common-theory/common-dac-dapp)
 
 This is a web interface for interacting with the [`common-dac`](https://github.com/common-theory/common-dac). The app is deployed to IPFS and accessible at the following places:
 
