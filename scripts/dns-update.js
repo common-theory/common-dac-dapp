@@ -11,7 +11,7 @@ const NAME = '@';
 (async () => {
   try {
     const daemon = exec('ipfs init && ipfs daemon');
-    const hash = await pexec('sleep 10 && ipfs add -r ./static -Q');
+    const hash = (await pexec('sleep 10 && ipfs add -r ./static -Q')).replace(/\s/g, '');
     console.log(`Added static dir at ${hash}`);
     const domains = await client.domains.list();
     const records = await client.domains.listRecords(DOMAIN);
