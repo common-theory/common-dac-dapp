@@ -17,6 +17,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
 
   connectors: Connector[] = [];
 
+  // These getters are probably _real_ inefficient
   get dynamicConnectors() {
     return this.connectors.filter(connector => !connector.isStatic);
   }
@@ -46,12 +47,12 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.updateDimensions);
+    window.addEventListener('resize', () => this.updateDimensions());
     this.updateDimensions(true);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateDimensions);
+    window.removeEventListener('resize', () => this.updateDimensions());
   }
 
   updateDimensions = (forceUpdate?: boolean) => {
@@ -126,7 +127,9 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       this.lastStep = currentMs;
       return;
     }
-    const time = (currentMs - this.lastStep) / 1000;
+    const deltaSeconds = (currentMs - this.lastStep) / 1000;
+    const time = deltaSeconds > 1 ? 1 : deltaSeconds;
+
     const MAX_STEP_TIME = 0.02;
     let _scratchTime = time;
     while (_scratchTime > 0) {
@@ -142,7 +145,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
 
     // Don't draw if we're not visible
     if (document.visibilityState !== 'visible') return;
-    
+
     ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
     for (let spring of this.springs) {
       // Don't draw if missing a connector, or is a spring with a static connector
@@ -165,22 +168,25 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       ctx.fillStyle = 'rgba(252, 236, 82, 0.75)';
       ctx.fill();
     }
-    // ctx.fillStyle = 'rgba(45, 31, 29, 0.2)';
-    // ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
   }
 
   render() {
     return (
-      <canvas style={{
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#64BFDB',
-        opacity: 0.75,
-        zIndex: -10
-      }} ref={this.canvasRef} width={this.state.width} height={this.state.height} />
+      <canvas
+        style={{
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#64BFDB',
+          opacity: 0.75,
+          zIndex: -10
+        }}
+        ref={this.canvasRef}
+        width={this.state.width}
+        height={this.state.height}
+      />
     );
   }
 }
