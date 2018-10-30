@@ -14,7 +14,12 @@ export const BlockHeader = styled.div`
   background-color: ${(props: {
     backgroundColor: string
   }) => props.backgroundColor || 'white'};
-  height: 30px;
+  // height: 30px;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
 `;
 
 export const BlockElement = styled.div`
@@ -35,4 +40,11 @@ export const BlockFooter = styled.div`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background-color: white;
+`;
+
+export const HFlex = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 2px;
+  align-items: center;
 `;
