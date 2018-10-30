@@ -8,6 +8,7 @@ interface Member {
 export interface Proposal {
   number: number,
   description: string,
+  creator: string,
   voteCycle: number,
   updateMember: boolean,
   memberAddress: string,
@@ -119,7 +120,7 @@ export default class DACStore {
       return '0xc984e6a196408dbaceb8b5e598badced2b3da412';
     } else if (id === 5777) {
       // ganache <3
-      return '0x9177d007c1d419be312922bc55cccb438a2f698e';
+      return '0xd1e07411297107c47c70cc6681d4729080b364ce';
     }
   }
 

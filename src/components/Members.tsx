@@ -34,8 +34,8 @@ export default class Members extends React.Component {
 
   sections(): PieGraphSection[] {
     const sections: PieGraphSection[] = [];
-    Object.keys(this.props.dacStore.members).forEach((key, index) => {
-      const member = this.props.dacStore.members[key];
+    Object.keys(this.props.dacStore.members).forEach(address => {
+      const member = this.props.dacStore.members[address];
       if (+member.value === 0) return;
       sections.push({
         value: member.value,

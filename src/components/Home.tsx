@@ -63,7 +63,6 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
               Proposal Count: {this.props.dacStore.proposalCount}
             </div>
           </BlockElement>
-          <HeaderText>Proposals</HeaderText>
           <div>
             {[...this.props.dacStore.proposals].reverse().map(proposal => {
               return (
