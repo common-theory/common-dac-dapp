@@ -51,7 +51,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
               Total Members: {this.props.dacStore.totalVotingMembers}
             </div>
             <div>
-              Total Ownership: {this.props.dacStore.totalOwnership}
+              Total Value: {this.props.dacStore.totalValue}
             </div>
             <div>
               Current Vote Cycle: {this.props.dacStore.currentVoteCycle}

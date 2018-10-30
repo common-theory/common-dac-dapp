@@ -36,9 +36,9 @@ export default class Members extends React.Component {
     const sections: PieGraphSection[] = [];
     Object.keys(this.props.dacStore.members).forEach((key, index) => {
       const member = this.props.dacStore.members[key];
-      if (+member.ownership === 0) return;
+      if (+member.value === 0) return;
       sections.push({
-        value: member.ownership,
+        value: member.value,
         fillStyle: this.randomColor(),
       });
     });
@@ -46,17 +46,18 @@ export default class Members extends React.Component {
   }
 
   render() {
+    const sections = this.sections();
     return (
       <Container>
-        {this.sections().map(section => (
-          <Container>
+        {sections.map((section, index) => (
+          <Container key={index}>
             <ColorSample section={section} />
             <div style={{}}>
               {section.value}
             </div>
           </Container>
         ))}
-        <PieGraph sections={this.sections()} radius={50} />
+        <PieGraph sections={sections} radius={50} />
       </Container>
     );
   }

@@ -2,13 +2,12 @@ import { observable } from 'mobx';
 
 interface Member {
   ownership: number,
-  name: string,
-  github: string,
-  website: string
+  link: string,
 }
 
 export interface Proposal {
   number: number,
+  description: string,
   voteCycle: number,
   updateMember: boolean,
   memberAddress: string,
@@ -25,7 +24,7 @@ export default class DACStore {
   private blockHeaderSubscription: any;
   private contract: any;
   @observable totalVotingMembers: number = 0;
-  @observable totalOwnership: number = 0;
+  @observable totalValue: number = 0;
 
   @observable currentVoteCycle: number = 0;
   @observable contractUpdated: boolean = false;
@@ -84,18 +83,20 @@ export default class DACStore {
   }
 
   async createProposal(config: {
+    description: string,
     updateMember: boolean,
     memberAddress: string,
-    newOwnership: number,
+    newValue: number,
     newContractAddress: string,
     updateContract: boolean
   }) {
     const accounts = await web3.eth.getAccounts();
     if (!accounts.length) return;
     this.contract.methods.createProposal(
+      config.description,
       config.updateMember,
       config.memberAddress || '0x0',
-      config.newOwnership,
+      config.newValue,
       config.newContractAddress || '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d',
       config.updateContract
     ).send({
@@ -114,7 +115,7 @@ export default class DACStore {
   addressForNetworkId(id: number) {
     if (id === 1) {
     } else if (id === 4) {
-      return '0x231918e686bdfdd2579cc9c903585c849ff8e100';
+      return '0xc984e6a196408dbaceb8b5e598badced2b3da412';
     } else if (id === 5777) {
       // ganache <3
       return '0x9177d007c1d419be312922bc55cccb438a2f698e';
@@ -134,13 +135,13 @@ export default class DACStore {
   async load() {
     const [
       _totalVotingMembers,
-      _totalOwnership,
+      _totalValue,
       _contractUpdated,
       _votePeriod,
       _genesisBlockTimestamp
     ] = await Promise.all([
       this.contract.methods.totalVotingMembers().call(),
-      this.contract.methods.totalOwnership().call(),
+      this.contract.methods.totalValue().call(),
       this.contract.methods.contractUpdated().call(),
       this.contract.methods.votePeriod().call(),
       this.contract.methods.genesisBlockTimestamp().call(),
@@ -148,7 +149,7 @@ export default class DACStore {
       this.loadProposals()
     ]);
     this.totalVotingMembers = _totalVotingMembers;
-    this.totalOwnership = _totalOwnership;
+    this.totalValue = _totalValue;
     this.contractUpdated = _contractUpdated;
     this.votePeriod = _votePeriod;
     this.genesisBlockTimestamp = _genesisBlockTimestamp;
