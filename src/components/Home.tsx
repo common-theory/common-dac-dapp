@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import DACStore from '../stores/DACStore';
 import ProposalCell from './ProposalCell';
-import { Container, BlockElement } from './Shared';
+import { Container, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import Members from './Members';
 
 const HeaderText = styled.div`
@@ -44,7 +44,9 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
       <>
         <Header />
         <Container>
-          <HeaderText>Contract Information</HeaderText>
+          <BlockHeader>
+            Contract Information
+          </BlockHeader>
           <BlockElement>
             <Members />
             <div>
@@ -63,6 +65,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
               Proposal Count: {this.props.dacStore.proposalCount}
             </div>
           </BlockElement>
+          <BlockFooter />
           <div>
             {[...this.props.dacStore.proposals].reverse().map(proposal => {
               return (
