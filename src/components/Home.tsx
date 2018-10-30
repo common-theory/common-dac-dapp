@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import DACStore from '../stores/DACStore';
 import ProposalCell from './ProposalCell';
 import { Container, BlockElement } from './Shared';
+import Members from './Members';
 
 const HeaderText = styled.div`
   font-family: Helvetica;
@@ -45,6 +46,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
         <Container>
           <HeaderText>Contract Information</HeaderText>
           <BlockElement>
+            <Members />
             <div>
               Total Members: {this.props.dacStore.totalVotingMembers}
             </div>
