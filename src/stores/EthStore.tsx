@@ -2,8 +2,6 @@ import { observable, action } from 'mobx';
 
 export default class EthStore {
 
-  @observable networkId: number = -1;
-
   private blockHeaderSubscription: any;
   @observable currentBlockHeader?: BlockHeader;
   @observable receivedBlockHeaders: BlockHeader[] = [];
@@ -11,6 +9,7 @@ export default class EthStore {
   @observable currentBlockNumber: number = 0;
 
   @observable accounts: any[] = [];
+  @observable private _networkId: number = -1;
 
   constructor() {
     this.blockHeaderSubscription = web3.eth.subscribe('newBlockHeaders');
@@ -47,7 +46,14 @@ export default class EthStore {
 
   @action
   async loadNetworkId() {
-    this.networkId = await web3.eth.net.getId();
+    this._networkId = await web3.eth.net.getId();
+  }
+
+  /**
+   * Get the current loaded networkId, this value may be stale.
+   **/
+  get networkId() {
+    return this._networkId;
   }
 
   @action
