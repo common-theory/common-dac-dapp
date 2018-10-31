@@ -50,7 +50,7 @@ export class Connector implements IVector2D {
     this.x += this.velocity.x * time;
     this.y += this.velocity.y * time;
     this.velocity = Vector2D.sum(this.velocity, acceleration);
-    const MAX_VELOCITY = 100;
+    const MAX_VELOCITY = 50;
     if (Math.abs(this.velocity.x) > MAX_VELOCITY) {
       this.velocity.x = MAX_VELOCITY * (this.velocity.x > 0 ? 1 : -1);
     }
