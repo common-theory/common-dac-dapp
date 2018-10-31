@@ -35,17 +35,50 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
     </>
   );
 
-  render() {
-    return (
-      <BlockContainer>
-        <BlockHeader>
-          <TextSpan>Proposal {this.props.proposal.number} - </TextSpan>
+  renderProposalState() {
+    console.log(this.props.proposal);
+    if (this.props.proposal.totalRejectingVotes != 0) {
+      return (
+        <>
+          <ion-icon
+            size="medium"
+            name="close-circle"
+            style={{ color: 'red' }}
+          />
+          <TextSpan>Rejected</TextSpan>
+        </>
+      );
+    }
+    if (this.props.proposal.applied) {
+      return (
+        <>
           <ion-icon
             size="medium"
             name="checkmark-circle"
             style={{ color: 'limegreen' }}
           />
           <TextSpan>Accepted</TextSpan>
+        </>
+      );
+    }
+    return (
+      <>
+        <ion-icon
+          size="medium"
+          name="alert"
+          style={{ color: 'gold' }}
+        />
+        <TextSpan>Awaiting Vote</TextSpan>
+      </>
+    )
+  }
+
+  render() {
+    return (
+      <BlockContainer>
+        <BlockHeader>
+          <TextSpan>Proposal {this.props.proposal.number} - </TextSpan>
+          {this.renderProposalState()}
         </BlockHeader>
         <BlockElement>
           <HFlex>
