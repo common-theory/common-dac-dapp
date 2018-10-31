@@ -32,7 +32,7 @@ const NAME = '@';
     // Pull the file across the ipfs servers so it's available for at least a bit
     await fetch(`https://ipfs.io/ipfs/${hash}`);
     // Pull commontheory.io 5 times to make sure each ipfs node is hit
-    await Promise.all(Array.apply(null, Array(5)).map(() => fetch('https://commontheory.io')));
+    // await Promise.all(Array.apply(null, Array(5)).map(() => fetch('https://commontheory.io')));
     const msWait = 60 * 2 * 1000;
     console.log(`Waiting ${msWait / 1000} seconds before spinning down.`);
     setTimeout(() => process.exit(0), msWait);
