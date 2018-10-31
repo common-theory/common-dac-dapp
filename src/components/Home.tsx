@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import DACStore from '../stores/DACStore';
 import ProposalCell from './ProposalCell';
-import { Container, BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { Container } from './Shared';
 import Members from './Members';
 import CreateProposal from './CreateProposal';
 import ContractInfo from './ContractInfo';

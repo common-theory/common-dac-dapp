@@ -129,15 +129,8 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     }
     const deltaSeconds = (currentMs - this.lastStep) / 1000;
     const time = deltaSeconds > 1 ? 1 : deltaSeconds;
-
-    const MAX_STEP_TIME = 0.02;
-    let _scratchTime = time;
-    while (_scratchTime > 0) {
-      const stepTime = _scratchTime < MAX_STEP_TIME ? _scratchTime : MAX_STEP_TIME;
-      for (let connector of this.connectors) {
-        connector.step(stepTime);
-      }
-      _scratchTime -= stepTime;
+    for (let connector of this.connectors) {
+      connector.step(time);
     }
     this.lastStep = currentMs;
 
@@ -165,7 +158,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       if (connector.isStatic) continue;
       ctx.beginPath();
       ctx.arc(connector.x, connector.y, 5, 0, 2 * Math.PI);
-      ctx.fillStyle = 'rgba(252, 236, 82, 0.75)';
+      ctx.fillStyle = 'rgba(252, 232, 47, 0.75)';
       ctx.fill();
     }
   }
@@ -179,7 +172,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
           top: 0,
           width: '100%',
           height: '100%',
-          backgroundColor: '#64BFDB',
+          backgroundColor: '#2CBEEA',
           opacity: 0.75,
           zIndex: -10
         }}
