@@ -17,6 +17,7 @@ const HeaderText = styled.div`
 `;
 
 const Footer = styled.div`
+  margin-top: 16px;
   text-align: center;
 `;
 
@@ -43,7 +44,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
           </div>
           <Footer>
             <a href="https://github.com/common-theory" target="_blank">
-              <img title="common-theory source code" src="https://ipfs.io/ipns/commontheory.io/github-logo-white.png" width="50px" height="50px" />
+              <img title="common-theory source code" src="https://ipfs.io/ipns/commontheory.io/github-logo-white.png" width="40px" height="40px" />
             </a>
           </Footer>
         </Container>
