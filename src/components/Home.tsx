@@ -31,6 +31,9 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
         <Container>
           <ContractInfo />
           <CreateProposal />
+          <HeaderText>
+            Proposals
+          </HeaderText>
           <div>
             {[...this.props.dacStore.proposals].reverse().map(proposal => {
               return (
