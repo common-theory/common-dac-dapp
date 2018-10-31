@@ -48,7 +48,7 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
             Contract Information
           </BlockHeader>
           <BlockElement>
-            <Members />
+            {/*<Members />*/}
             <div>
               Total Members: {this.props.dacStore.totalVotingMembers}
             </div>
