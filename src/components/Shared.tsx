@@ -12,7 +12,7 @@ export const BlockHeader = styled.div`
   border-top-right-radius: 10px;
   border: 1px solid #eff0f4;
   background-color: ${(props: {
-    backgroundColor: string
+    backgroundColor?: string
   }) => props.backgroundColor || 'white'};
   // height: 30px;
   font-size: 20px;

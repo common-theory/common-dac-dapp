@@ -8,9 +8,10 @@ import { BlockElement, BlockHeader, BlockFooter } from './Shared';
 export default class CreateProposal extends React.Component<{ dacStore?: DACStore }> {
   state = {
     updateMember: false,
-    memberAddress: '',
-    newOwnership: 0,
-    updateContract: false
+    ethAddress: '',
+    newValue: 0,
+    updateContract: false,
+    description: ''
   };
 
   handleSubmit = (e: any) => {
@@ -25,32 +26,49 @@ export default class CreateProposal extends React.Component<{ dacStore?: DACStor
           Create Proposal
         </BlockHeader>
         <BlockElement>
-          Create a proposal
           <form onSubmit={this.handleSubmit}>
             <div>
               <label>
-                Member Address:
+                Ethereum Address:
                 <input
-                  name="memberAddress"
+                  name="ethAddress"
                   type="text"
-                  value={this.state.memberAddress}
+                  value={this.state.ethAddress}
                   onChange={(event) => this.setState({
-                    memberAddress: event.target.value
+                    ethAddress: event.target.value
                   })}
                 />
               </label>
             </div>
             <div>
               <label>
-                New Ownership:
+                New Value:
                 <input
-                  name="newOwnership"
+                  name="newValue"
                   type="number"
-                  value={this.state.newOwnership}
+                  value={this.state.newValue}
                   onChange={(event) => this.setState({
-                    newOwnership: event.target.value
+                    newValue: event.target.value
                   })}
                 />
+              </label>
+            </div>
+            <div>
+              <label>
+                <div>
+                  Additional Info:
+                </div>
+                <textarea
+                  rows={4}
+                  cols={50}
+                  placeholder="Short description, or ipfs address to longer doc"
+                  value={this.state.description}
+                  onChange={(event) => this.setState({
+                    description: event.target.value
+                  })}
+                >
+                  Any additional information
+                </textarea>
               </label>
             </div>
             <input type="submit" value="Submit" />

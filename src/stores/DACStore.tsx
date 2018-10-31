@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 
 interface Member {
-  ownership: number,
+  value: number,
   link: string,
 }
 

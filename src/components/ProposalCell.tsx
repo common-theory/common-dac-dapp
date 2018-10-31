@@ -45,7 +45,7 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
             name="checkmark-circle"
             style={{ color: 'limegreen' }}
           />
-          <TextSpan>Applied</TextSpan>
+          <TextSpan>Accepted</TextSpan>
         </BlockHeader>
         <BlockElement>
           <HFlex>

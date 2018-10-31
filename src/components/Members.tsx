@@ -23,7 +23,7 @@ const ColorSample = styled.div`
 
 @inject('dacStore')
 @observer
-export default class Members extends React.Component {
+export default class Members extends React.Component <{ dacStore?: DACStore }> {
 
   randomColor() {
     const r = Math.random() * 255;
