@@ -22,8 +22,20 @@ const HeaderBackground = styled.div`
 
 const HeaderContentContainer = styled.div`
   margin: 8px;
+  margin-bottom: 0px;
+  padding-left: 8px;
+  padding-right: 8px;
   color: white;
   font-family: Helvetica;
+`;
+
+const TitleContentContainer = styled.div`
+  margin: 8px;
+  margin-bottom: 0px;
+  padding-left: 8px;
+  padding-right: 8px;
+  display: flex;
+  align-items: flex-end;
 `;
 
 const RightText = styled.div`
@@ -64,14 +76,9 @@ export default class Header extends React.Component<{
     return (
       <HeaderContainer>
         <HeaderBackground />
-        <HeaderContentContainer>
+        <TitleContentContainer>
           <LogoText>Common Theory</LogoText>
-          <LinkContainer>
-            <HeaderLink to="/">Home</HeaderLink>
-            <HeaderLink to="/create">Create</HeaderLink>
-            <HeaderLink to="/about">About</HeaderLink>
-          </LinkContainer>
-        </HeaderContentContainer>
+        </TitleContentContainer>
         <HeaderContentContainer>
           <RightText>
             Network ID: {this.props.ethStore.networkId}
