@@ -9,6 +9,11 @@ export class Connector implements IVector2D {
   y: number;
   position: Vector2D = new Vector2D();
   velocity: Vector2D = new Vector2D();
+  maxVelocity: Vector2D = new Vector2D({ x: 50, y: 50 });
+  // Return velocity as a value between 0 and 1
+  get percentVelocity() {
+    return this.velocity.magnitude / this.maxVelocity.magnitude;
+  }
   mass: number;
   get isStatic() {
     return this.mass === Infinity;
@@ -50,12 +55,11 @@ export class Connector implements IVector2D {
     this.x += this.velocity.x * time;
     this.y += this.velocity.y * time;
     this.velocity = Vector2D.sum(this.velocity, acceleration);
-    const MAX_VELOCITY = 50;
-    if (Math.abs(this.velocity.x) > MAX_VELOCITY) {
-      this.velocity.x = MAX_VELOCITY * (this.velocity.x > 0 ? 1 : -1);
+    if (Math.abs(this.velocity.x) > this.maxVelocity.x) {
+      this.velocity.x = this.maxVelocity.x * (this.velocity.x > 0 ? 1 : -1);
     }
-    if (Math.abs(this.velocity.y) > MAX_VELOCITY) {
-      this.velocity.y = MAX_VELOCITY * (this.velocity.y > 0 ? 1 : -1);
+    if (Math.abs(this.velocity.y) > this.maxVelocity.y) {
+      this.velocity.y = this.maxVelocity.y * (this.velocity.y > 0 ? 1 : -1);
     }
   }
 

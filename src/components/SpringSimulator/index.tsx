@@ -140,7 +140,10 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     // Don't draw if we're not visible
     if (document.visibilityState !== 'visible') return;
 
+    // Clear the drawing space
     ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+
+    // Then render the springs
     for (let spring of this.springs) {
       // Don't draw if missing a connector, or is a spring with a static connector
       if (!spring.connector1 || !spring.connector2) continue;
@@ -150,16 +153,24 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       ctx.beginPath();
       ctx.moveTo(spring.connector1.x, spring.connector1.y);
       ctx.lineTo(spring.connector2.x, spring.connector2.y);
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+
+      ctx.strokeStyle = `rgba(255, 255, 255, 0.1)`;
       ctx.lineWidth = 1;
       ctx.stroke();
     }
+    // Finally the nodes
     for (let connector of this.connectors) {
       // Don't draw the static connectors
       if (connector.isStatic) continue;
       ctx.beginPath();
       ctx.arc(connector.x, connector.y, 5, 0, 2 * Math.PI);
-      ctx.fillStyle = 'rgba(252, 232, 47, 0.75)';
+
+      // Let's vary the alpha with velocity
+      const min = 0.3;
+      const max = 0.6;
+      // And let's invert it, so as it goes faster it gets less visible
+      const alpha = min + (max - min) * (1 - connector.velocity.magnitude / connector.maxVelocity.magnitude)
+      ctx.fillStyle = `rgba(252, 232, 47, ${alpha})`;
       ctx.fill();
     }
   }
