@@ -5,6 +5,11 @@ interface Member {
   link: string,
 }
 
+export enum ProposalType {
+  MemberUpdate,
+  ContractUpdate,
+}
+
 export interface Proposal {
   number: number,
   description: string,
@@ -85,21 +90,19 @@ export default class DACStore {
 
   async createProposal(config: {
     description: string,
-    updateMember: boolean,
     ethAddress: string,
     newValue: number,
     newContractAddress: string,
-    updateContract: boolean
+    _type: ProposalType
   }) {
     const accounts = await web3.eth.getAccounts();
     if (!accounts.length) return;
     this.contract.methods.createProposal(
       config.description,
-      config.updateMember,
+      config._type,
       config.ethAddress || '0x0',
       config.newValue,
-      config.newContractAddress || '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d',
-      config.updateContract
+      config.newContractAddress || '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d'
     ).send({
       from: accounts[0]
     });
@@ -117,7 +120,7 @@ export default class DACStore {
     if (id === 1) {
       return '0xA1FA6c74E704506AeAB57C8b1335336E213c0442';
     } else if (id === 4) {
-      return '0xc6b6ce0ca262fb0e0c06319f1763ef10eab47b11';
+      return '0xa2ddcbc31a66c512cba24f95d6fe1af09a419288';
     } else if (id === 5777) {
       // ganache <3
       return '0x83c19928eb2893bf3f11099bf13e71cab32d13f0';

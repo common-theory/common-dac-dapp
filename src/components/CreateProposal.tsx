@@ -1,16 +1,15 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import DACStore from '../stores/DACStore';
+import DACStore, { ProposalType } from '../stores/DACStore';
 import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 
 @inject('dacStore')
 @observer
 export default class CreateProposal extends React.Component<{ dacStore?: DACStore }> {
   defaultState = {
-    updateMember: false,
+    _type: ProposalType.MemberUpdate,
     ethAddress: '',
     newValue: 0,
-    updateContract: false,
     description: ''
   }
   state = this.defaultState;
