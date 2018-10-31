@@ -3,7 +3,7 @@ import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared
 import { observer, inject } from 'mobx-react';
 import DACStore from '../stores/DACStore';
 
-@inject('dacStore')
+@inject('dacStore', 'ethStore')
 @observer
 export default class ContractInfo extends React.Component <{ dacStore?: DACStore }> {
   timeout: NodeJS.Timeout;
@@ -24,6 +24,7 @@ export default class ContractInfo extends React.Component <{ dacStore?: DACStore
   }
 
   render() {
+    const contractAddress = this.props.dacStore.addressForNetworkId(this.props.ethStore.networkId);
     return (
       <BlockContainer>
         <BlockHeader>
@@ -31,6 +32,11 @@ export default class ContractInfo extends React.Component <{ dacStore?: DACStore
         </BlockHeader>
         <BlockElement>
           {/*<Members />*/}
+          <div>
+            <a href={this.props.ethStore.etherscanUrl(contractAddress)} target="_blank">
+              Address: {contractAddress}
+            </a>
+          </div>
           <div>
             Total Members: {this.props.dacStore.totalVotingMembers}
           </div>

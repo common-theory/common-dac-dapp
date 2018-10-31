@@ -36,7 +36,6 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
   );
 
   renderProposalState() {
-    console.log(this.props.proposal);
     if (this.props.proposal.totalRejectingVotes != 0) {
       return (
         <>
