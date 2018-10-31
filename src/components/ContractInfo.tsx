@@ -33,8 +33,9 @@ export default class ContractInfo extends React.Component <{ dacStore?: DACStore
         <BlockElement>
           {/*<Members />*/}
           <div>
+            {'Address: '}
             <a href={this.props.ethStore.etherscanUrl(contractAddress)} target="_blank">
-              Address: {contractAddress}
+              {contractAddress}
             </a>
           </div>
           <div>
