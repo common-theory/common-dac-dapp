@@ -12,7 +12,7 @@ const NAME = '@';
   try {
     const daemon = exec('ipfs init && ipfs daemon');
     const hash = (await pexec('sleep 10 && ipfs add -r ./static -Q')).replace(/\s/g, '');
-    console.log(`Added static dir at ${hash}`);
+    console.log(`Added static directory at ${hash}`);
     const domains = await client.domains.list();
     const records = await client.domains.listRecords(DOMAIN);
     const dnslinkRecord = records.find(record => {
@@ -31,7 +31,9 @@ const NAME = '@';
     console.log('DNS record updated')
     // Pull the file across the ipfs servers so it's available for at least a bit
     await fetch(`https://ipfs.io/ipfs/${hash}`);
-    const msWait = 60 * 5 * 1000;
+    // Pull commontheory.io 5 times to make sure each ipfs node is hit
+    await Promise.all(Array.apply(null, Array(5)).map(() => fetch('https://commontheory.io')));
+    const msWait = 60 * 2 * 1000;
     console.log(`Waiting ${msWait / 1000} seconds before spinning down.`);
     setTimeout(() => process.exit(0), msWait);
   } catch (err) {
