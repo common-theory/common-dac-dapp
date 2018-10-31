@@ -1,13 +1,11 @@
 import React from 'react';
-import Header from './Header';
 import { observer, inject } from 'mobx-react';
-import styled from 'styled-components';
 import DACStore from '../stores/DACStore';
-import { Container, BlockElement } from './Shared';
+import { BlockElement, BlockHeader, BlockFooter } from './Shared';
 
 @inject('dacStore')
 @observer
-export default class CreateProposal extends React.Component<{ dacStore: DACStore }> {
+export default class CreateProposal extends React.Component<{ dacStore?: DACStore }> {
   state = {
     updateMember: false,
     memberAddress: '',
@@ -23,53 +21,43 @@ export default class CreateProposal extends React.Component<{ dacStore: DACStore
   render() {
     return (
       <>
-        <Header />
-        <Container>
-          <BlockElement>
-            Create a proposal
-            <form onSubmit={this.handleSubmit}>
-              <div>
-                <label>
-                  Update Member:
-                  <input
-                    name="updateMember"
-                    type="checkbox"
-                    checked={this.state.updateMember}
-                    onChange={(event) => this.setState({
-                      updateMember: event.target.checked
-                    })} />
-                </label>
-              </div>
-              <div>
-                <label>
-                  Member Address:
-                  <input
-                    name="memberAddress"
-                    type="text"
-                    value={this.state.memberAddress}
-                    onChange={(event) => this.setState({
-                      memberAddress: event.target.value
-                    })}
-                  />
-                </label>
-              </div>
-              <div>
-                <label>
-                  New Ownership:
-                  <input
-                    name="newOwnership"
-                    type="number"
-                    value={this.state.newOwnership}
-                    onChange={(event) => this.setState({
-                      newOwnership: event.target.value
-                    })}
-                  />
-                </label>
-              </div>
-              <input type="submit" value="Submit" />
-            </form>
-          </BlockElement>
-        </Container>
+        <BlockHeader>
+          Create Proposal
+        </BlockHeader>
+        <BlockElement>
+          Create a proposal
+          <form onSubmit={this.handleSubmit}>
+            <div>
+              <label>
+                Member Address:
+                <input
+                  name="memberAddress"
+                  type="text"
+                  value={this.state.memberAddress}
+                  onChange={(event) => this.setState({
+                    memberAddress: event.target.value
+                  })}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                New Ownership:
+                <input
+                  name="newOwnership"
+                  type="number"
+                  value={this.state.newOwnership}
+                  onChange={(event) => this.setState({
+                    newOwnership: event.target.value
+                  })}
+                />
+              </label>
+            </div>
+            <input type="submit" value="Submit" />
+          </form>
+        </BlockElement>
+        <BlockFooter>
+        </BlockFooter>
       </>
     );
   }
