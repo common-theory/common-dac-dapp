@@ -53,6 +53,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
 
   componentWillUnmount() {
     window.removeEventListener('resize', () => this.updateDimensions());
+    this.stopSimulating();
   }
 
   updateDimensions = (forceUpdate?: boolean) => {

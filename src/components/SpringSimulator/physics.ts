@@ -87,7 +87,7 @@ export class Spring {
   restLength: number;
   damping: number;
 
-  constructor(_restLength: (number|[IVector2D, IVector2D]), _stiffness = 0.1, _damping = 0.08) {
+  constructor(_restLength: (number|[IVector2D, IVector2D]), _stiffness = 0.1, _damping = 0.2) {
     if (Array.isArray(_restLength)) {
       this.restLength = Vector2D.distanceScalar(_restLength[0], _restLength[1]);
     } else {
