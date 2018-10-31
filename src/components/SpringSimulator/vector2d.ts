@@ -31,22 +31,22 @@ export default class Vector2D implements IVector2D {
    *
    * @param IVector2D|Vector2D coords The initial x and y coordinates.
    **/
-  constructor(coords: IVector2D = { x: 0, y: 0 }) {
+  constructor(coords: (Vector2D | IVector2D) = { x: 0, y: 0 }) {
     this.x = coords.x;
     this.y = coords.y;
   }
 
-  static divide(...args: IVector2D[]) {
-    if (args.length === 0) return { x: 0, y: 0 };
+  static divide(...args: (Vector2D | IVector2D)[]): Vector2D {
+    if (args.length === 0) return new Vector2D({ x: 0, y: 0 });
     const quotient = args.shift();
     for (let vector of args) {
       quotient.x /= vector.x;
       quotient.y /= vector.y;
     }
-    return quotient;
+    return new Vector2D(quotient);
   }
 
-  static multiply(...args: (IVector2D | number)[]) {
+  static multiply(...args: (Vector2D | IVector2D | number)[]): Vector2D {
     const product = {
       x: 1,
       y: 1,
@@ -60,13 +60,13 @@ export default class Vector2D implements IVector2D {
         product.y *= vector.y;
       }
     }
-    return product;
+    return new Vector2D(product);
   }
 
   /**
    * Sum any vectors or numbers provided. Numbers are applied to both axes.
    **/
-  static sum(...args: (IVector2D | number)[]) {
+  static sum(...args: (Vector2D | IVector2D | number)[]): Vector2D {
     const sum = {
       x: 0,
       y: 0,
@@ -80,7 +80,7 @@ export default class Vector2D implements IVector2D {
         sum.y += vector.y;
       }
     }
-    return sum;
+    return new Vector2D(sum);
   }
 
   /**

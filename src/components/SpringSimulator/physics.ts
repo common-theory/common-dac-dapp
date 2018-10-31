@@ -29,13 +29,11 @@ export class Connector implements IVector2D {
     for (let spring of this.springs) {
       const otherEntity = spring.connector1 === this ? spring.connector2 : spring.connector1;
       if (!otherEntity) continue;
-      const currentLength = Vector2D.distanceScalar(this, otherEntity);
-      const force = (currentLength - spring.restLength) * spring.stiffness;
+      const force = spring.force;
       const acceleration = force / this.mass;
       const forceAngle = Vector2D.angle(this, otherEntity);
       const vectorAcceleration = Vector2D.projectScalarTo2D(acceleration, forceAngle);
-      const dampedAcceleration = Vector2D.sum(vectorAcceleration, Vector2D.multiply(this.velocity, spring.damping, -1));
-      accelerations.push(dampedAcceleration);
+      accelerations.push(vectorAcceleration);
     }
     return Vector2D.sum(...accelerations);
   }
@@ -51,7 +49,7 @@ export class Connector implements IVector2D {
 
     this.x += this.velocity.x * time;
     this.y += this.velocity.y * time;
-    this.velocity = new Vector2D(Vector2D.sum(this.velocity, acceleration));
+    this.velocity = Vector2D.sum(this.velocity, acceleration);
   }
 
   addSpring(spring: Spring) {
@@ -129,5 +127,11 @@ export class Spring {
     if (newConnector) {
       newConnector.addSpring(this);
     }
+  }
+
+  get force() {
+    const velocity = Vector2D.sum(this.connector1, this.connector2);
+    const currentLength = Vector2D.distanceScalar(this.connector1, this.connector2);
+    return (currentLength - this.restLength) * this.stiffness - this.damping * (velocity as Vector2D).magnitude;
   }
 }
