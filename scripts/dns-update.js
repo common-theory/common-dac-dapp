@@ -30,7 +30,7 @@ const NAME = '@';
     });
     console.log('DNS record updated')
     // Pull the file across the ipfs servers so it's available for at least a bit
-    await fetch(`http://ipfs.io/ipfs/${hash}`);
+    await fetch(`https://ipfs.io/ipfs/${hash}`);
     const msWait = 60 * 10 * 1000;
     console.log(`Waiting ${msWait / 1000} seconds before spinning down.`);
     setTimeout(() => process.exit(0), msWait);
