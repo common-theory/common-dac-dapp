@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import DACStore from '../stores/DACStore';
-import { BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 
 @inject('dacStore')
 @observer
@@ -29,7 +29,7 @@ export default class CreateProposal extends React.Component<{ dacStore?: DACStor
 
   render() {
     return (
-      <>
+      <BlockContainer>
         <BlockHeader>
           Create Proposal
         </BlockHeader>
@@ -84,7 +84,7 @@ export default class CreateProposal extends React.Component<{ dacStore?: DACStor
         </BlockElement>
         <BlockFooter>
         </BlockFooter>
-      </>
+      </BlockContainer>
     );
   }
 }

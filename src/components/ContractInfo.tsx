@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlockElement, BlockFooter, BlockHeader } from './Shared';
+import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
 import { observer, inject } from 'mobx-react';
 import DACStore from '../stores/DACStore';
 
@@ -25,7 +25,7 @@ export default class ContractInfo extends React.Component <{ dacStore?: DACStore
 
   render() {
     return (
-      <>
+      <BlockContainer>
         <BlockHeader>
           Contract Information
         </BlockHeader>
@@ -48,7 +48,7 @@ export default class ContractInfo extends React.Component <{ dacStore?: DACStore
           </div>
         </BlockElement>
         <BlockFooter />
-      </>
+      </BlockContainer>
     );
   }
 }

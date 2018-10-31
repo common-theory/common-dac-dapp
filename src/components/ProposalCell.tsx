@@ -2,7 +2,7 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import DACStore, { Proposal } from '../stores/DACStore';
-import { BlockElement, BlockHeader, BlockFooter, HFlex } from './Shared';
+import { BlockContainer, BlockElement, BlockHeader, BlockFooter, HFlex } from './Shared';
 
 const TextSpan = styled.span`
   margin-left: 4px;
@@ -37,7 +37,7 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
 
   render() {
     return (
-      <>
+      <BlockContainer>
         <BlockHeader>
           <TextSpan>Proposal {this.props.proposal.number} - </TextSpan>
           <ion-icon
@@ -56,7 +56,7 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
           {this.props.dacStore.currentVoteCycle === this.props.proposal.voteCycle ? this.renderVoteButtons() : null}
         </BlockElement>
         <BlockFooter />
-      </>
+      </BlockContainer>
     );
   }
 }

@@ -4,9 +4,14 @@ export const Container = styled.div`
   padding: 8px;
 `;
 
+export const BlockContainer = styled.div`
+  margin: 8px;
+  box-shadow: 0 1px 5px 1px #444444;
+  border-radius: 10px;
+`;
+
 export const BlockHeader = styled.div`
   padding: 8px;
-  margin: 8px;
   margin-bottom: 0px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -24,9 +29,6 @@ export const BlockHeader = styled.div`
 
 export const BlockElement = styled.div`
   padding: 8px;
-  margin: 8px;
-  margin-top: 0px;
-  margin-bottom: 0px;
   background-color: white;
   border: 1px solid #eff0f4;
   border-bottom: 0px;
@@ -35,8 +37,6 @@ export const BlockElement = styled.div`
 
 export const BlockFooter = styled.div`
   padding: 8px;
-  margin: 8px;
-  margin-top: 0px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background-color: white;
