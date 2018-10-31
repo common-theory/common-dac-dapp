@@ -86,7 +86,7 @@ export default class DACStore {
   async createProposal(config: {
     description: string,
     updateMember: boolean,
-    memberAddress: string,
+    ethAddress: string,
     newValue: number,
     newContractAddress: string,
     updateContract: boolean
@@ -96,7 +96,7 @@ export default class DACStore {
     this.contract.methods.createProposal(
       config.description,
       config.updateMember,
-      config.memberAddress || '0x0',
+      config.ethAddress || '0x0',
       config.newValue,
       config.newContractAddress || '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d',
       config.updateContract

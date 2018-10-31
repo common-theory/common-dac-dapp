@@ -6,17 +6,25 @@ import { BlockElement, BlockHeader, BlockFooter } from './Shared';
 @inject('dacStore')
 @observer
 export default class CreateProposal extends React.Component<{ dacStore?: DACStore }> {
-  state = {
+  defaultState = {
     updateMember: false,
     ethAddress: '',
     newValue: 0,
     updateContract: false,
     description: ''
-  };
+  }
+  state = this.defaultState;
 
-  handleSubmit = (e: any) => {
+  handleSubmit = async (e: any) => {
     e.preventDefault();
-    this.props.dacStore.createProposal(this.state);
+    try {
+      await this.props.dacStore.createProposal(this.state);
+    } catch (err) {
+      alert('There was a problem creating your proposal');
+      console.log(err);
+    } finally {
+      this.setState(this.defaultState);
+    }
   };
 
   render() {
