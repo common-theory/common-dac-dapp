@@ -8,6 +8,7 @@ addons:
   apt:
     packages:
       - golang-go
+
 script:
   - wget https://github.com/ipfs/go-ipfs/releases/download/v0.4.17/go-ipfs_v0.4.17_linux-386.tar.gz
   - tar -xvf go-ipfs_v0.4.17_linux-386.tar.gz
@@ -15,3 +16,7 @@ script:
   - rm -rf go-ipfs
   - rm go-ipfs_v0.4.17_linux-386.tar.gz
   - npm run deploy
+
+branches:
+  only:
+  - master
