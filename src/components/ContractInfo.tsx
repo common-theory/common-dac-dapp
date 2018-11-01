@@ -2,6 +2,7 @@ import React from 'react';
 import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
 import { observer, inject } from 'mobx-react';
 import DACStore from '../stores/DACStore';
+import Members from './Members';
 
 @inject('dacStore', 'ethStore')
 @observer
@@ -31,7 +32,7 @@ export default class ContractInfo extends React.Component <{ dacStore?: DACStore
           Contract Information
         </BlockHeader>
         <BlockElement>
-          {/*<Members />*/}
+          <Members />
           <p>
             A contract for routing incoming funds. Ethereum sent to the address below is distributed proportionately to the addresses with value.
           </p>

@@ -57,7 +57,7 @@ export default class Members extends React.Component <{ dacStore?: DACStore }> {
             </div>
           </Container>
         ))}
-        <PieGraph sections={sections} radius={50} />
+        <PieGraph sections={sections} radius={30} />
       </Container>
     );
   }

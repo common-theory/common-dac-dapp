@@ -35,7 +35,7 @@ export default class PieGraph extends React.Component<Props, {}> {
   get totalValue() {
     let value = 0;
     for (let section of this.props.sections) {
-      value += section.value;
+      value += +section.value;
     }
     return +value;
   }
@@ -48,7 +48,8 @@ export default class PieGraph extends React.Component<Props, {}> {
     let currentAngle = 0.75 * TWO_PI;
     let _totalValue = this.totalValue;
     const strokeWidth = 2;
-    for (let section of this.props.sections) {
+    const descendingValue = this.props.sections.sort((a, b) => b.value - a.value);
+    for (let section of descendingValue) {
       if (+section.value === 0) continue;
       if (Number.isNaN(+section.value)) {
         console.log('encountered NaN section value in PieGraph');
