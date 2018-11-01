@@ -106,9 +106,10 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       }
     }
     this.startSimulating();
-  }, 1);
+  }, 1000);
 
   startSimulating = () => {
+    if (this.drawing) return;
     this.drawing = true;
     requestAnimationFrame(this.draw);
   }
@@ -135,7 +136,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     ctx.fillStyle = '#222222';
     ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
     const gradient = ctx.createLinearGradient(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
-    gradient.addColorStop(0, 'rgba(48, 206, 255, 0.75');
+    gradient.addColorStop(0, 'rgba(38, 236, 255, 0.75');
     gradient.addColorStop(1, 'rgba(44, 190, 234, 0.65)');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
