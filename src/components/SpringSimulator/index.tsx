@@ -28,7 +28,6 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   springs: Spring[] = [];
   drawing: boolean;
   lastStep: number = 0;
-  _timer: any;
 
   constructor(props: {}) {
     super(props);
@@ -110,48 +109,36 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   }, 1);
 
   startSimulating = () => {
-    if (this._timer) {
-      clearInterval(this._timer);
-    }
-    this._timer = setInterval(this.draw, 1000 / 60);
+    this.drawing = true;
+    requestAnimationFrame(this.draw);
   }
 
   stopSimulating = () => {
-    if (!this._timer) return;
-    clearInterval(this._timer);
-    delete this._timer;
+    this.drawing = false;
   }
 
-  draw = () => {
-    const currentMs = performance.now();
+  draw = (now: number) => {
     if (this.lastStep === 0) {
-      this.lastStep = currentMs;
-      return;
+      this.lastStep = now;
     }
-    const deltaSeconds = (currentMs - this.lastStep) / 1000;
+    const deltaSeconds = (now - this.lastStep) / 1000;
+    // console.log(deltaSeconds);
     const time = deltaSeconds > 1 ? 1 : deltaSeconds;
     for (let connector of this.connectors) {
       connector.step(time);
     }
-    this.lastStep = currentMs;
+    this.lastStep = now;
 
     const ctx = this.canvasRef.current.getContext('2d');
 
-    // Don't draw if we're not visible
-    if (document.visibilityState !== 'visible') return;
-
-    const _canvas = document.createElement('canvas');
-    _canvas.width = this.canvasRef.current.width;
-    _canvas.height = this.canvasRef.current.height;
-    const _ctx = _canvas.getContext('2d');
     // Clear the drawing space
-    _ctx.fillStyle = '#222222';
-    _ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
-    const gradient = _ctx.createLinearGradient(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    ctx.fillStyle = '#222222';
+    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    const gradient = ctx.createLinearGradient(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
     gradient.addColorStop(0, 'rgba(48, 206, 255, 0.75');
     gradient.addColorStop(1, 'rgba(44, 190, 234, 0.65)');
-    _ctx.fillStyle = gradient;
-    _ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
 
     // Then render the springs
     for (let spring of this.springs) {
@@ -160,30 +147,33 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       if (idx(spring, _ => _.connector1.isStatic) ||
           idx(spring, _ => _.connector2.isStatic)) continue;
 
-      _ctx.beginPath();
-      _ctx.moveTo(spring.connector1.x, spring.connector1.y);
-      _ctx.lineTo(spring.connector2.x, spring.connector2.y);
+      ctx.beginPath();
+      ctx.moveTo(spring.connector1.x, spring.connector1.y);
+      ctx.lineTo(spring.connector2.x, spring.connector2.y);
 
-      _ctx.strokeStyle = `rgba(255, 255, 255, 0.1)`;
-      _ctx.lineWidth = 1;
-      _ctx.stroke();
+      ctx.strokeStyle = `rgba(255, 255, 255, 0.1)`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
     }
     // Finally the nodes
     for (let connector of this.connectors) {
       // Don't draw the static connectors
       if (connector.isStatic) continue;
-      _ctx.beginPath();
-      _ctx.arc(connector.x, connector.y, 5, 0, 2 * Math.PI);
+      ctx.beginPath();
+      ctx.arc(connector.x, connector.y, 5, 0, 2 * Math.PI);
 
       // Let's vary the alpha with velocity
       const min = 0.3;
       const max = 0.6;
       // And let's invert it, so as it goes faster it gets less visible
       const alpha = min + (max - min) * (1 - connector.velocity.magnitude / connector.maxVelocity.magnitude)
-      _ctx.fillStyle = `rgba(252, 232, 47, ${alpha})`;
-      _ctx.fill();
+      ctx.fillStyle = `rgba(252, 232, 47, ${alpha})`;
+      ctx.fill();
     }
-    ctx.drawImage(_canvas, 0, 0);
+
+    if (this.drawing) {
+      requestAnimationFrame(this.draw);
+    }
   }
 
   render() {
