@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import DACStore, { Proposal } from '../stores/DACStore';
 import { BlockContainer, BlockElement, BlockHeader, BlockFooter, HFlex } from './Shared';
+import Colors from './Colors';
 
 const TextSpan = styled.span`
   margin-left: 4px;
@@ -42,7 +43,7 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
           <ion-icon
             size="medium"
             name="close-circle"
-            style={{ color: 'red' }}
+            style={{ color: Colors.red() }}
           />
           <TextSpan>Rejected</TextSpan>
         </>
@@ -54,9 +55,33 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
           <ion-icon
             size="medium"
             name="checkmark-circle"
-            style={{ color: 'limegreen' }}
+            style={{ color: Colors.green() }}
           />
           <TextSpan>Accepted</TextSpan>
+        </>
+      );
+    }
+    if (this.props.proposal.voteCycle == this.props.dacStore.currentVoteCycle) {
+      return (
+        <>
+          <ion-icon
+            size="medium"
+            name="alert"
+            style={{ color: Colors.green() }}
+          />
+          <TextSpan>Voting Active</TextSpan>
+        </>
+      );
+    }
+    if (+this.props.proposal.voteCycle < +this.props.dacStore.currentVoteCycle) {
+      return (
+        <>
+          <ion-icon
+            size="medium"
+            name="close-circle"
+            style={{ color: Colors.red() }}
+          />
+          <TextSpan>Rejected</TextSpan>
         </>
       );
     }
@@ -65,9 +90,9 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
         <ion-icon
           size="medium"
           name="alert"
-          style={{ color: 'gold' }}
+          style={{ color: Colors.yellow() }}
         />
-        <TextSpan>Awaiting Vote</TextSpan>
+        <TextSpan>Vote Upcoming</TextSpan>
       </>
     )
   }
@@ -87,11 +112,11 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
           </HFlex>
           <HFlex>
             <TextSpan>
-              <ion-icon style={{ color: 'limegreen' }} name="thumbs-up" />
+              <ion-icon style={{ color: Colors.green() }} name="thumbs-up" />
               {this.props.proposal.totalAcceptingVotes}
             </TextSpan>
             <TextSpan>
-              <ion-icon color='danger' name="thumbs-down" />
+              <ion-icon style={{ color: Colors.red() }} name="thumbs-down" />
               {this.props.proposal.totalRejectingVotes}
             </TextSpan>
           </HFlex>
