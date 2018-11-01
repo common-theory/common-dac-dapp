@@ -95,6 +95,9 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
               {this.props.proposal.totalRejectingVotes}
             </TextSpan>
           </HFlex>
+          <HFlex>
+            {this.props.proposal.description || 'No description provided.'}
+          </HFlex>
           {this.props.dacStore.currentVoteCycle === this.props.proposal.voteCycle ? this.renderVoteButtons() : null}
         </BlockElement>
         <BlockFooter />
