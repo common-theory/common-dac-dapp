@@ -32,7 +32,7 @@ export default class ContractInfo extends React.Component <{ dacStore?: DACStore
           Contract Information
         </BlockHeader>
         <BlockElement>
-          <Members />
+          {/* <Members /> */}
           <p>
             A contract for routing incoming funds. Ethereum sent to the address below is distributed proportionately to the addresses with value.
           </p>
