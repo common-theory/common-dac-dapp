@@ -12,14 +12,14 @@ export enum ProposalType {
 
 export interface Proposal {
   number: number,
+  _type: ProposalType,
   description: string,
   creator: string,
   voteCycle: number,
   updateMember: boolean,
   memberAddress: string,
-  newOwnership: number,
+  newValue: number,
   newContractAddress: string,
-  updateContract: boolean
   totalAcceptingVotes: number,
   totalRejectingVotes: number,
   applied: boolean

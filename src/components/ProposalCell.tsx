@@ -85,6 +85,16 @@ export default class ProposalCell extends React.Component<{ dacStore?: DACStore,
             <ion-icon size="medium" name="arrow-round-forward" />
             <TextSpan>{this.props.proposal.newValue}</TextSpan>
           </HFlex>
+          <HFlex>
+            <TextSpan>
+              <ion-icon style={{ color: 'limegreen' }} name="thumbs-up" />
+              {this.props.proposal.totalAcceptingVotes}
+            </TextSpan>
+            <TextSpan>
+              <ion-icon color='danger' name="thumbs-down" />
+              {this.props.proposal.totalRejectingVotes}
+            </TextSpan>
+          </HFlex>
           {this.props.dacStore.currentVoteCycle === this.props.proposal.voteCycle ? this.renderVoteButtons() : null}
         </BlockElement>
         <BlockFooter />
