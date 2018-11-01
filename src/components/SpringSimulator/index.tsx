@@ -141,7 +141,13 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     if (document.visibilityState !== 'visible') return;
 
     // Clear the drawing space
-    ctx.clearRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    ctx.fillStyle = '#222222';
+    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    const gradient = ctx.createLinearGradient(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    gradient.addColorStop(0, 'rgba(48, 206, 255, 0.75');
+    gradient.addColorStop(1, 'rgba(44, 190, 234, 0.65)');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
 
     // Then render the springs
     for (let spring of this.springs) {
@@ -184,8 +190,6 @@ export default class SpringSimulator extends React.Component <{}, {}> {
           top: 0,
           width: '100%',
           height: '100%',
-          backgroundColor: '#2CBEEA',
-          opacity: 0.65,
           zIndex: -10
         }}
         ref={this.canvasRef}
