@@ -51,13 +51,11 @@ export default class Members extends React.Component <{ dacStore?: DACStore }> {
   render() {
     const sections = this.sections();
     return (
-      <div style={{
-        maxWidth: 400
-      }}>
+      <div>
         {sections.map((section, index) => (
           <Container key={index}>
             <ColorSample section={section} />
-            <div style={{ marginLeft: 8, marginRight: 8 }}>
+            <div style={{ marginLeft: 8, marginRight: 8, marginTop: 8 }}>
               <a href={this.props.ethStore.etherscanUrl(section.extraData)} target="_blank">
                 {section.extraData.slice(0, 10)}...
               </a>
