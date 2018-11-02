@@ -2,11 +2,13 @@ import React from 'react';
 import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
 import { observer, inject } from 'mobx-react';
 import DACStore from '../stores/DACStore';
+import EthStore from '../stores/EthStore';
+import Colors from './Colors';
 import Members from './Members';
 
 @inject('dacStore', 'ethStore')
 @observer
-export default class ContractInfo extends React.Component <{ dacStore?: DACStore }> {
+export default class ContractInfo extends React.Component <{ ethStore?: EthStore, dacStore?: DACStore }> {
   timeout: NodeJS.Timeout;
   state = {
     cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
@@ -33,14 +35,32 @@ export default class ContractInfo extends React.Component <{ dacStore?: DACStore
         </BlockHeader>
         <BlockElement>
           {/* <Members /> */}
-          <p>
-            A contract for routing incoming funds. Ethereum sent to the address below is distributed proportionately to the addresses with value.
+          <p style={{
+            margin: 16
+          }}>
+            Ethereum sent to the address below is distributed proportionately to the addresses with value.
           </p>
-          <div>
-            {'Address: '}
-            <a href={this.props.ethStore.etherscanUrl(contractAddress)} target="_blank">
-              {contractAddress}
-            </a>
+          <div style={{ textAlign: 'center' }}>
+            <div>
+              Contract Address
+            </div>
+            <div style={{
+              display: 'inline-block',
+              backgroundColor: Colors.black(0.7),
+              borderRadius: 20,
+              margin: 8,
+              padding: 12,
+              textAlign: 'center'
+            }}>
+              <a style={{
+                color: '#fff',
+                fontFamily: 'helvetica',
+                fontWeight: 600,
+                fontSize: 16
+              }} href={this.props.ethStore.etherscanUrl(contractAddress)} target="_blank">
+                {contractAddress}
+              </a>
+            </div>
           </div>
           <div>
             Total Members: {this.props.dacStore.totalVotingMembers}
