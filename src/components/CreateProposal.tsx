@@ -33,6 +33,11 @@ export default class CreateProposal extends React.Component<{ dacStore?: DACStor
           Create Proposal
         </BlockHeader>
         <BlockElement>
+          <p>
+            {`Create a proposal to change the value at an Ethereum address.
+              Metamask is required for sending the transaction.
+              Proposals will appear below and can be voted on during the next cycle.`}
+          </p>
           <form onSubmit={this.handleSubmit}>
             <div>
               <label>
