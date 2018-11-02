@@ -1,3 +1,9 @@
+/**
+ * Color constants
+ *
+ * https://coolors.co/444444-fce82f-2ec8f7-d81e30-01bf3a
+ **/
+
 export default class Colors {
   static red(alpha: number = 1) {
     return `rgba(216, 30, 48, ${alpha})`;
