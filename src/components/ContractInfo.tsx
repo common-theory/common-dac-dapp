@@ -34,7 +34,6 @@ export default class ContractInfo extends React.Component <{ ethStore?: EthStore
           Contract Information
         </BlockHeader>
         <BlockElement>
-          {/* <Members /> */}
           <p style={{
             margin: 16
           }}>
@@ -62,20 +61,29 @@ export default class ContractInfo extends React.Component <{ ethStore?: EthStore
               </a>
             </div>
           </div>
-          <div>
-            Total Members: {this.props.dacStore.totalVotingMembers}
-          </div>
-          <div>
-            Total Value: {this.props.dacStore.totalValue}
-          </div>
-          <div>
-            Current Vote Cycle: {this.props.dacStore.currentVoteCycle}
-          </div>
-          <div>
-            Cycle Time Remaining: {this.state.cycleTimeRemaining} seconds
-          </div>
-          <div>
-            Proposal Count: {this.props.dacStore.proposalCount}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-around'
+          }}>
+            <div>
+              <div>
+                Total Members: {this.props.dacStore.totalVotingMembers}
+              </div>
+              <div>
+                Total Value: {this.props.dacStore.totalValue}
+              </div>
+              <div>
+                Current Vote Cycle: {this.props.dacStore.currentVoteCycle}
+              </div>
+              <div>
+                Cycle Time Remaining: {this.state.cycleTimeRemaining} seconds
+              </div>
+              <div>
+                Proposal Count: {this.props.dacStore.proposalCount}
+              </div>
+            </div>
+            <Members />
           </div>
         </BlockElement>
         <BlockFooter />

@@ -3,7 +3,8 @@ import React from 'react';
 export interface PieGraphSection {
   value: number,
   fillStyle?: string
-  strokeStyle?: string
+  strokeStyle?: string,
+  extraData?: any,
 }
 
 type Props = {
@@ -47,7 +48,7 @@ export default class PieGraph extends React.Component<Props, {}> {
     const TWO_PI = 2 * Math.PI;
     let currentAngle = 0.75 * TWO_PI;
     let _totalValue = this.totalValue;
-    const strokeWidth = 2;
+    const strokeWidth = 1;
     const descendingValue = this.props.sections.sort((a, b) => b.value - a.value);
     for (let section of descendingValue) {
       if (+section.value === 0) continue;
@@ -62,6 +63,7 @@ export default class PieGraph extends React.Component<Props, {}> {
       }
 
       ctx.beginPath();
+      ctx.moveTo(this.width / 2, this.height / 2);
       ctx.arc(this.width / 2, this.height / 2, this.props.radius - strokeWidth, currentAngle, newAngle);
       ctx.fillStyle = section.fillStyle;
       ctx.strokeStyle = section.strokeStyle || 'black';
