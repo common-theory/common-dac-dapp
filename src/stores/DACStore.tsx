@@ -120,7 +120,7 @@ export default class DACStore {
     if (id === 1) {
       return '0xA1FA6c74E704506AeAB57C8b1335336E213c0442';
     } else if (id === 4) {
-      return '0x8f97ac0d9328bcca93ccaafa7b7c66fd23a6ef77';
+      return '0x2ca351b986f8200e60f84870df2608ea7edded50';
     } else if (id === 5777) {
       // ganache <3
       return '0x83c19928eb2893bf3f11099bf13e71cab32d13f0';
