@@ -90,10 +90,11 @@ export default class DACStore {
 
   async createProposal(config: {
     description: string,
-    ethAddress: string,
+    ethAddress?: string,
     newValue: number,
-    newContractAddress: string,
+    contractAddress?: string,
     _type: ProposalType
+    voteCycleLength?: number,
   }) {
     const accounts = await web3.eth.getAccounts();
     if (!accounts.length) return;
@@ -102,7 +103,8 @@ export default class DACStore {
       config._type,
       config.ethAddress || '0x0',
       config.newValue,
-      config.newContractAddress || '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d'
+      config.contractAddress || '0x8dFFB6953C969913887ceE6ba20a22f9BdB4b94d',
+      config.voteCycleLength || 0
     ).send({
       from: accounts[0]
     });
