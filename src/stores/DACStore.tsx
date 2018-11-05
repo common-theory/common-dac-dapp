@@ -36,7 +36,7 @@ export default class DACStore {
   @observable contractUpdated: boolean = false;
 
   // The voting period in seconds
-  @observable votePeriod: number = 0;
+  @observable voteCycleLength: number = 0;
   // The timestamp of contract creation
   @observable genesisBlockTimestamp: number = 0;
 
@@ -133,7 +133,7 @@ export default class DACStore {
   cycleTimeRemaining(): number {
     const nowSeconds = +(new Date()) / 1000;
     return Math.floor(
-      this.votePeriod - ((nowSeconds - this.genesisBlockTimestamp) % this.votePeriod)
+      this.voteCycleLength - ((nowSeconds - this.genesisBlockTimestamp) % this.voteCycleLength)
     );
   }
 
@@ -142,13 +142,13 @@ export default class DACStore {
       _totalVotingMembers,
       _totalValue,
       _contractUpdated,
-      _votePeriod,
+      _voteCycleLength,
       _genesisBlockTimestamp
     ] = await Promise.all([
       this.contract.methods.totalVotingMembers().call(),
       this.contract.methods.totalValue().call(),
       this.contract.methods.contractUpdated().call(),
-      this.contract.methods.votePeriod().call(),
+      this.contract.methods.voteCycleLength().call(),
       this.contract.methods.genesisBlockTimestamp().call(),
       this.loadCurrentVoteCycle(),
       this.loadProposals()
@@ -156,7 +156,7 @@ export default class DACStore {
     this.totalVotingMembers = _totalVotingMembers;
     this.totalValue = _totalValue;
     this.contractUpdated = _contractUpdated;
-    this.votePeriod = _votePeriod;
+    this.voteCycleLength = _voteCycleLength;
     this.genesisBlockTimestamp = _genesisBlockTimestamp;
   }
 
