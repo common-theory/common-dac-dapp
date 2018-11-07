@@ -19,6 +19,13 @@ const HeaderText = styled.div`
 const Footer = styled.div`
   margin-top: 16px;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FooterLink = styled.a`
+  margin: 8px;
 `;
 
 @inject('dacStore')
@@ -43,9 +50,12 @@ export default class Home extends React.Component<{ dacStore: DACStore }> {
             })}
           </div>
           <Footer>
-            <a href="https://github.com/common-theory" target="_blank">
+            <FooterLink href="https://github.com/common-theory" target="_blank">
               <img title="common-theory source code" src="https://ipfs.io/ipns/commontheory.io/github-logo-white.png" width="40px" height="40px" />
-            </a>
+            </FooterLink>
+            <FooterLink href="https://discord.gg/4FFVg8a" target="_blank">
+              <img title="discord" src="https://ipfs.io/ipns/commontheory.io/discord-logo-white.png" width="40px" height="40px" />
+            </FooterLink>
           </Footer>
         </Container>
       </>
