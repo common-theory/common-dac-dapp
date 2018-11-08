@@ -23,6 +23,8 @@ script:
   - ipfs init
   - ipfs daemon &
   - npm run deploy
+  - echo "Waiting for other services to pull ipfs ref"
+  - sleep 300
 
 branches:
   only:
