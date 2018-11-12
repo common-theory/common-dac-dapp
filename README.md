@@ -1,16 +1,6 @@
-# common-dac-dapp [![Build Status](https://travis-ci.org/common-theory/common-dac-dapp.svg?branch=master)](https://travis-ci.org/common-theory/common-dac-dapp)
+# common-dapp [![Build Status](https://travis-ci.org/common-theory/common-dapp.svg?branch=master)](https://travis-ci.org/common-theory/common-dapp) ![Webapp Hash](https://dnslinkcid.commontheory.io/?domain=commontheory.io)
 
-This is a web interface for interacting with the [`common-dac`](https://github.com/common-theory/common-dac). The app is deployed to IPFS and accessible at the following places:
+This is a web interface for interacting with the common theory [`contracts`](https://github.com/common-theory/contracts). The app is deployed to IPFS and accessible at the following places:
 
 - [common-theory servers](https://commontheory.io)
 - [IPFS servers](https://ipfs.io/ipns/commontheory.io)
-
-## Current Deployment
-
-Each push to the master branch triggers continuous integration that builds the app and uploads it to IPFS, updating domain TXT records for `commontheory.io` after.
-
-The address is currently mapped to the following address:
-
-// TODO: Make this dynamic
-
-`/ipns/commontheory.io` -> `/ipfs/QmUpphC6w32RCMVZfPVcFUFkjt6GSgUmeCFRHGMYBRrYQj`
