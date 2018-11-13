@@ -12,12 +12,9 @@ if (typeof web3 !== 'undefined') {
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './components/Home';
-import About from './components/About';
 import EthStore from './stores/EthStore';
 import { Provider } from 'mobx-react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import DACStore from './stores/DACStore';
-import CreateProposal from './components/CreateProposal';
 import SpringSimulator from './components/SpringSimulator';
 
 const stores = {
@@ -35,13 +32,7 @@ Object.assign(document.body.style, {
 ReactDOM.render(
   <>
     <Provider { ...stores }>
-      <Router>
-        <>
-          <Route exact path="/" component={Home} />
-          {/* <Route path="/about" component={About} /> */}
-          <Route path="/create" component={CreateProposal} />
-        </>
-      </Router>
+      <Home />
     </Provider>
     <SpringSimulator />
   </>,

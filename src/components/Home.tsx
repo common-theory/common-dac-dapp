@@ -30,7 +30,7 @@ const FooterLink = styled.a`
 
 @inject('dacStore')
 @observer
-export default class Home extends React.Component<{ dacStore: DACStore }> {
+export default class Home extends React.Component<{ dacStore?: DACStore }> {
 
   render() {
     return (
