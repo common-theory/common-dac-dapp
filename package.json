@@ -9,6 +9,7 @@
     "build": "npm run clean && npm run prebuild && webpack",
     "build:production": "npm run clean && npm run prebuild && webpack --config webpack.prod.js",
     "deploy": "npm run build:production && jsdnslink update commontheory.io $(ipfs add -Qr ./static)",
+    "deploy:alpha": "npm run build:production && jsdnslink update alpha.commontheory.io $(ipfs add -Qr ./static)",
     "dev": "npm run prebuild && webpack-dev-server --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
