@@ -23,27 +23,12 @@ before_script:
   - go get -u github.com/ipfs/ipfs-update
   - ipfs-update install v0.4.18
 
-jobs:
-  include:
-    - stage: build
-      script:
-        - ipfs init
-        - ipfs daemon &
-        - npm run build:production
-    - stage: deploy-master
-      script:
-        - npx dnslink update commontheory.io $(ipfs add -Qr ./static)
-    - stage: deploy-alpha
-      script:
-        - npx dnslink update _dnslink.alpha.commontheory.io $(ipfs add -Qr ./static)
-    - stage: wait
-      script:
-        - echo "Waiting for other services to pull ipfs ref"
-        - sleep 300
-stages:
-  - name: build
-  - name: deploy-master
-    if: branch = master
-  - name: deploy-alpha
-    if: branch = alpha
-  - name: wait
+script:
+  - npm run build:production
+  - ipfs init
+  - ipfs daemon &
+  - if [ $TRAVIS_BRANCH = 'master' ]; then DOMAIN="commontheory.io"; fi
+  - if [ $TRAVIS_BRANCH = 'alpha' ]; then DOMAIN="_dnslink.alpha.commontheory.io"; fi
+  - npx dnslink update $DOMAIN $(ipfs add -Qr ./static)
+  - echo "Waiting for other services to pull ipfs ref"
+  - sleep 300
