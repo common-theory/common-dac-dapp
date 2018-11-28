@@ -27,5 +27,5 @@ script:
 
 branches:
   only:
-  - master
-  - alpha
+    - master
+    - alpha
