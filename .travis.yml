@@ -13,7 +13,7 @@ addons:
   apt:
     update: true
     packages:
-      - golang-go
+      - golang-1.10-go
 
 before_script:
   - go get -u github.com/ipfs/ipfs-update
