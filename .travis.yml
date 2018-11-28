@@ -30,10 +30,20 @@ jobs:
         - ipfs init
         - ipfs daemon &
         - npm run build:production
+    - stage: deploy-master
+      script:
+        - npx dnslink update commontheory.io $(ipfs add -Qr ./static)
+    - stage: deploy-alpha
+      script:
         - npx dnslink update _dnslink.alpha.commontheory.io $(ipfs add -Qr ./static)
+    - stage: wait
+      script:
         - echo "Waiting for other services to pull ipfs ref"
         - sleep 300
-
 stages:
   - name: build
+  - name: deploy-master
+    if: branch = master
+  - name: deploy-alpha
     if: branch = alpha
+  - name: wait
