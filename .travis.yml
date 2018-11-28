@@ -1,3 +1,5 @@
+dist: xenial
+
 sudo: required
 
 after_success:
@@ -11,9 +13,11 @@ node_js:
 
 addons:
   apt:
+    sources:
+      - sourceline: 'ppa:longsleep/golang-backports'
     update: true
     packages:
-      - golang-1.10-go
+      - golang-go
 
 before_script:
   - go get -u github.com/ipfs/ipfs-update
