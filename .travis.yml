@@ -24,9 +24,9 @@ before_script:
   - ipfs-update install v0.4.18
 
 script:
-  - npm run build:production
   - ipfs init
   - ipfs daemon &
+  - npm run build:production
   - if [ $TRAVIS_BRANCH = 'master' ]; then DOMAIN="commontheory.io"; fi
   - if [ $TRAVIS_BRANCH = 'alpha' ]; then DOMAIN="_dnslink.alpha.commontheory.io"; fi
   - npx dnslink update $DOMAIN $(ipfs add -Qr ./static)
