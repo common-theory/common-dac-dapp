@@ -30,7 +30,7 @@ jobs:
         - ipfs init
         - ipfs daemon &
         - npm run build:production
-        - npx dnslink update alpha.commontheory.io $(ipfs add -Qr ./static)
+        - npx dnslink update _dnslink.alpha.commontheory.io $(ipfs add -Qr ./static)
         - echo "Waiting for other services to pull ipfs ref"
         - sleep 300
 
