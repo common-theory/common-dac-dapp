@@ -7,6 +7,7 @@ import {
   BlockHeader,
   BlockFooter
 } from './Shared';
+import Contract from './Contract';
 
 @inject()
 @observer
@@ -28,6 +29,7 @@ export default class DeployContract extends React.Component <{}, {}> {
                 <br />
                   2. A syndicate contract used for storing and routing funds
               </p>
+              <Contract />
             </BlockElement>
             <BlockFooter>
             </BlockFooter>
