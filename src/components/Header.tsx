@@ -78,7 +78,11 @@ class Header extends React.Component<{
         <HeaderBackground />
         <TitleContentContainer>
           <>
-            <LogoText>Common Theory</LogoText>
+            <HeaderLink to="/">
+              <LogoText>
+                Common Theory
+              </LogoText>
+            </HeaderLink>
             <LinkContainer>
               <HeaderLink to="deploy">
                 Deploy
