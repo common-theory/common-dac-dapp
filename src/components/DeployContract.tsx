@@ -8,6 +8,12 @@ import {
   BlockFooter
 } from './Shared';
 import Contract from './Contract';
+import styled from 'styled-components';
+
+const ContractWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 @inject()
 @observer
@@ -29,7 +35,10 @@ export default class DeployContract extends React.Component <{}, {}> {
                 <br />
                   2. A syndicate contract used for storing and routing funds
               </p>
-              <Contract />
+              <ContractWrapper>
+                <Contract name="decision" index={1} />
+                <Contract name="syndicate" index={2} />
+              </ContractWrapper>
             </BlockElement>
             <BlockFooter>
             </BlockFooter>

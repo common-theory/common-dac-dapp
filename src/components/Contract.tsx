@@ -6,6 +6,10 @@ import styled from 'styled-components';
  * A component for customizing and deploying smart contracts
  **/
 
+const Wrapper = styled.div`
+  margin: 4px;
+`;
+
 const ContractContainer = styled.div`
   border-style: solid;
   border-width: 2px;
@@ -32,24 +36,36 @@ const ContractDeploySection = styled.button`
 
 @inject()
 @observer
-export default class Contract extends React.Component <{}, {}> {
+export default class Contract extends React.Component <{
+  name: string,
+  index: number,
+  arguments?: {
+    type: 'number' | 'string',
+    name: string
+  }[]
+}, {}> {
+
+  handleDeploy = () => {
+    console.log(`Deploy pressed for contract ${this.props.name}`);
+  };
+
   render() {
     return (
-      <>
-        Contract #1
+      <Wrapper>
+        Contract #{this.props.index}
         <ContractContainer>
           <ContractSection>
             {/* the contract name */}
-            decision
+            {this.props.name}
           </ContractSection>
           <ContractSection>
             members
           </ContractSection>
-          <ContractDeploySection>
+          <ContractDeploySection onClick={this.handleDeploy}>
             deploy
           </ContractDeploySection>
         </ContractContainer>
-      </>
+      </Wrapper>
     );
   }
 }
