@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { observer, inject } from 'mobx-react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import EthStore from '../stores/EthStore';
 
 const HeaderContainer = styled.div`
@@ -69,7 +69,7 @@ const HeaderLink = styled(Link)`
 
 @inject('ethStore')
 @observer
-export default class Header extends React.Component<{
+class Header extends React.Component<{
   ethStore?: EthStore
 }> {
   render() {
@@ -77,7 +77,14 @@ export default class Header extends React.Component<{
       <HeaderContainer>
         <HeaderBackground />
         <TitleContentContainer>
-          <LogoText>Common Theory</LogoText>
+          <>
+            <LogoText>Common Theory</LogoText>
+            <LinkContainer>
+              <HeaderLink to="deploy">
+                Deploy
+              </HeaderLink>
+            </LinkContainer>
+          </>
         </TitleContentContainer>
         <HeaderContentContainer>
           <RightText>
@@ -96,3 +103,5 @@ export default class Header extends React.Component<{
     );
   }
 }
+
+export default withRouter(props => <Header {...props} />);

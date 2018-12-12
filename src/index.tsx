@@ -16,6 +16,8 @@ import EthStore from './stores/EthStore';
 import { Provider } from 'mobx-react';
 import DACStore from './stores/DACStore';
 import SpringSimulator from './components/SpringSimulator';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import DeployContract from './components/DeployContract';
 
 const stores = {
   ethStore: new EthStore(),
@@ -32,7 +34,12 @@ Object.assign(document.body.style, {
 ReactDOM.render(
   <>
     <Provider { ...stores }>
-      <Home />
+      <Router>
+        <>
+          <Route exact path="/" component={Home} />
+          <Route path="/deploy" component={DeployContract} />
+        </>
+      </Router>
     </Provider>
     <SpringSimulator />
   </>,
