@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import Header from './Header';
-import { Container } from './Shared';
 import {
   BlockContainer,
   BlockElement,
@@ -16,7 +15,7 @@ export default class DeployContract extends React.Component <{}, {}> {
     return (
       <>
         <Header />
-        <Container>
+        <BlockContainer>
           <BlockHeader>
             Deploy a Syndicate
           </BlockHeader>
@@ -31,7 +30,7 @@ export default class DeployContract extends React.Component <{}, {}> {
           </BlockElement>
           <BlockFooter>
           </BlockFooter>
-        </Container>
+        </BlockContainer>
       </>
     );
   }
