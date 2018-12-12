@@ -15,22 +15,24 @@ export default class DeployContract extends React.Component <{}, {}> {
     return (
       <>
         <Header />
-        <BlockContainer>
-          <BlockHeader>
-            Deploy a Syndicate
-          </BlockHeader>
-          <BlockElement>
-            <p>
-              A syndicate has two components:
-              <br />
-                1. A decision contract used for controlling other contracts
-              <br />
-                2. A syndicate contract used for storing and routing funds
-            </p>
-          </BlockElement>
-          <BlockFooter>
-          </BlockFooter>
-        </BlockContainer>
+        <>
+          <BlockContainer>
+            <BlockHeader>
+              Deploy a Syndicate
+            </BlockHeader>
+            <BlockElement>
+              <p>
+                A syndicate has two components:
+                <br />
+                  1. A decision contract used for controlling other contracts
+                <br />
+                  2. A syndicate contract used for storing and routing funds
+              </p>
+            </BlockElement>
+            <BlockFooter>
+            </BlockFooter>
+          </BlockContainer>
+        </>
       </>
     );
   }
