@@ -39,10 +39,11 @@ const ContractDeploySection = styled.button`
 export default class Contract extends React.Component <{
   name: string,
   index: number,
-  arguments?: {
+  arguments: {
     type: 'number' | 'string',
     name: string
-  }[]
+  }[],
+  contractCid: string
 }, {}> {
 
   handleDeploy = () => {
@@ -59,7 +60,11 @@ export default class Contract extends React.Component <{
             {this.props.name}
           </ContractSection>
           <ContractSection>
-            members
+            {this.props.arguments.map(arg => {
+              return (
+                arg.name
+              );
+            })}
           </ContractSection>
           <ContractDeploySection onClick={this.handleDeploy}>
             deploy

@@ -36,8 +36,18 @@ export default class DeployContract extends React.Component <{}, {}> {
                   2. A syndicate contract used for storing and routing funds
               </p>
               <ContractWrapper>
-                <Contract name="decision" index={1} />
-                <Contract name="syndicate" index={2} />
+                <Contract name="decision" index={1} arguments={[
+                  {
+                    name: "InitialMember",
+                    type: "string"
+                  }
+                ]} />
+                <Contract name="syndicate" index={2} arguments={[
+                  {
+                    name: "DecisionContract",
+                    type: "string"
+                  }
+                ]} />
               </ContractWrapper>
             </BlockElement>
             <BlockFooter>
