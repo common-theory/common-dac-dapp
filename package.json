@@ -43,6 +43,7 @@
     "webpack-dev-server": "^3.1.9"
   },
   "dependencies": {
+    "@ctheory/contracts": "^0.0.1",
     "debounce": "^1.2.0",
     "idx": "^2.4.0",
     "mobx": "^5.5.0",
