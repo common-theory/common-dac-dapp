@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Header';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
-import DACStore from '../stores/DACStore';
 import ProposalCell from './ProposalCell';
 import { Container } from './Shared';
 import Members from './Members';
@@ -28,9 +27,9 @@ const FooterLink = styled.a`
   margin: 8px;
 `;
 
-@inject('dacStore')
+@inject()
 @observer
-export default class Home extends React.Component<{ dacStore?: DACStore }> {
+export default class Home extends React.Component {
 
   render() {
     return (
@@ -42,13 +41,15 @@ export default class Home extends React.Component<{ dacStore?: DACStore }> {
           <HeaderText>
             Proposals
           </HeaderText>
-          <div>
-            {[...this.props.dacStore.proposals].reverse().map(proposal => {
-              return (
-                <ProposalCell key={proposal.number} proposal={proposal} />
-              );
-            })}
-          </div>
+          {
+          // <div>
+          //   {[...this.props.dacStore.proposals].reverse().map(proposal => {
+          //     return (
+          //       <ProposalCell key={proposal.number} proposal={proposal} />
+          //     );
+          //   })}
+          // </div>
+          }
           <Footer>
             <FooterLink href="https://github.com/common-theory" target="_blank">
               <img title="common-theory source code" src="https://ipfs.io/ipns/commontheory.io/github-logo-white.png" width="40px" height="40px" />

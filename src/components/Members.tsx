@@ -3,7 +3,7 @@ import PieGraph, { PieGraphSection } from './PieGraph';
 import { observer, inject } from 'mobx-react';
 import DACStore from '../stores/DACStore';
 import styled from 'styled-components';
-import EthStore from '../stores/EthStore';
+import EthereumStore from '../stores/Ethereum';
 
 const Container = styled.div`
   justify-content: space-around;
@@ -24,11 +24,10 @@ const ColorSample = styled.div`
   border-style: solid;
 `;
 
-@inject('dacStore', 'ethStore')
+@inject('ethereumStore')
 @observer
 export default class Members extends React.Component <{
-  ethStore?: EthStore,
-  dacStore?: DACStore
+  ethereumStore?: EthereumStore
 }> {
 
   randomColor() {
@@ -40,15 +39,15 @@ export default class Members extends React.Component <{
 
   sections(): PieGraphSection[] {
     const sections: PieGraphSection[] = [];
-    Object.keys(this.props.dacStore.members).forEach(address => {
-      const member = this.props.dacStore.members[address];
-      if (+member.value === 0) return;
-      sections.push({
-        value: member.value,
-        fillStyle: this.randomColor(),
-        extraData: address,
-      });
-    });
+    // Object.keys(this.props.dacStore.members).forEach(address => {
+    //   const member = this.props.dacStore.members[address];
+    //   if (+member.value === 0) return;
+    //   sections.push({
+    //     value: member.value,
+    //     fillStyle: this.randomColor(),
+    //     extraData: address,
+    //   });
+    // });
     return sections;
   }
 
@@ -60,9 +59,11 @@ export default class Members extends React.Component <{
           <Container key={index}>
             <ColorSample section={section} />
             <div style={{ marginLeft: 8, marginRight: 8, marginTop: 8 }}>
-              <a href={this.props.ethStore.etherscanUrl(section.extraData)} target="_blank">
-                {section.extraData.slice(0, 10)}...
-              </a>
+            {
+              // <a href={this.props.ethStore.etherscanUrl(section.extraData)} target="_blank">
+              //   {section.extraData.slice(0, 10)}...
+              // </a>
+            }
             </div>
             <div style={{}}>
               {section.value}

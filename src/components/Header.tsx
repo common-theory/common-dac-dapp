@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { observer, inject } from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
-import EthStore from '../stores/EthStore';
+import EthereumStore from '../stores/Ethereum';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -67,10 +67,10 @@ const HeaderLink = styled(Link)`
   text-decoration: none;
 `;
 
-@inject('ethStore')
+@inject('ethereumStore')
 @observer
 class Header extends React.Component<{
-  ethStore?: EthStore
+  ethereumStore?: EthereumStore
 }> {
   render() {
     return (
@@ -92,14 +92,14 @@ class Header extends React.Component<{
         </TitleContentContainer>
         <HeaderContentContainer>
           <RightText>
-            Network ID: {this.props.ethStore.networkId}
+            Network ID: {this.props.ethereumStore.networkId}
           </RightText>
           <RightText>
-            Current Block: {this.props.ethStore.currentBlockNumber}
+            Current Block: {this.props.ethereumStore.currentBlockNumber}
           </RightText>
           <RightText>
-            <HeaderA href={this.props.ethStore.etherscanUrl()} target="_blank">
-              {this.props.ethStore.activeAddress() || 'Unauthenticated!'}
+            <HeaderA href={this.props.ethereumStore.etherscanUrl()} target="_blank">
+              {this.props.ethereumStore.activeAddress() || 'Unauthenticated!'}
             </HeaderA>
           </RightText>
         </HeaderContentContainer>

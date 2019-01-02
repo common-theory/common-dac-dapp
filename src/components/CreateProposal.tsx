@@ -3,9 +3,9 @@ import { observer, inject } from 'mobx-react';
 import DACStore, { ProposalType } from '../stores/DACStore';
 import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 
-@inject('dacStore')
+@inject()
 @observer
-export default class CreateProposal extends React.Component<{ dacStore?: DACStore }> {
+export default class CreateProposal extends React.Component<{ }> {
   defaultState = {
     _type: ProposalType.MemberUpdate,
     ethAddress: '',
@@ -17,7 +17,7 @@ export default class CreateProposal extends React.Component<{ dacStore?: DACStor
   handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      await this.props.dacStore.createProposal(this.state);
+      // await this.props.dacStore.createProposal(this.state);
     } catch (err) {
       alert('There was a problem creating your proposal');
       console.log(err);

@@ -1,23 +1,22 @@
 import React from 'react';
 import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
 import { observer, inject } from 'mobx-react';
-import DACStore from '../stores/DACStore';
-import EthStore from '../stores/EthStore';
+import EthereumStore from '../stores/Ethereum';
 import Colors from './Colors';
 import Members from './Members';
 
-@inject('dacStore', 'ethStore')
+@inject('ethereumStore')
 @observer
-export default class ContractInfo extends React.Component <{ ethStore?: EthStore, dacStore?: DACStore }> {
+export default class ContractInfo extends React.Component <{ ethereumStore?: EthereumStore }> {
   timeout: NodeJS.Timeout;
   state = {
-    cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
+    // cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
   };
 
   componentDidMount() {
     this.timeout = setInterval(() => {
       this.setState({
-        cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
+        // cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
       });
     }, 1000);
   }
@@ -27,7 +26,8 @@ export default class ContractInfo extends React.Component <{ ethStore?: EthStore
   }
 
   render() {
-    const contractAddress = this.props.dacStore.addressForNetworkId(this.props.ethStore.networkId);
+    // const contractAddress = this.props.dacStore.addressForNetworkId(this.props.ethStore.networkId);
+    const contractAddress = '';
     return (
       <BlockContainer>
         <BlockHeader>
@@ -56,7 +56,7 @@ export default class ContractInfo extends React.Component <{ ethStore?: EthStore
                 fontFamily: 'helvetica',
                 fontWeight: 600,
                 fontSize: 16
-              }} href={this.props.ethStore.etherscanUrl(contractAddress)} target="_blank">
+              }} href={this.props.ethereumStore.etherscanUrl(contractAddress)} target="_blank">
                 {contractAddress}
               </a>
             </div>
@@ -67,21 +67,23 @@ export default class ContractInfo extends React.Component <{ ethStore?: EthStore
             justifyContent: 'space-around'
           }}>
             <div>
-              <div>
-                Total Members: {this.props.dacStore.totalVotingMembers}
-              </div>
-              <div>
-                Total Value: {this.props.dacStore.totalValue}
-              </div>
-              <div>
-                Current Vote Cycle: {this.props.dacStore.currentVoteCycle}
-              </div>
-              <div>
-                Cycle Time Remaining: {this.state.cycleTimeRemaining} seconds
-              </div>
-              <div>
-                Proposal Count: {this.props.dacStore.proposalCount}
-              </div>
+            {
+              // <div>
+              //   Total Members: {this.props.dacStore.totalVotingMembers}
+              // </div>
+              // <div>
+              //   Total Value: {this.props.dacStore.totalValue}
+              // </div>
+              // <div>
+              //   Current Vote Cycle: {this.props.dacStore.currentVoteCycle}
+              // </div>
+              // <div>
+              //   Cycle Time Remaining: {this.state.cycleTimeRemaining} seconds
+              // </div>
+              // <div>
+              //   Proposal Count: {this.props.dacStore.proposalCount}
+              // </div>
+            }
             </div>
             <Members />
           </div>

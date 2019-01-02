@@ -12,16 +12,16 @@ if (typeof web3 !== 'undefined') {
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './components/Home';
-import EthStore from './stores/EthStore';
 import { Provider } from 'mobx-react';
-import DACStore from './stores/DACStore';
 import SpringSimulator from './components/SpringSimulator';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import DeployContract from './components/DeployContract';
+import EthereumStore from './stores/Ethereum';
+import SyndicateStore from './stores/Syndicate';
 
 const stores = {
-  ethStore: new EthStore(),
-  dacStore: new DACStore()
+  ethereumStore: new EthereumStore(),
+  syndicateStore: new SyndicateStore()
 };
 
 Object.assign(document.body.style, {

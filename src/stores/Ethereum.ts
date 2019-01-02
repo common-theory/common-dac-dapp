@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-export default class EthStore {
+export default class EthereumStore {
 
   private blockHeaderSubscription: any;
   @observable currentBlockHeader?: BlockHeader;
