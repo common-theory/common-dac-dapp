@@ -1,13 +1,17 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import DACStore, { ProposalType } from '../stores/DACStore';
 import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
+
+interface ProposedPayment {
+  receiver: string,
+  weiValue: string,
+  time: number
+}
 
 @inject()
 @observer
 export default class CreateProposal extends React.Component<{ }> {
   defaultState = {
-    _type: ProposalType.MemberUpdate,
     ethAddress: '',
     newValue: 0,
     description: ''
@@ -34,7 +38,7 @@ export default class CreateProposal extends React.Component<{ }> {
         </BlockHeader>
         <BlockElement>
           <p>
-            {`Create a proposal to change the value at an Ethereum address.
+            {`Create a proposal to spend funds.
               Metamask is required for sending the transaction.
               Proposals will appear below and can be voted on during the next cycle.`}
           </p>
