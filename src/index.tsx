@@ -15,7 +15,6 @@ import Home from './components/Home';
 import { Provider } from 'mobx-react';
 import SpringSimulator from './components/SpringSimulator';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import DeployContract from './components/DeployContract';
 import EthereumStore from './stores/Ethereum';
 import SyndicateStore from './stores/Syndicate';
 
@@ -37,7 +36,6 @@ ReactDOM.render(
       <Router>
         <>
           <Route exact path="/" component={Home} />
-          <Route path="/deploy" component={DeployContract} />
         </>
       </Router>
     </Provider>
