@@ -18,12 +18,10 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import DeployContract from './components/DeployContract';
 import EthereumStore from './stores/Ethereum';
 import SyndicateStore from './stores/Syndicate';
-import DecisionStore from './stores/Decision';
 
 const stores = {
   ethereumStore: new EthereumStore(),
-  syndicateStore: new SyndicateStore(),
-  decisionStore: new DecisionStore()
+  syndicateStore: new SyndicateStore()
 };
 
 Object.assign(document.body.style, {
