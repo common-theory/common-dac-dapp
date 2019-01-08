@@ -1,3 +1,4 @@
+import { observable } from 'mobx';
 import BN from 'bn.js';
 
 const ABI = [
@@ -278,9 +279,25 @@ interface Payment {
 export default class SyndicateStore {
 
   private contract: any;
+  @observable payments: Payment[] = [];
+  @observable paymentCount: number = 0;
 
   constructor() {
     this.contract = new web3.eth.Contract(ABI, this.addressForNetwork(0));
+    this.loadPayments();
+  }
+
+  async loadPayments() {
+    this.paymentCount = await this.contract.methods.paymentCount().call();
+    if (+this.paymentCount === 0) {
+      this.payments = [];
+      return;
+    }
+    const promises = [];
+    for (let x = 0; x < Math.min(this.paymentCount, 10); x++) {
+      promises.push(this.contract.methods.payments(x).call());
+    }
+    this.payments = await Promise.all(promises);
   }
 
   async balance(address: string) {
@@ -318,12 +335,13 @@ export default class SyndicateStore {
     return await this.contract.methods.payments(index).call() as Payment;
   }
 
-  async payments(): Promise<Payment[]> {
-    return await this.contract.methods.payments().call();
+  async paymentWeiOwed(index: number) {
+    return await this.contract.methods.paymentWeiOwed(index).call();
   }
 
-  async paymentCount(): Promise<number> {
-    return +(await this.contract.methods.paymentCount().call());
+  async loadPaymentCount() {
+    const _paymentCount = +(await this.contract.methods.paymentCount().call());
+    this.paymentCount = _paymentCount;
   }
 
   addressForNetwork(__networkId: number): string {

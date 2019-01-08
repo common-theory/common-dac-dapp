@@ -23,7 +23,7 @@ export default class ContractInfo extends React.Component <{
           <p style={{
             margin: 16
           }}>
-            The Common Theory Syndicate allows Ether to be paid to addresses over time. Ether sent is guaranteed to be paid and can be withdrawn with 1 second resolution.
+            Common Theory allows Ether to be paid to addresses over time. Ether sent is guaranteed to be paid and can be withdrawn with 1 second resolution.
           </p>
           <div style={{ textAlign: 'center' }}>
             <div>
@@ -45,6 +45,9 @@ export default class ContractInfo extends React.Component <{
               }} href={this.props.ethereumStore.etherscanUrl(contractAddress)} target="_blank">
                 {contractAddress}
               </a>
+            </div>
+            <div>
+              Total Payments: {this.props.syndicateStore.paymentCount}
             </div>
           </div>
         </BlockElement>
