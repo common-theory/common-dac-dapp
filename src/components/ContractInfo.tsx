@@ -2,32 +2,18 @@ import React from 'react';
 import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
 import { observer, inject } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
+import SyndicateStore from '../stores/Syndicate';
 import Colors from './Colors';
-import Members from './Members';
 
-@inject('ethereumStore')
+@inject('ethereumStore', 'syndicateStore')
 @observer
-export default class ContractInfo extends React.Component <{ ethereumStore?: EthereumStore }> {
-  timeout: NodeJS.Timeout;
-  state = {
-    // cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
-  };
-
-  componentDidMount() {
-    this.timeout = setInterval(() => {
-      this.setState({
-        // cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
-      });
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timeout);
-  }
+export default class ContractInfo extends React.Component <{
+  ethereumStore?: EthereumStore,
+  syndicateStore?: SyndicateStore
+}> {
 
   render() {
-    // const contractAddress = this.props.dacStore.addressForNetworkId(this.props.ethStore.networkId);
-    const contractAddress = '';
+    const contractAddress = this.props.syndicateStore.addressForNetwork(this.props.ethereumStore.networkId);
     return (
       <BlockContainer>
         <BlockHeader>
@@ -37,7 +23,7 @@ export default class ContractInfo extends React.Component <{ ethereumStore?: Eth
           <p style={{
             margin: 16
           }}>
-            Ethereum sent to the address below is distributed proportionately to the addresses with value.
+            The Common Theory Syndicate allows Ether to be paid to addresses over time. Ether sent is guaranteed to be paid and can be withdrawn with 1 second resolution.
           </p>
           <div style={{ textAlign: 'center' }}>
             <div>
@@ -60,32 +46,6 @@ export default class ContractInfo extends React.Component <{ ethereumStore?: Eth
                 {contractAddress}
               </a>
             </div>
-          </div>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-around'
-          }}>
-            <div>
-            {
-              // <div>
-              //   Total Members: {this.props.dacStore.totalVotingMembers}
-              // </div>
-              // <div>
-              //   Total Value: {this.props.dacStore.totalValue}
-              // </div>
-              // <div>
-              //   Current Vote Cycle: {this.props.dacStore.currentVoteCycle}
-              // </div>
-              // <div>
-              //   Cycle Time Remaining: {this.state.cycleTimeRemaining} seconds
-              // </div>
-              // <div>
-              //   Proposal Count: {this.props.dacStore.proposalCount}
-              // </div>
-            }
-            </div>
-            <Members />
           </div>
         </BlockElement>
         <BlockFooter />
