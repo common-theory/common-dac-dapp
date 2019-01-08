@@ -8,8 +8,8 @@ export default class EthereumStore {
 
   @observable currentBlockNumber: number = 0;
 
-  @observable accounts: any[] = [];
-  @observable private _networkId: number = -1;
+  @observable activeAddress: string;
+  @observable networkId: number;
 
   constructor() {
     this.blockHeaderSubscription = web3.eth.subscribe('newBlockHeaders');
@@ -19,13 +19,13 @@ export default class EthereumStore {
       this.currentBlockNumber = blockHeader.number;
     });
     this.blockHeaderSubscription.on('error', console.error);
-    this.loadNetworkId();
     this.loadBlock();
-    this.loadAccounts();
+    this.loadNetworkId();
+    this.loadActiveAccount();
   }
 
   etherscanUrl(_address?: string): string {
-    const address = _address || this.activeAddress();
+    const address = _address || this.activeAddress;
     if (this.networkId === 1) {
       // mainnet
       return `https://etherscan.io/address/${address}`;
@@ -36,24 +36,20 @@ export default class EthereumStore {
     }
   }
 
-  activeAddress() {
-    return this.accounts.length && this.accounts[0];
-  }
-
-  async loadAccounts() {
-    this.accounts = await web3.eth.getAccounts();
+  async loadActiveAccount() {
+    const accounts = await web3.eth.getAccounts();
+    if (accounts.length > 0) {
+      this.activeAddress = accounts[0];
+      return this.activeAddress;
+    } else {
+      this.activeAddress = undefined;
+      return;
+    }
   }
 
   @action
   async loadNetworkId() {
-    this._networkId = await web3.eth.net.getId();
-  }
-
-  /**
-   * Get the current loaded networkId, this value may be stale.
-   **/
-  get networkId() {
-    return this._networkId;
+    this.networkId = await web3.eth.net.getId();
   }
 
   @action
