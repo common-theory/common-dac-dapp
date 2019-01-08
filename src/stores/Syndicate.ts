@@ -281,6 +281,9 @@ export default class SyndicateStore {
   private contract: any;
   @observable payments: Payment[] = [];
   @observable paymentCount: number = 0;
+  @observable balances: {
+    [key: string]: string
+  } = {};
 
   constructor() {
     this.contract = new web3.eth.Contract(ABI, this.addressForNetwork(0));
@@ -300,8 +303,9 @@ export default class SyndicateStore {
     this.payments = await Promise.all(promises);
   }
 
-  async balance(address: string) {
-    return await this.contract.methods.balances(address).call();
+  async loadBalance(address: string) {
+    const balance = await this.contract.methods.balances(address).call();
+    this.balances[address] = balance;
   }
 
   async deposit(
@@ -324,8 +328,8 @@ export default class SyndicateStore {
     });
   }
 
-  async withdraw(to: string, from: string) {
-    await this.contract.methods.withdraw(to).send({
+  async withdraw(from: string) {
+    await this.contract.methods.withdraw().send({
       from,
       gas: 300000
     });

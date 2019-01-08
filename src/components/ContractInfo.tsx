@@ -12,6 +12,10 @@ export default class ContractInfo extends React.Component <{
   syndicateStore?: SyndicateStore
 }> {
 
+  componentDidMount() {
+    this.props.syndicateStore.loadBalance(this.props.ethereumStore.activeAddress);
+  }
+
   render() {
     const contractAddress = this.props.syndicateStore.addressForNetwork(this.props.ethereumStore.networkId);
     return (
@@ -48,6 +52,14 @@ export default class ContractInfo extends React.Component <{
             </div>
             <div>
               Total Payments: {this.props.syndicateStore.paymentCount}
+              <br />
+              Available Balance: {this.props.syndicateStore.balances[this.props.ethereumStore.activeAddress] || '0'}
+              <br />
+              <button type="button" onClick={() => {
+                this.props.syndicateStore.withdraw(
+                  this.props.ethereumStore.activeAddress
+                );
+              }}>Withdraw</button>
             </div>
           </div>
         </BlockElement>
