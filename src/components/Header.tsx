@@ -94,7 +94,7 @@ class Header extends React.Component<{
           </RightText>
           <RightText>
             <HeaderA href={this.props.ethereumStore.etherscanUrl()} target="_blank">
-              {this.props.ethereumStore.activeAddress() || 'Unauthenticated!'}
+              {this.props.ethereumStore.activeAddress || 'Unauthenticated!'}
             </HeaderA>
           </RightText>
         </HeaderContentContainer>
