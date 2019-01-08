@@ -7,6 +7,7 @@ import { Container } from './Shared';
 import Members from './Members';
 import CreateProposal from './CreateProposal';
 import ContractInfo from './ContractInfo';
+import CreatePayment from './CreatePayment';
 
 const HeaderText = styled.div`
   font-family: Helvetica;
@@ -37,19 +38,7 @@ export default class Home extends React.Component {
         <Header />
         <Container>
           <ContractInfo />
-          <CreateProposal />
-          <HeaderText>
-            Proposals
-          </HeaderText>
-          {
-          // <div>
-          //   {[...this.props.dacStore.proposals].reverse().map(proposal => {
-          //     return (
-          //       <ProposalCell key={proposal.number} proposal={proposal} />
-          //     );
-          //   })}
-          // </div>
-          }
+          <CreatePayment />
           <Footer>
             <FooterLink href="https://github.com/common-theory" target="_blank">
               <img title="common-theory source code" src="https://ipfs.io/ipns/commontheory.io/github-logo-white.png" width="40px" height="40px" />
