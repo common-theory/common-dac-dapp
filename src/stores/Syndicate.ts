@@ -318,7 +318,7 @@ export default class SyndicateStore {
     return await this.contract.methods.payments(index).call() as Payment;
   }
 
-  async payments(): promise<payment[]> {
+  async payments(): Promise<Payment[]> {
     return await this.contract.methods.payments().call();
   }
 
