@@ -1,7 +1,6 @@
 import React from 'react';
 import PieGraph, { PieGraphSection } from './PieGraph';
 import { observer, inject } from 'mobx-react';
-import DACStore from '../stores/DACStore';
 import styled from 'styled-components';
 import EthereumStore from '../stores/Ethereum';
 

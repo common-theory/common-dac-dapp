@@ -266,7 +266,7 @@ const ABI = [
   }
 ];
 
-interface Payment {
+export interface Payment {
   id: number|BN;
   sender: string;
   receiver: string;
