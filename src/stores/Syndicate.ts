@@ -267,7 +267,7 @@ const ABI = [
 ];
 
 export interface Payment {
-  id: number|BN;
+  index: number;
   sender: string;
   receiver: string;
   timestamp: string|number|BN;
@@ -287,20 +287,44 @@ export default class SyndicateStore {
 
   constructor() {
     this.contract = new web3.eth.Contract(ABI, this.addressForNetwork(0));
-    this.loadPayments();
+    this.loadPayments(0, 10);
   }
 
-  async loadPayments() {
-    this.paymentCount = await this.contract.methods.paymentCount().call();
-    if (+this.paymentCount === 0) {
+  /**
+   * Load count payments from offset
+   **/
+  async loadPayments(index: number, count: number) {
+    this.paymentCount = +(await this.contract.methods.paymentCount().call());
+    if (this.paymentCount === 0) {
       this.payments = [];
       return;
     }
-    const promises = [];
-    for (let x = 0; x < Math.min(this.paymentCount, 10); x++) {
-      promises.push(this.contract.methods.payments(x).call());
+    if (index >= this.paymentCount) {
+      throw new Error(`Invalid index supplied`);
     }
-    this.payments = await Promise.all(promises);
+    const promises = [];
+    for (let x = index; x < index + count; x++) {
+      if (x >= this.paymentCount) break;
+      const promise = this.contract.methods.payments(x).call()
+        .then((payment: Payment) => {
+          payment.index = x;
+          return payment;
+        });
+      promises.push(promise);
+    }
+    const loadedIndexes: {
+      [key: number]: boolean
+    } = {};
+    // Put the newly loaded  payments in front of the others then uniq and sort
+    this.payments = [...(await Promise.all(promises)), ...this.payments]
+      .filter((payment: Payment) => {
+        if (loadedIndexes[payment.index]) return false;
+        loadedIndexes[payment.index] = true;
+        return loadedIndexes;
+      })
+      .sort((p1: Payment, p2: Payment) => {
+        return p2.index - p1.index;
+      });
   }
 
   async loadBalance(address: string) {
