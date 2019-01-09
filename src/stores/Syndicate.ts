@@ -31,6 +31,18 @@ export default class SyndicateStore {
     this.paymentCount = 0;
     this.balances = {};
     this.loadPayments(0, 10);
+    this.contract.events.PaymentCreated()
+      .on('data', (event: any) => {
+        const index = +event.returnValues.index;
+        this.loadPayments(index, 1);
+      })
+      .on('error', console.log);
+    this.contract.events.PaymentUpdated()
+      .on('data', (event: any) => {
+        const index = +event.returnValues.index;
+        this.loadPayments(index, 1);
+      })
+      .on('error', console.log);
   }
 
   /**
