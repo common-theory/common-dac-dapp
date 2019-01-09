@@ -21,8 +21,15 @@ export default class SyndicateStore {
     [key: string]: string
   } = {};
 
-  constructor() {
-    this.contract = new web3.eth.Contract(ABI, this.addressForNetwork(0));
+  constructor(networkId: number) {
+    this.reloadContract(networkId);
+  }
+
+  reloadContract(networkId: number) {
+    this.contract = new web3.eth.Contract(ABI, this.addressForNetwork(networkId));
+    this.payments = [];
+    this.paymentCount = 0;
+    this.balances = {};
     this.loadPayments(0, 10);
   }
 
@@ -108,7 +115,13 @@ export default class SyndicateStore {
     this.paymentCount = _paymentCount;
   }
 
-  addressForNetwork(__networkId: number): string {
-    return '0x8280c8b56c0270e40ffed3867d81789e0712f976';
+  addressForNetwork(networkId: number): string {
+    if (networkId === 1) {
+      return '';
+    } else if (networkId === 4) {
+      return '0x8280c8b56c0270e40ffed3867d81789e0712f976';
+    } else {
+      throw new Error(`Invalid networkId: ${networkId} supplied to addressForNetwork`);
+    }
   }
 }

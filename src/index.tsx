@@ -8,9 +8,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import EthereumStore from './stores/Ethereum';
 import SyndicateStore from './stores/Syndicate';
 
+const ethereumStore = new EthereumStore();
+const syndicateStore = new SyndicateStore(1);
+web3.eth.net.getId()
+  .then((networkId: number) => syndicateStore.reloadContract(networkId));
 const stores = {
-  ethereumStore: new EthereumStore(),
-  syndicateStore: new SyndicateStore()
+  ethereumStore,
+  syndicateStore
 };
 
 Object.assign(document.body.style, {
