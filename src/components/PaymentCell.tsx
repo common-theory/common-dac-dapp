@@ -49,14 +49,21 @@ export default class PaymentCell extends React.Component <{
           Total Paid: <WeiDisplay wei={this.props.payment.weiPaid} />
           <br />
           Total Owed: <WeiDisplay wei={totalWeiOwed} />
-          <br />
-          <button type="button" onClick={() => {
-            this.props.ethereumStore.assertAuthenticated();
-            this.props.syndicateStore.settlePayment(
-              this.props.ethereumStore.activeAddress,
-              this.props.payment.index
+          {(() => {
+            if (paymentSettled) return null;
+            return (
+              <>
+                <br />
+                <button type="button" onClick={() => {
+                  this.props.ethereumStore.assertAuthenticated();
+                  this.props.syndicateStore.settlePayment(
+                    this.props.ethereumStore.activeAddress,
+                    this.props.payment.index
+                  );
+                }}>Settle</button>
+              </>
             );
-          }}>Settle</button>
+          })()}
         </BlockElement>
         <BlockFooter>
         </BlockFooter>
