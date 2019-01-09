@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { HFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import styled from 'styled-components';
 import SyndicateStore, { Payment } from '../stores/Syndicate';
 import EthereumStore from '../stores/Ethereum';
@@ -41,10 +41,11 @@ export default class PaymentCell extends React.Component <{
           <TextSpan>Payment {this.props.payment.index} - {paymentSettled ? 'settled' : `${TimerDisplay.formatSeconds(timeRemaining)} remaining`}</TextSpan>
         </BlockHeader>
         <BlockElement>
-          Sender: {this.props.payment.sender}
-          <br />
-          Receiver: {this.props.payment.receiver}
-          <br />
+          <HFlex>
+            {this.props.payment.sender}
+            <ion-icon size="medium" name="arrow-round-forward" />
+            {this.props.payment.receiver}
+          </HFlex>
           Time: <TimerDisplay seconds={+this.props.payment.time} />
           <br />
           Total Value: <WeiDisplay wei={this.props.payment.weiValue} />
