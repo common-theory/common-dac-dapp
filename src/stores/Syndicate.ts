@@ -34,6 +34,21 @@ export default class SyndicateStore {
   }
 
   /**
+   * Calculate the paymentWeiOwed at the current point in time using only local
+   * data
+   **/
+  static paymentWeiOwed(payment: Payment) {
+    if (isNaN(+payment.weiValue) || isNaN(+payment.timestamp) || isNaN(+payment.time) || isNaN(+payment.weiPaid)) return 0;
+    if (+payment.time === 0) return 0;
+    if (+payment.weiValue === 0) return 0;
+    const now = Math.floor(+new Date() / 1000);
+    const weiValue = new BN(payment.weiValue);
+    const weiPaid = new BN(payment.weiPaid);
+    const timeOffset = new BN(Math.min(now - +payment.timestamp, +payment.time));
+    return weiValue.mul(timeOffset).div(new BN(payment.time)).sub(weiPaid);
+  }
+
+  /**
    * Load count payments from offset
    **/
   async loadPayments(index: number, count: number) {

@@ -18,20 +18,37 @@ export default class PaymentCell extends React.Component <{
   ethereumStore?: EthereumStore,
   syndicateStore?: SyndicateStore
 }> {
+  state = {};
+  timer: any;
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setState(this.state);
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
   render() {
+    const paymentSettled = this.props.payment.weiPaid === this.props.payment.weiValue;
+    const totalWeiOwed = SyndicateStore.paymentWeiOwed(this.props.payment);
+    const timeRemaining = +this.props.payment.time - (Math.floor(+new Date() / 1000) - +this.props.payment.timestamp);
     return (
       <BlockContainer>
         <BlockHeader>
-          <TextSpan>Payment - {this.props.payment.receiver}</TextSpan>
+          <TextSpan>Payment {this.props.payment.index} - {paymentSettled ? 'settled' : `${timeRemaining} seconds remaining`}</TextSpan>
         </BlockHeader>
         <BlockElement>
           Sender: {this.props.payment.sender}
           <br />
           Receiver: {this.props.payment.receiver}
           <br />
-          WeiValue: <WeiDisplay wei={this.props.payment.weiValue} />
+          Total Value: <WeiDisplay wei={this.props.payment.weiValue} />
           <br />
-          WeiPaid: <WeiDisplay wei={this.props.payment.weiPaid} />
+          Total Paid: <WeiDisplay wei={this.props.payment.weiPaid} />
+          <br />
+          Total Owed: <WeiDisplay wei={totalWeiOwed} />
           <br />
           <button type="button" onClick={() => {
             this.props.ethereumStore.assertAuthenticated();
