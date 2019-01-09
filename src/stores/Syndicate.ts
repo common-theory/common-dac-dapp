@@ -147,7 +147,7 @@ export default class SyndicateStore {
     if (networkId === 1) {
       return '';
     } else if (networkId === 4) {
-      return '0x82abeed3e247e9ecf14f026243a3241178d8fe89';
+      return '0x1ad19921a4029dcbe0e698892378d763bb01dc38';
     } else {
       throw new Error(`Invalid networkId: ${networkId} supplied to addressForNetwork`);
     }
