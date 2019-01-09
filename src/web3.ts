@@ -9,3 +9,8 @@ if (typeof web3 !== 'undefined') {
   console.log('Consider installing metamask!');
   global.web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.commontheory.io'));
 }
+
+if (window.ethereum) {
+  // Request permission from metamask if present
+  window.ethereum.enable();
+}
