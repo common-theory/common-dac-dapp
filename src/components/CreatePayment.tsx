@@ -2,6 +2,8 @@ import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import styled from 'styled-components';
+import EthereumStore from '../stores/Ethereum';
+import SyndicateStore from '../stores/Syndicate';
 
 const AddressInput = styled.input`
   font-family: Helvetica;
@@ -12,7 +14,10 @@ const AddressInput = styled.input`
 
 @inject('syndicateStore', 'ethereumStore')
 @observer
-export default class CreatePayment extends React.Component {
+export default class CreatePayment extends React.Component <{
+  syndicateStore: SyndicateStore,
+  ethereumStore: EthereumStore
+}> {
 
   state: {
     toAddress: string,
@@ -30,13 +35,11 @@ export default class CreatePayment extends React.Component {
 
   createPayment = (e: any) => {
     e.preventDefault();
-    console.log('Create payment');
     if (!this.props.ethereumStore.activeAddress) {
       alert('No active Ethereum account detected!');
       return;
     }
     const weiAmount = web3.utils.toWei(this.state.amount, this.state.amountUnit);
-    console.log(this.timeInSeconds());
     this.props.syndicateStore.deposit(
       this.props.ethereumStore.activeAddress,
       this.state.toAddress,

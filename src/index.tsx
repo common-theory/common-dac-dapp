@@ -9,7 +9,7 @@ import EthereumStore from './stores/Ethereum';
 import SyndicateStore from './stores/Syndicate';
 
 const ethereumStore = new EthereumStore();
-const syndicateStore = new SyndicateStore(1);
+const syndicateStore = new SyndicateStore(4);
 web3.eth.net.getId()
   .then((networkId: number) => syndicateStore.reloadContract(networkId));
 const stores = {

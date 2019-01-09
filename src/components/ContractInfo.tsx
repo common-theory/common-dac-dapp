@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
 import Colors from './Colors';
+import WeiDisplay from './WeiDisplay';
 
 @inject('ethereumStore', 'syndicateStore')
 @observer
@@ -51,10 +52,10 @@ export default class ContractInfo extends React.Component <{
               </a>
             </div>
             <div>
-              Total Payments: {this.props.syndicateStore.paymentCount}
-              <br />
-              Available Balance: {this.props.syndicateStore.balances[this.props.ethereumStore.activeAddress] || '0'}
-              <br />
+              {
+              // Available Balance: <WeiDisplay wei={this.props.syndicateStore.balances[this.props.ethereumStore.activeAddress]} />
+              // <br />
+              }
               <button type="button" onClick={() => {
                 this.props.syndicateStore.withdraw(
                   this.props.ethereumStore.activeAddress
