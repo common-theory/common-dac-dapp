@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import SyndicateStore, { Payment } from '../stores/Syndicate';
 import EthereumStore from '../stores/Ethereum';
 import WeiDisplay from './WeiDisplay';
+import TimerDisplay from './TimerDisplay';
 
 const TextSpan = styled.span`
   margin-left: 4px;
@@ -37,18 +38,24 @@ export default class PaymentCell extends React.Component <{
     return (
       <BlockContainer>
         <BlockHeader>
-          <TextSpan>Payment {this.props.payment.index} - {paymentSettled ? 'settled' : `${timeRemaining} seconds remaining`}</TextSpan>
+          <TextSpan>Payment {this.props.payment.index} - {paymentSettled ? 'settled' : `${TimerDisplay.formatSeconds(timeRemaining)} remaining`}</TextSpan>
         </BlockHeader>
         <BlockElement>
           Sender: {this.props.payment.sender}
           <br />
           Receiver: {this.props.payment.receiver}
           <br />
+          Time: {
+            +this.props.payment.time === 0 ?
+            'Instant' :
+            <TimerDisplay seconds={+this.props.payment.time} />
+          }
+          <br />
           Total Value: <WeiDisplay wei={this.props.payment.weiValue} />
           <br />
           Total Paid: <WeiDisplay wei={this.props.payment.weiPaid} />
           <br />
-          Total Owed: <WeiDisplay wei={totalWeiOwed} />
+          Total Available: <WeiDisplay wei={totalWeiOwed} />
           {(() => {
             if (paymentSettled) return null;
             return (
