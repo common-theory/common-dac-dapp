@@ -58,9 +58,16 @@ export default [
     "type": "function"
   },
   {
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "fallback"
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "PaymentUpdated",
+    "type": "event"
   },
   {
     "anonymous": false,
@@ -71,7 +78,7 @@ export default [
         "type": "uint256"
       }
     ],
-    "name": "PaymentUpdated",
+    "name": "PaymentCreated",
     "type": "event"
   },
   {
@@ -106,10 +113,6 @@ export default [
       {
         "name": "_time",
         "type": "uint256"
-      },
-      {
-        "name": "_sender",
-        "type": "address"
       }
     ],
     "name": "pay",
@@ -197,8 +200,8 @@ export default [
     "constant": false,
     "inputs": [
       {
-        "name": "weiValue",
-        "type": "uint256"
+        "name": "target",
+        "type": "address"
       }
     ],
     "name": "withdraw",
@@ -211,34 +214,12 @@ export default [
     "constant": false,
     "inputs": [
       {
-        "name": "weiValue",
-        "type": "uint256"
-      },
-      {
-        "name": "to",
+        "name": "target",
         "type": "address"
       },
       {
-        "name": "indexesToSettle",
-        "type": "uint256[]"
-      }
-    ],
-    "name": "withdraw",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
         "name": "weiValue",
         "type": "uint256"
-      },
-      {
-        "name": "to",
-        "type": "address"
       }
     ],
     "name": "withdraw",
