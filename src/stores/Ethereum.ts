@@ -36,6 +36,16 @@ export default class EthereumStore {
     }
   }
 
+  assertAuthenticated() {
+    if (this.authenticated()) return;
+    alert('Login with Metamask to do that.');
+    throw new Error('Metamask unauthenticated');
+  }
+
+  authenticated(): boolean {
+    return !!this.activeAddress;
+  }
+
   async loadActiveAccount() {
     const accounts = await web3.eth.getAccounts();
     if (accounts.length > 0) {
