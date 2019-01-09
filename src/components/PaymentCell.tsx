@@ -34,7 +34,7 @@ export default class PaymentCell extends React.Component <{
   render() {
     const paymentSettled = this.props.payment.weiPaid === this.props.payment.weiValue;
     const totalWeiOwed = SyndicateStore.paymentWeiOwed(this.props.payment);
-    const timeRemaining = +this.props.payment.time - (Math.floor(+new Date() / 1000) - +this.props.payment.timestamp);
+    const timeRemaining = Math.max(0, +this.props.payment.time - (Math.floor(+new Date() / 1000) - +this.props.payment.timestamp));
     return (
       <BlockContainer>
         <BlockHeader>
@@ -45,11 +45,7 @@ export default class PaymentCell extends React.Component <{
           <br />
           Receiver: {this.props.payment.receiver}
           <br />
-          Time: {
-            +this.props.payment.time === 0 ?
-            'Instant' :
-            <TimerDisplay seconds={+this.props.payment.time} />
-          }
+          Time: <TimerDisplay seconds={+this.props.payment.time} />
           <br />
           Total Value: <WeiDisplay wei={this.props.payment.weiValue} />
           <br />
