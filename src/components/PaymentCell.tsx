@@ -4,6 +4,7 @@ import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared
 import styled from 'styled-components';
 import SyndicateStore, { Payment } from '../stores/Syndicate';
 import EthereumStore from '../stores/Ethereum';
+import WeiDisplay from './WeiDisplay';
 
 const TextSpan = styled.span`
   margin-left: 4px;
@@ -28,9 +29,9 @@ export default class PaymentCell extends React.Component <{
           <br />
           Receiver: {this.props.payment.receiver}
           <br />
-          WeiValue: {this.props.payment.weiValue}
+          WeiValue: <WeiDisplay wei={this.props.payment.weiValue} />
           <br />
-          WeiPaid: {this.props.payment.weiPaid}
+          WeiPaid: <WeiDisplay wei={this.props.payment.weiPaid} />
           <br />
           <button type="button" onClick={() => {
             this.props.syndicateStore.settlePayment(
