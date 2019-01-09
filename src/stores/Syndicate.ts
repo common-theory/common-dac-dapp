@@ -82,7 +82,8 @@ export default class SyndicateStore {
       })
       .sort((p1: Payment, p2: Payment) => {
         return p2.index - p1.index;
-      });
+      })
+      .reverse();
   }
 
   async loadBalance(address: string) {
