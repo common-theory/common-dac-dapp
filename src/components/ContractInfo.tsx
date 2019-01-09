@@ -1,33 +1,24 @@
 import React from 'react';
 import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
 import { observer, inject } from 'mobx-react';
-import DACStore from '../stores/DACStore';
-import EthStore from '../stores/EthStore';
+import EthereumStore from '../stores/Ethereum';
+import SyndicateStore from '../stores/Syndicate';
 import Colors from './Colors';
-import Members from './Members';
+import WeiDisplay from './WeiDisplay';
 
-@inject('dacStore', 'ethStore')
+@inject('ethereumStore', 'syndicateStore')
 @observer
-export default class ContractInfo extends React.Component <{ ethStore?: EthStore, dacStore?: DACStore }> {
-  timeout: NodeJS.Timeout;
-  state = {
-    cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
-  };
+export default class ContractInfo extends React.Component <{
+  ethereumStore?: EthereumStore,
+  syndicateStore?: SyndicateStore
+}> {
 
   componentDidMount() {
-    this.timeout = setInterval(() => {
-      this.setState({
-        cycleTimeRemaining: this.props.dacStore.cycleTimeRemaining()
-      });
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timeout);
+    this.props.syndicateStore.loadBalance(this.props.ethereumStore.activeAddress);
   }
 
   render() {
-    const contractAddress = this.props.dacStore.addressForNetworkId(this.props.ethStore.networkId);
+    const contractAddress = this.props.syndicateStore.addressForNetwork(this.props.ethereumStore.networkId);
     return (
       <BlockContainer>
         <BlockHeader>
@@ -37,7 +28,7 @@ export default class ContractInfo extends React.Component <{ ethStore?: EthStore
           <p style={{
             margin: 16
           }}>
-            Ethereum sent to the address below is distributed proportionately to the addresses with value.
+            Common Theory allows Ether to be paid to addresses over time. Ether sent is guaranteed to be paid and can be withdrawn with 1 second resolution.
           </p>
           <div style={{ textAlign: 'center' }}>
             <div>
@@ -56,34 +47,21 @@ export default class ContractInfo extends React.Component <{ ethStore?: EthStore
                 fontFamily: 'helvetica',
                 fontWeight: 600,
                 fontSize: 16
-              }} href={this.props.ethStore.etherscanUrl(contractAddress)} target="_blank">
+              }} href={this.props.ethereumStore.etherscanUrl(contractAddress)} target="_blank">
                 {contractAddress}
               </a>
             </div>
-          </div>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-around'
-          }}>
             <div>
-              <div>
-                Total Members: {this.props.dacStore.totalVotingMembers}
-              </div>
-              <div>
-                Total Value: {this.props.dacStore.totalValue}
-              </div>
-              <div>
-                Current Vote Cycle: {this.props.dacStore.currentVoteCycle}
-              </div>
-              <div>
-                Cycle Time Remaining: {this.state.cycleTimeRemaining} seconds
-              </div>
-              <div>
-                Proposal Count: {this.props.dacStore.proposalCount}
-              </div>
+              {
+              // Available Balance: <WeiDisplay wei={this.props.syndicateStore.balances[this.props.ethereumStore.activeAddress]} />
+              // <br />
+              }
+              <button type="button" onClick={() => {
+                this.props.syndicateStore.withdraw(
+                  this.props.ethereumStore.activeAddress
+                );
+              }}>Withdraw</button>
             </div>
-            <Members />
           </div>
         </BlockElement>
         <BlockFooter />

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { observer, inject } from 'mobx-react';
-import { Link } from 'react-router-dom';
-import EthStore from '../stores/EthStore';
+import { Link, withRouter } from 'react-router-dom';
+import EthereumStore from '../stores/Ethereum';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -67,28 +67,34 @@ const HeaderLink = styled(Link)`
   text-decoration: none;
 `;
 
-@inject('ethStore')
+@inject('ethereumStore')
 @observer
-export default class Header extends React.Component<{
-  ethStore?: EthStore
+class Header extends React.Component<{
+  ethereumStore?: EthereumStore
 }> {
   render() {
     return (
       <HeaderContainer>
         <HeaderBackground />
         <TitleContentContainer>
-          <LogoText>Common Theory</LogoText>
+          <>
+            <HeaderLink to="/">
+              <LogoText>
+                Common Theory
+              </LogoText>
+            </HeaderLink>
+          </>
         </TitleContentContainer>
         <HeaderContentContainer>
           <RightText>
-            Network ID: {this.props.ethStore.networkId}
+            Network ID: {this.props.ethereumStore.networkId}
           </RightText>
           <RightText>
-            Current Block: {this.props.ethStore.currentBlockNumber}
+            Current Block: {this.props.ethereumStore.currentBlockNumber}
           </RightText>
           <RightText>
-            <HeaderA href={this.props.ethStore.etherscanUrl()} target="_blank">
-              {this.props.ethStore.activeAddress() || 'Unauthenticated!'}
+            <HeaderA href={this.props.ethereumStore.etherscanUrl()} target="_blank">
+              {this.props.ethereumStore.activeAddress || 'Unauthenticated!'}
             </HeaderA>
           </RightText>
         </HeaderContentContainer>
@@ -96,3 +102,5 @@ export default class Header extends React.Component<{
     );
   }
 }
+
+export default withRouter(props => <Header {...props} />);

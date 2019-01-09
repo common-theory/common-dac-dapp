@@ -47,4 +47,5 @@ export const HFlex = styled.div`
   flex-direction: row;
   margin: 2px;
   align-items: center;
+  justify-content: space-evenly;
 `;

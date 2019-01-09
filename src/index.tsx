@@ -1,25 +1,20 @@
-import Web3 from 'web3';
-/**
- * Initialize a global web3 from metamask or from a fallback source.
- **/
-if (typeof web3 !== 'undefined') {
-  global.web3 = new Web3(web3.currentProvider);
-} else {
-  // Set the provider you want from Web3.providers
-  global.web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.commontheory.io'));
-}
-
+require('./web3');
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from './components/Home';
-import EthStore from './stores/EthStore';
 import { Provider } from 'mobx-react';
-import DACStore from './stores/DACStore';
 import SpringSimulator from './components/SpringSimulator';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import EthereumStore from './stores/Ethereum';
+import SyndicateStore from './stores/Syndicate';
 
+const ethereumStore = new EthereumStore();
+const syndicateStore = new SyndicateStore(4);
+web3.eth.net.getId()
+  .then((networkId: number) => syndicateStore.reloadContract(networkId));
 const stores = {
-  ethStore: new EthStore(),
-  dacStore: new DACStore()
+  ethereumStore,
+  syndicateStore
 };
 
 Object.assign(document.body.style, {
@@ -32,7 +27,11 @@ Object.assign(document.body.style, {
 ReactDOM.render(
   <>
     <Provider { ...stores }>
-      <Home />
+      <Router>
+        <>
+          <Route exact path="/" component={Home} />
+        </>
+      </Router>
     </Provider>
     <SpringSimulator />
   </>,

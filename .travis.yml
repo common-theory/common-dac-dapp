@@ -1,7 +1,9 @@
+dist: xenial
+
 sudo: required
 
 after_success:
-  - bash <(curl -s https://raw.githubusercontent.com/common-theory/travis-ci-discord-webhook/master/send.sh) success $DISCORD_WEBHOOK_URL
+  - if [ $TRAVIS_BRANCH = 'master' ]; then bash <(curl -s https://raw.githubusercontent.com/common-theory/travis-ci-discord-webhook/master/send.sh) success $DISCORD_WEBHOOK_URL; fi
 after_failure:
   - bash <(curl -s https://raw.githubusercontent.com/common-theory/travis-ci-discord-webhook/master/send.sh) failure $DISCORD_WEBHOOK_URL
 
@@ -11,21 +13,20 @@ node_js:
 
 addons:
   apt:
+    sources:
+      - sourceline: 'ppa:longsleep/golang-backports'
+    update: true
     packages:
       - golang-go
 
+before_script:
+  - go get -u github.com/ipfs/ipfs-update
+  - ipfs-update install v0.4.18
+
 script:
-  - wget https://github.com/ipfs/go-ipfs/releases/download/v0.4.17/go-ipfs_v0.4.17_linux-386.tar.gz
-  - tar -xvf go-ipfs_v0.4.17_linux-386.tar.gz
-  - sudo mv ./go-ipfs/ipfs /usr/local/bin/ipfs
-  - rm -rf go-ipfs
-  - rm go-ipfs_v0.4.17_linux-386.tar.gz
   - ipfs init
   - ipfs daemon &
-  - npm run deploy
+  - npm run build:production
+  - npx dnslink update "commontheory.io" $(ipfs add -Qr ./static)
   - echo "Waiting for other services to pull ipfs ref"
   - sleep 300
-
-branches:
-  only:
-  - master

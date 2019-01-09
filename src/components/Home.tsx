@@ -2,12 +2,11 @@ import React from 'react';
 import Header from './Header';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
-import DACStore from '../stores/DACStore';
-import ProposalCell from './ProposalCell';
 import { Container } from './Shared';
-import Members from './Members';
-import CreateProposal from './CreateProposal';
 import ContractInfo from './ContractInfo';
+import CreatePayment from './CreatePayment';
+import PaymentCell from './PaymentCell';
+import SyndicateStore from '../stores/Syndicate';
 
 const HeaderText = styled.div`
   font-family: Helvetica;
@@ -28,9 +27,11 @@ const FooterLink = styled.a`
   margin: 8px;
 `;
 
-@inject('dacStore')
+@inject('syndicateStore')
 @observer
-export default class Home extends React.Component<{ dacStore?: DACStore }> {
+export default class Home extends React.Component <{
+  syndicateStore: SyndicateStore
+}> {
 
   render() {
     return (
@@ -38,16 +39,16 @@ export default class Home extends React.Component<{ dacStore?: DACStore }> {
         <Header />
         <Container>
           <ContractInfo />
-          <CreateProposal />
+          <CreatePayment />
           <HeaderText>
-            Proposals
+            Payments
           </HeaderText>
           <div>
-            {[...this.props.dacStore.proposals].reverse().map(proposal => {
+            {[...this.props.syndicateStore.payments].reverse().map((payment, i) => {
               return (
-                <ProposalCell key={proposal.number} proposal={proposal} />
+                <PaymentCell payment={payment} key={i} />
               );
-            })}
+            })};
           </div>
           <Footer>
             <FooterLink href="https://github.com/common-theory" target="_blank">
