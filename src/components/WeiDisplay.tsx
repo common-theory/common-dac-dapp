@@ -15,7 +15,7 @@ export default class WeiDisplay extends React.Component <{
     const usdValue = Math.round(1e2 * roundedEtherValue * this.props.gdaxStore.ethPrice) / 1e2;
     return (
       <>
-        {`${roundedEtherValue.toString()} ether ~ $${usdValue}`}
+        {`${roundedEtherValue.toString()} ether ~= $${usdValue}`}
       </>
     );
   }
