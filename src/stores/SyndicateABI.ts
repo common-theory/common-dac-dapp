@@ -113,6 +113,18 @@ export default [
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "target",
+        "type": "address"
+      }
+    ],
+    "name": "BalanceUpdated",
+    "type": "event"
+  },
+  {
     "constant": false,
     "inputs": [
       {
