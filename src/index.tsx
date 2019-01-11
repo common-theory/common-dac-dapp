@@ -7,14 +7,17 @@ import SpringSimulator from './components/SpringSimulator';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import EthereumStore from './stores/Ethereum';
 import SyndicateStore from './stores/Syndicate';
+import GDAXStore from './stores/GDAX';
 
 const ethereumStore = new EthereumStore();
 const syndicateStore = new SyndicateStore(4);
 web3.eth.net.getId()
   .then((networkId: number) => syndicateStore.reloadContract(networkId));
+const gdaxStore = new GDAXStore();
 const stores = {
   ethereumStore,
-  syndicateStore
+  syndicateStore,
+  gdaxStore
 };
 
 Object.assign(document.body.style, {
