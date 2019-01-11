@@ -30,7 +30,7 @@ const FooterLink = styled.a`
 @inject('syndicateStore')
 @observer
 export default class Home extends React.Component <{
-  syndicateStore: SyndicateStore
+  syndicateStore?: SyndicateStore
 }> {
 
   render() {

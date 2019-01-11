@@ -16,8 +16,8 @@ const AddressInput = styled.input`
 @inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
 export default class CreatePayment extends React.Component <{
-  syndicateStore: SyndicateStore,
-  ethereumStore: EthereumStore,
+  syndicateStore?: SyndicateStore,
+  ethereumStore?: EthereumStore,
   gdaxStore?: GDAXStore
 }> {
 
