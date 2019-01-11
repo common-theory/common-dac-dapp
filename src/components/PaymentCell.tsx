@@ -6,6 +6,7 @@ import SyndicateStore, { Payment } from '../stores/Syndicate';
 import EthereumStore from '../stores/Ethereum';
 import WeiDisplay from './WeiDisplay';
 import TimerDisplay from './TimerDisplay';
+import ForkControls from './ForkControls';
 
 const TextSpan = styled.span`
   margin-left: 4px;
@@ -67,6 +68,10 @@ export default class PaymentCell extends React.Component <{
                 }}>Settle</button>
               </>
             );
+          })()}
+          {(() => {
+            if (this.props.payment.receiver !== this.props.ethereumStore.activeAddress) return null;
+            return <ForkControls payment={this.props.payment} />;
           })()}
         </BlockElement>
         <BlockFooter>
