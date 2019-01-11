@@ -2,7 +2,7 @@ import { observable } from 'mobx';
 import BN from 'bn.js';
 import ABI from './SyndicateABI';
 
-export interface Payment {
+export class Payment {
   index: number;
   sender: string;
   receiver: string;
@@ -10,6 +10,35 @@ export interface Payment {
   time: string|number|BN;
   weiValue: string|number|BN;
   weiPaid: string|number|BN;
+
+  constructor(obj: any) {
+    this.index = obj.index;
+    this.sender = obj.sender;
+    this.receiver = obj.receiver;
+    this.timestamp = obj.timestamp;
+    this.time = obj.time;
+    this.weiValue = obj.weiValue;
+    this.weiPaid = obj.weiPaid;
+  }
+
+  get weiOwed() {
+    if (isNaN(+this.weiValue) || isNaN(+this.timestamp) || isNaN(+this.time) || isNaN(+this.weiPaid)) return 0;
+    if (+this.time === 0) return 0;
+    if (+this.weiValue === 0) return 0;
+    const now = Math.floor(+new Date() / 1000);
+    const weiValue = new BN(this.weiValue);
+    const weiPaid = new BN(this.weiPaid);
+    const timeOffset = new BN(Math.min(now - +this.timestamp, +this.time));
+    return weiValue.mul(timeOffset).div(new BN(this.time)).sub(weiPaid);
+  }
+
+  get settled() {
+    return this.weiPaid === this.weiValue;
+  }
+
+  get timeRemaining() {
+    return Math.max(0, +this.time - (Math.floor(+new Date() / 1000) - +this.timestamp));
+  }
 }
 
 export default class SyndicateStore {
@@ -46,21 +75,6 @@ export default class SyndicateStore {
   }
 
   /**
-   * Calculate the paymentWeiOwed at the current point in time using only local
-   * data
-   **/
-  static paymentWeiOwed(payment: Payment) {
-    if (isNaN(+payment.weiValue) || isNaN(+payment.timestamp) || isNaN(+payment.time) || isNaN(+payment.weiPaid)) return 0;
-    if (+payment.time === 0) return 0;
-    if (+payment.weiValue === 0) return 0;
-    const now = Math.floor(+new Date() / 1000);
-    const weiValue = new BN(payment.weiValue);
-    const weiPaid = new BN(payment.weiPaid);
-    const timeOffset = new BN(Math.min(now - +payment.timestamp, +payment.time));
-    return weiValue.mul(timeOffset).div(new BN(payment.time)).sub(weiPaid);
-  }
-
-  /**
    * Load count payments from offset
    **/
   async loadPayments(index: number, count: number) {
@@ -78,7 +92,7 @@ export default class SyndicateStore {
       const promise = this.contract.methods.payments(x).call()
         .then((payment: Payment) => {
           payment.index = x;
-          return payment;
+          return new Payment(payment);
         });
       promises.push(promise);
     }
@@ -131,7 +145,7 @@ export default class SyndicateStore {
   }
 
   async payment(index: number): Promise<Payment> {
-    return await this.contract.methods.payments(index).call() as Payment;
+    return new Payment(await this.contract.methods.payments(index).call());
   }
 
   async paymentWeiOwed(index: number) {

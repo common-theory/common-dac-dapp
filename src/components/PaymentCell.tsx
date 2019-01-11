@@ -33,12 +33,10 @@ export default class PaymentCell extends React.Component <{
   }
 
   render() {
-    const paymentSettled = this.props.payment.weiPaid === this.props.payment.weiValue;
-    const timeRemaining = Math.max(0, +this.props.payment.time - (Math.floor(+new Date() / 1000) - +this.props.payment.timestamp));
     return (
       <BlockContainer>
         <BlockHeader>
-          <TextSpan>Payment {this.props.payment.index} - {paymentSettled ? 'settled' : `${TimerDisplay.formatSeconds(timeRemaining)} remaining`}</TextSpan>
+          <TextSpan>Payment {this.props.payment.index} - {this.props.payment.settled ? 'settled' : `${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
         </BlockHeader>
         <BlockElement>
           <PaymentInfo payment={this.props.payment} />

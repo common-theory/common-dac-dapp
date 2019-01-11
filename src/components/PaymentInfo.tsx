@@ -14,9 +14,11 @@ export default class PaymentInfo extends React.Component<{
   ethereumStore?: EthereumStore,
   syndicateStore?: SyndicateStore
 }> {
+  shouldComponentUpdate() {
+    return true;
+  }
+  
   render() {
-    const paymentSettled = this.props.payment.weiPaid === this.props.payment.weiValue;
-    const totalWeiOwed = SyndicateStore.paymentWeiOwed(this.props.payment);
     return (
       <>
         <HFlex>
@@ -30,10 +32,9 @@ export default class PaymentInfo extends React.Component<{
         <br />
         Total Paid: <WeiDisplay wei={this.props.payment.weiPaid} />
         <br />
-        Total Available: <WeiDisplay wei={totalWeiOwed} />
-        {(() => {
-          if (paymentSettled) return null;
-          return (
+        Total Available: <WeiDisplay wei={this.props.payment.weiOwed} />
+        {
+          this.props.payment.settled ? null : (
             <>
               <br />
               <button type="button" onClick={() => {
@@ -44,8 +45,8 @@ export default class PaymentInfo extends React.Component<{
                 );
               }}>Settle</button>
             </>
-          );
-        })()}
+          )
+        }
       </>
     );
   }
