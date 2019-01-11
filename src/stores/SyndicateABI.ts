@@ -4,14 +4,10 @@ export default [
     "inputs": [
       {
         "name": "",
-        "type": "uint256"
-      },
-      {
-        "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
-    "name": "_forks",
+    "name": "balances",
     "outputs": [
       {
         "name": "",
@@ -27,10 +23,14 @@ export default [
     "inputs": [
       {
         "name": "",
-        "type": "address"
+        "type": "uint256"
+      },
+      {
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "balances",
+    "name": "forkIndexes",
     "outputs": [
       {
         "name": "",
@@ -215,11 +215,30 @@ export default [
         "type": "uint256"
       }
     ],
-    "name": "paymentForkCount",
+    "name": "paymentForkIndexes",
     "outputs": [
       {
         "name": "",
+        "type": "uint256[2]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index",
         "type": "uint256"
+      }
+    ],
+    "name": "isPaymentForked",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
       }
     ],
     "payable": false,
@@ -261,12 +280,7 @@ export default [
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "name": "target",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "withdraw",
     "outputs": [],
     "payable": false,
@@ -275,7 +289,12 @@ export default [
   },
   {
     "constant": false,
-    "inputs": [],
+    "inputs": [
+      {
+        "name": "target",
+        "type": "address"
+      }
+    ],
     "name": "withdraw",
     "outputs": [],
     "payable": false,
