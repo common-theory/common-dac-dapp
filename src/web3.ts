@@ -12,5 +12,6 @@ if (typeof web3 !== 'undefined') {
 
 if (window.ethereum) {
   // Request permission from metamask if present
+  console.log('Requesting metamask connection');
   window.ethereum.enable();
 }
