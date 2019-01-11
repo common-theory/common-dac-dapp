@@ -4,6 +4,7 @@ import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared
 import styled from 'styled-components';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
+import GDAXStore from '../stores/GDAX';
 
 const AddressInput = styled.input`
   font-family: Helvetica;
@@ -12,22 +13,21 @@ const AddressInput = styled.input`
   border: 1px solid black;
 `;
 
-@inject('syndicateStore', 'ethereumStore')
+@inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
 export default class CreatePayment extends React.Component <{
   syndicateStore: SyndicateStore,
-  ethereumStore: EthereumStore
+  ethereumStore: EthereumStore,
+  gdaxStore?: GDAXStore
 }> {
 
   state: {
     toAddress: string,
-    amountUnit: string,
     amount: number,
     timeUnit: 'seconds' | 'minutes' | 'hours' | 'days' | 'months',
     time: number
   } = {
     toAddress: '',
-    amountUnit: 'ether',
     amount: 0,
     timeUnit: 'seconds',
     time: 0
@@ -39,7 +39,7 @@ export default class CreatePayment extends React.Component <{
       alert('No active Ethereum account detected!');
       return;
     }
-    const weiAmount = web3.utils.toWei(this.state.amount, this.state.amountUnit);
+    const weiAmount = web3.utils.toWei(this.state.amount, 'ether');
     this.props.syndicateStore.deposit(
       this.props.ethereumStore.activeAddress,
       this.state.toAddress,
@@ -108,6 +108,7 @@ export default class CreatePayment extends React.Component <{
               <input
                 type="number"
                 name="amount"
+                step="any"
                 min="0"
                 onChange={event => this.setState({
                   amount: event.target.value
@@ -115,19 +116,7 @@ export default class CreatePayment extends React.Component <{
                 value={this.state.amount}
               />
             </label>
-            <label>
-              <select
-                value={this.state.amountUnit}
-                onChange={event => this.setState({
-                  amountUnit: event.target.value
-                })}
-              >
-                <option value="ether">Ether</option>
-                <option value="finney">Finney</option>
-                <option value="szabo">Szabo</option>
-                <option value="gwei">Gwei</option>
-              </select>
-            </label>
+            {` ether ~= $${Math.round(1e2 * this.state.amount * this.props.gdaxStore.ethPrice) / 1e2}`}
             <br />
             <label>
               Time:
