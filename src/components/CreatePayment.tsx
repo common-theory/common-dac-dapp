@@ -5,13 +5,7 @@ import styled from 'styled-components';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
 import GDAXStore from '../stores/GDAX';
-
-const AddressInput = styled.input`
-  font-family: Helvetica;
-  width: 44ch;
-  border-radius: 3px;
-  border: 1px solid black;
-`;
+import AddressField from './AddressField';
 
 @inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
@@ -93,13 +87,9 @@ export default class CreatePayment extends React.Component <{
           <form onSubmit={this.createPayment}>
             <label>
               To:
-              <AddressInput
-                placeholder={'0x7726A9b0E93dE68bf24d40b37F6D0DC4e4caF47C'}
-                name="toAddress"
-                onChange={event => this.setState({
-                  toAddress: event.target.value
-                })}
-                value={this.state.toAddress}
+              <AddressField
+                onChange={toAddress => this.setState({ toAddress })}
+                address={this.state.toAddress}
               />
             </label>
             <br />
