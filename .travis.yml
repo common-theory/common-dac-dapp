@@ -27,6 +27,7 @@ script:
   - ipfs init
   - ipfs daemon &
   - npm run build:production
-  - npx dnslink update "commontheory.io" $(ipfs add -Qr ./static)
-  - echo "Waiting for other services to pull ipfs ref"
-  - sleep 300
+  - curl -X DELETE https://cidhook.commontheory.io/$(npx jsipfs dns commontheory.io)
+  - npx dnslink update commontheory.io $(ipfs add -Qr ./static)
+  - sleep 120 # Wait for DNS record TTL
+  - curl -X POST https://cidhook.commontheory.io/$(npx jsipfs dns commontheory.io)
