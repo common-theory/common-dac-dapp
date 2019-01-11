@@ -32,7 +32,7 @@ ReactDOM.render(
     <Provider { ...stores }>
       <Router>
         <>
-          <Route exact path="/" component={Home} />
+          <Route path="/" component={Home} />
         </>
       </Router>
     </Provider>
