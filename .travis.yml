@@ -13,7 +13,8 @@ node_js:
 
 script:
   - npm run build:production
-  - curl -X DELETE "https://cidhook.commontheory.io/$(npx jsipfs dns commontheory.io)"
-  - npx dnslink update commontheory.io $(ipfs add -Qr ./static)
+  - npm i -g cidhook ipfs dnslink
+  - cidhook cidhook.commontheory.io $(jsipfs dns commontheory.io) DELETE
+  - dnslink update commontheory.io $(jsipfs add -Qr ./static)
   - sleep 120 # Wait for DNS record TTL
-  - curl -X POST "https://cidhook.commontheory.io/$(npx jsipfs dns commontheory.io)"
+  - cidhook cidhook.commontheory.io $(jsipfs dns commontheory.io)
