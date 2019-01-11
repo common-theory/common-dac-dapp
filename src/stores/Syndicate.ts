@@ -171,7 +171,7 @@ export default class SyndicateStore {
 
   addressForNetwork(networkId: number): string {
     if (networkId === 1) {
-      return '0x3c0Dc66381A4e40d9afBfc33F74e503eB8099F27';
+      return '0xf11f3722586d04e85e3cf805e434ecbb623958f6';
     } else if (networkId === 4) {
       return '0xecc094eb4f7b466f9620b9a6b663763b9c53f99d';
     } else {
