@@ -29,7 +29,12 @@ export class Payment {
     const weiValue = new BN(this.weiValue);
     const weiPaid = new BN(this.weiPaid);
     const timeOffset = new BN(Math.min(now - +this.timestamp, +this.time));
-    return weiValue.mul(timeOffset).div(new BN(this.time)).sub(weiPaid);
+    const totalWeiOwed = weiValue.mul(timeOffset).div(new BN(this.time));
+    if (totalWeiOwed.lt(weiPaid)) {
+      return new BN('0');
+    } else {
+      return totalWeiOwed.sub(weiPaid);
+    }
   }
 
   get settled() {
@@ -137,6 +142,13 @@ export default class SyndicateStore {
     });
   }
 
+  async paymentFork(from: string, index: number, receiver: string, weiValue: string|BN) {
+    await this.contract.methods.paymentFork(index, receiver, weiValue).send({
+      from,
+      gas: 500000
+    });
+  }
+
   async withdraw(from: string) {
     await this.contract.methods.withdraw().send({
       from,
@@ -161,7 +173,7 @@ export default class SyndicateStore {
     if (networkId === 1) {
       return '0x3c0Dc66381A4e40d9afBfc33F74e503eB8099F27';
     } else if (networkId === 4) {
-      return '0xe423c03c5b52ff8be021deae6024acedd23e0c09';
+      return '0x52b63ff116042422674ca0ab3c26a20dbe6b0ffc';
     } else {
       throw new Error(`Invalid networkId: ${networkId} supplied to addressForNetwork`);
     }

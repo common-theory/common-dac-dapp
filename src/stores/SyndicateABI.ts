@@ -4,6 +4,29 @@ export default [
     "inputs": [
       {
         "name": "",
+        "type": "uint256"
+      },
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "_forks",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
         "type": "address"
       }
     ],
@@ -50,6 +73,14 @@ export default [
       },
       {
         "name": "weiPaid",
+        "type": "uint256"
+      },
+      {
+        "name": "isFork",
+        "type": "bool"
+      },
+      {
+        "name": "parentIndex",
         "type": "uint256"
       }
     ],
@@ -155,6 +186,47 @@ export default [
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "name": "_receiver",
+        "type": "address"
+      },
+      {
+        "name": "_weiValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "paymentFork",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "paymentForkCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [
       {
@@ -189,7 +261,12 @@ export default [
   },
   {
     "constant": false,
-    "inputs": [],
+    "inputs": [
+      {
+        "name": "target",
+        "type": "address"
+      }
+    ],
     "name": "withdraw",
     "outputs": [],
     "payable": false,
@@ -198,12 +275,7 @@ export default [
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "name": "target",
-        "type": "address"
-      }
-    ],
+    "inputs": [],
     "name": "withdraw",
     "outputs": [],
     "payable": false,
