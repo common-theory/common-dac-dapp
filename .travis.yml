@@ -16,6 +16,5 @@ script:
   - npm i -g cidhook ipfs
   - jsipfs init
   - cidhook cidhook.commontheory.io $(jsipfs dns commontheory.io) DELETE
+  - cidhook cidhook.commontheory.io $(jsipfs add -Qr ./static)
   - npx dnslink update commontheory.io $(jsipfs add -Qr ./static)
-  - sleep 120 # Wait for DNS record TTL
-  - cidhook cidhook.commontheory.io $(jsipfs dns commontheory.io)
