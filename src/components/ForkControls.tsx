@@ -29,7 +29,8 @@ export default class ForkControls extends React.Component <{
 
   render() {
     if (this.props.payment.settled) return null;
-    if (this.props.payment.receiver !== this.props.ethereumStore.activeAddress) return null;
+    // Temporarily show forking logic for all users
+    // if (this.props.payment.receiver !== this.props.ethereumStore.activeAddress) return null;
     return (
       <Container>
         Max Forkable Value: <WeiDisplay wei={+this.props.payment.weiValue - +this.props.payment.weiOwed} />
