@@ -108,6 +108,7 @@ export default class SyndicateStore {
     this.payments = [...(await Promise.all(promises)), ...this.payments]
       .filter((payment: Payment) => {
         if (loadedIndexes[payment.index]) return false;
+        if (+payment.weiValue === 0) return false;
         loadedIndexes[payment.index] = true;
         return loadedIndexes;
       })
