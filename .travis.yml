@@ -14,6 +14,7 @@ node_js:
 script:
   - npm run build:production
   - npm i -g cidhook ipfs
+  - jsipfs init
   - jsipfs daemon &
   - sleep 10
   - cidhook cidhook.commontheory.io $(jsipfs dns commontheory.io) DELETE
