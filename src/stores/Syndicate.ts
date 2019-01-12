@@ -16,8 +16,9 @@ export class Payment {
   fork1Index: number;
   fork2Index: number;
 
-  constructor(obj: any) {
-    this.index = obj.index;
+  constructor(obj: any, index: number) {
+    if (isNaN(+index)) throw new Error('Nan index received for Payment');
+    this.index = +index;
     this.sender = obj.sender;
     this.receiver = obj.receiver;
     this.timestamp = obj.timestamp;
@@ -95,6 +96,31 @@ export default class SyndicateStore {
       .on('error', console.log);
   }
 
+  /**
+   * Loads the payment binary tree into an array of payments
+   **/
+  async loadPaymentTree(rootIndex: number): Promise<Payment[]> {
+    const indexes = await this.loadTreeIndexes(rootIndex);
+    return await Promise.all(
+      indexes.map((index: number|string) => this._cachedPayment(+index))
+    );
+  }
+
+  /**
+   * Loads the tree from the current point forward in time
+   *
+   * Recursively constructs array
+   **/
+  async loadTreeIndexes(rootIndex: number): Promise<number[]> {
+    const payment = await this._cachedPayment(rootIndex);
+    if (!payment.isForked) return [rootIndex];
+    return [
+      rootIndex,
+      ...await this.loadTreeIndexes(payment.fork1Index),
+      ...await this.loadTreeIndexes(payment.fork2Index)
+    ];
+  }
+
   async loadAllPayments() {
     await this.loadPaymentCount();
     await this.loadPayments(0, this.paymentCount);
@@ -117,8 +143,7 @@ export default class SyndicateStore {
       if (x >= this.paymentCount) break;
       const promise = this.contract.methods.payments(x).call()
         .then((payment: Payment) => {
-          payment.index = x;
-          return new Payment(payment);
+          return new Payment(payment, x);
         });
       promises.push(promise);
     }
@@ -187,7 +212,7 @@ export default class SyndicateStore {
   }
 
   async payment(index: number): Promise<Payment> {
-    return new Payment(await this.contract.methods.payments(index).call());
+    return new Payment(await this.contract.methods.payments(index).call(), index);
   }
 
   async paymentWeiOwed(index: number) {
