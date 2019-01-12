@@ -12,6 +12,9 @@ export class Payment {
   weiPaid: string|number|BN;
   isFork: boolean;
   parentIndex: number;
+  isForked: boolean;
+  fork1Index: number;
+  fork2Index: number;
 
   constructor(obj: any) {
     this.index = obj.index;
@@ -23,6 +26,9 @@ export class Payment {
     this.weiPaid = obj.weiPaid;
     this.isFork = obj.isFork;
     this.parentIndex = obj.parentIndex;
+    this.isForked = obj.isForked;
+    this.fork1Index = obj.fork1Index;
+    this.fork2Index = obj.fork2Index;
   }
 
   get weiOwed() {
@@ -197,7 +203,7 @@ export default class SyndicateStore {
     if (networkId === 1) {
       return '0x992447bbd9d9e1d98deaa7d6237b3ebd0ced728e';
     } else if (networkId === 4) {
-      return '0x32fa7e03ebb7186ac191387f5d8e276f56d5a92b';
+      return '0x5852ca0707d97418096ad073c9520fab37632c07';
     } else {
       throw new Error(`Invalid networkId: ${networkId} supplied to addressForNetwork`);
     }
