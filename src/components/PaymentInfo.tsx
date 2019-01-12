@@ -17,7 +17,7 @@ export default class PaymentInfo extends React.Component<{
   shouldComponentUpdate() {
     return true;
   }
-  
+
   render() {
     return (
       <>
@@ -33,6 +33,16 @@ export default class PaymentInfo extends React.Component<{
         Total Paid: <WeiDisplay wei={this.props.payment.weiPaid} />
         <br />
         Total Available: <WeiDisplay wei={this.props.payment.weiOwed} />
+        <br />
+        Is Fork: {this.props.payment.isFork ? 'YES' : 'NO'}
+        {
+          this.props.payment.isFork ? (
+            <>
+              <br />
+              Parent Payment Index: {this.props.payment.parentIndex}
+            </>
+          ) : null
+        }
         {
           this.props.payment.settled ? null : (
             <>

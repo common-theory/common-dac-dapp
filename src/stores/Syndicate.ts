@@ -10,6 +10,8 @@ export class Payment {
   time: string|number|BN;
   weiValue: string|number|BN;
   weiPaid: string|number|BN;
+  isFork: boolean;
+  parentIndex: number;
 
   constructor(obj: any) {
     this.index = obj.index;
@@ -19,6 +21,8 @@ export class Payment {
     this.time = obj.time;
     this.weiValue = obj.weiValue;
     this.weiPaid = obj.weiPaid;
+    this.isFork = obj.isFork;
+    this.parentIndex = obj.parentIndex;
   }
 
   get weiOwed() {
@@ -64,7 +68,7 @@ export default class SyndicateStore {
     this.payments = [];
     this.paymentCount = 0;
     this.balances = {};
-    this.loadPayments(0, 10);
+    this.loadAllPayments();
     this.contract.events.PaymentCreated()
       .on('data', (event: any) => {
         const index = +event.returnValues.index;
@@ -79,11 +83,22 @@ export default class SyndicateStore {
       .on('error', console.log);
   }
 
+  async loadPaymentOrigin(index: number): Promise<Payment> {
+    const payment = await this._cachedPayment(index);
+    if (!payment.isFork) return payment;
+    return await this.loadPaymentOrigin(payment.parentIndex);
+  }
+
+  async loadAllPayments() {
+    await this.loadPaymentCount();
+    await this.loadPayments(0, this.paymentCount);
+  }
+
   /**
    * Load count payments from offset
    **/
   async loadPayments(index: number, count: number) {
-    this.paymentCount = +(await this.contract.methods.paymentCount().call());
+    await this.loadPaymentCount();
     if (this.paymentCount === 0) {
       this.payments = [];
       return;
@@ -155,6 +170,11 @@ export default class SyndicateStore {
       from,
       gas: 300000
     });
+  }
+
+  async _cachedPayment(index: number) {
+    if (this.payments[index]) return this.payments[index];
+    return await this.payment(index);
   }
 
   async payment(index: number): Promise<Payment> {

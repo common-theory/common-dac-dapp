@@ -1,8 +1,13 @@
 import React from 'react';
 import { Payment } from '../stores/Syndicate';
+import SyndicateStore from '../stores/Syndicate';
+import { inject, observer } from 'mobx-react';
 
+@inject('syndicateStore')
+@observer
 export default class PaymentGraph extends React.Component<{
-  payment: Payment
+  payment: Payment,
+  syndicateStore?: SyndicateStore
 }> {
   state = {};
 
@@ -13,15 +18,20 @@ export default class PaymentGraph extends React.Component<{
     this.canvasRef = React.createRef();
   }
 
+  componentDidMount() {
+    this.draw();
+  }
+
   componentDidUpdate() {
     this.draw();
   }
 
   draw = () => {
-    if (!this.canvasRef.current) return;
-    const ctx = this.canvasRef.current.getContext('2d');
+    const canvas = this.canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#222222';
-    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   render() {
