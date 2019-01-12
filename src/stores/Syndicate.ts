@@ -81,6 +81,12 @@ export default class SyndicateStore {
         this.loadPayments(index, 1);
       })
       .on('error', console.log);
+    this.contract.events.BalanceUpdated()
+      .on('data', (event: any) => {
+        const address = event.returnValues.target;
+        this.loadBalance(address);
+      })
+      .on('error', console.log);
   }
 
   async loadPaymentOrigin(index: number): Promise<Payment> {
@@ -131,6 +137,10 @@ export default class SyndicateStore {
         return p2.index - p1.index;
       })
       .reverse();
+    const accounts = await web3.eth.getAccounts();
+    await Promise.all(
+      accounts.map((account: string) => this.loadBalance(account))
+    );
   }
 
   async loadBalance(address: string) {
