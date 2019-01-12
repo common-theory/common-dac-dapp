@@ -89,12 +89,6 @@ export default class SyndicateStore {
       .on('error', console.log);
   }
 
-  async loadPaymentOrigin(index: number): Promise<Payment> {
-    const payment = await this._cachedPayment(index);
-    if (!payment.isFork) return payment;
-    return await this.loadPaymentOrigin(payment.parentIndex);
-  }
-
   async loadAllPayments() {
     await this.loadPaymentCount();
     await this.loadPayments(0, this.paymentCount);
@@ -129,7 +123,6 @@ export default class SyndicateStore {
     this.payments = [...(await Promise.all(promises)), ...this.payments]
       .filter((payment: Payment) => {
         if (loadedIndexes[payment.index]) return false;
-        if (+payment.weiValue === 0) return false;
         loadedIndexes[payment.index] = true;
         return loadedIndexes;
       })
