@@ -42,7 +42,11 @@ export default class PaymentCell extends React.Component <{
         <BlockElement>
           <PaymentInfo payment={this.props.payment} />
           <ForkControls payment={this.props.payment} />
-          <PaymentGraph payment={this.props.payment} />
+          {
+            this.props.payment.isForked && !this.props.payment.isFork ? (
+              <PaymentGraph payment={this.props.payment} />
+            ) : null
+          }
         </BlockElement>
         <BlockFooter>
         </BlockFooter>

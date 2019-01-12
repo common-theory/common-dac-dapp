@@ -57,6 +57,7 @@ export default class PaymentInfo extends React.Component<{
             </>
           )
         }
+        <br />
       </>
     );
   }

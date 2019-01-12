@@ -9,7 +9,11 @@ export default class PaymentGraph extends React.Component<{
   payment: Payment,
   syndicateStore?: SyndicateStore
 }> {
-  state = {};
+  state: {
+    paymentChain: Payment[]
+  } = {
+    paymentChain: []
+  };
 
   canvasRef: React.RefObject<HTMLCanvasElement>;
 
@@ -30,14 +34,21 @@ export default class PaymentGraph extends React.Component<{
     const canvas = this.canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#222222';
+
+    const start = +this.props.payment.timestamp;
+    const now = +new Date() / 1000;
+    const end = +this.props.payment.timestamp + +this.props.payment.time;
+
+    ctx.fillStyle = '#000000';
     ctx.strokeStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    const drawNode = (x: number, y: number) => {
-      ctx.arc(x, y, 10, 0, 0);
+    const drawNode = (x: number, y: number, radius: number = 10) => {
+      ctx.arc(x, y, radius, 0, 2 * Math.PI);
+      ctx.lineWidth = 1;
       ctx.stroke();
     };
-    drawNode(10, canvas.height / 2);
+    let currentHeight = canvas.height / 2;
+    drawNode(15, currentHeight);
   }
 
   render() {
