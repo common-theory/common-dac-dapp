@@ -31,7 +31,13 @@ export default class PaymentGraph extends React.Component<{
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#222222';
+    ctx.strokeStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const drawNode = (x: number, y: number) => {
+      ctx.arc(x, y, 10, 0, 0);
+      ctx.stroke();
+    };
+    drawNode(10, canvas.height / 2);
   }
 
   render() {

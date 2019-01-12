@@ -10,7 +10,7 @@ export default class WeiDisplay extends React.Component <{
   gdaxStore?: any
 }> {
   render() {
-    const etherValue = +web3.utils.fromWei(this.props.wei.toString());
+    const etherValue = +web3.utils.fromWei((this.props.wei || 0).toString());
     const roundedEtherValue = Math.round(etherValue * 1e5) / 1e5;
     const usdValue = Math.round(1e2 * roundedEtherValue * this.props.gdaxStore.ethPrice) / 1e2;
     return (
