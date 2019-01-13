@@ -1,5 +1,7 @@
 #/bin/sh
 
+set -e
+
 # Intended to be run in a CI environment
 if [ -z "$CI" ];
 then
