@@ -11,12 +11,23 @@ language: node_js
 node_js:
   10
 
-script:
-  - npm run build:production
-  - npm i -g cidhook ipfs
-  - jsipfs init
-  - jsipfs daemon &
-  - sleep 10
-  - cidhook cidhook.commontheory.io $(jsipfs dns commontheory.io) unpin
-  - cidhook cidhook.commontheory.io $(jsipfs add -Qr ./static)
-  - npx dnslink update commontheory.io $(jsipfs add -Qr ./static)
+deploy: &Deploy |
+  npm run build:production
+  npm i -g cidhook ipfs
+  jsipfs init
+  jsipfs daemon &
+  sleep 10
+  # Unpin the old version
+  cidhook cidhook.commontheory.io $(jsipfs dns commontheory.io) unpin
+  # Pin the new version
+  cidhook cidhook.commontheory.io $(jsipfs add -Qr ./static)
+  # Update the DNS record
+  npx dnslink update commontheory.io $(jsipfs add -Qr ./static)
+
+jobs:
+  include:
+    - stage: build
+      script: npm run build:production
+    - stage: deploy
+      if: branch = master
+      script: *Deploy
