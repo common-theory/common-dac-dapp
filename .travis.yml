@@ -14,6 +14,7 @@ node_js:
 jobs:
   include:
     - stage: build
+      if: branch != master
       script: npm run build:production
     - stage: deploy
       if: branch = master
