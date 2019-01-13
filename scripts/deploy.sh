@@ -25,10 +25,10 @@ OLD_CID=$(jsipfs dns commontheory.io)
 NEW_CID=$(jsipfs add -Qr ./static)
 
 # Unpin the old version
-npx cidhook cidhook.commontheory.io $OLD_CID unpin
+npx cidhook cidhookd.commontheory.io $OLD_CID unpin
 
 # Pin the new version
-npx cidhook cidhook.commontheory.io $NEW_CID
+npx cidhook cidhookd.commontheory.io $NEW_CID
 
 # Update the DNS record
 npx dnslink update commontheory.io $NEW_CID
