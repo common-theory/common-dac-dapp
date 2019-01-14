@@ -7,6 +7,7 @@ import ContractInfo from './ContractInfo';
 import CreatePayment from './CreatePayment';
 import PaymentCell from './PaymentCell';
 import SyndicateStore from '../stores/Syndicate';
+import BalanceInfo from './BalanceInfo';
 
 const HeaderText = styled.div`
   font-family: Helvetica;
@@ -39,6 +40,7 @@ export default class Home extends React.Component <{
         <Header />
         <Container>
           <ContractInfo />
+          <BalanceInfo />
           <CreatePayment />
           <HeaderText>
             Payments

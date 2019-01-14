@@ -24,29 +24,6 @@ export default [
       {
         "name": "",
         "type": "uint256"
-      },
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "forkIndexes",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256"
       }
     ],
     "name": "payments",
@@ -81,6 +58,18 @@ export default [
       },
       {
         "name": "parentIndex",
+        "type": "uint256"
+      },
+      {
+        "name": "isForked",
+        "type": "bool"
+      },
+      {
+        "name": "fork1Index",
+        "type": "uint256"
+      },
+      {
+        "name": "fork2Index",
         "type": "uint256"
       }
     ],
@@ -227,44 +216,6 @@ export default [
         "type": "uint256"
       }
     ],
-    "name": "paymentForkIndexes",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256[2]"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "isPaymentForked",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
     "name": "isPaymentSettled",
     "outputs": [
       {
@@ -292,6 +243,24 @@ export default [
   },
   {
     "constant": false,
+    "inputs": [
+      {
+        "name": "target",
+        "type": "address"
+      },
+      {
+        "name": "weiValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
     "inputs": [],
     "name": "withdraw",
     "outputs": [],
@@ -305,24 +274,6 @@ export default [
       {
         "name": "target",
         "type": "address"
-      }
-    ],
-    "name": "withdraw",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "target",
-        "type": "address"
-      },
-      {
-        "name": "weiValue",
-        "type": "uint256"
       }
     ],
     "name": "withdraw",

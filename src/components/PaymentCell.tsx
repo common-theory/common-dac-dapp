@@ -7,6 +7,7 @@ import EthereumStore from '../stores/Ethereum';
 import TimerDisplay from './TimerDisplay';
 import ForkControls from './ForkControls';
 import PaymentInfo from './PaymentInfo';
+import PaymentGraph from './PaymentGraph';
 
 const TextSpan = styled.span`
   margin-left: 4px;
@@ -41,6 +42,11 @@ export default class PaymentCell extends React.Component <{
         <BlockElement>
           <PaymentInfo payment={this.props.payment} />
           <ForkControls payment={this.props.payment} />
+          {
+            this.props.payment.isForked && !this.props.payment.isFork ? (
+              <PaymentGraph payment={this.props.payment} />
+            ) : null
+          }
         </BlockElement>
         <BlockFooter>
         </BlockFooter>
