@@ -6,6 +6,7 @@ import SyndicateStore from '../stores/Syndicate';
 import { HFlex } from './Shared';
 import { inject, observer } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
+import AddressDisplay from './AddressDisplay';
 
 @inject('ethereumStore', 'syndicateStore')
 @observer
@@ -17,14 +18,14 @@ export default class PaymentInfo extends React.Component<{
   shouldComponentUpdate() {
     return true;
   }
-  
+
   render() {
     return (
       <>
         <HFlex>
-          {this.props.payment.sender}
+          <AddressDisplay address={this.props.payment.sender} />
           <ion-icon size="medium" name="arrow-round-forward" />
-          {this.props.payment.receiver}
+          <AddressDisplay address={this.props.payment.receiver} />
         </HFlex>
         Time: <TimerDisplay seconds={+this.props.payment.time} />
         <br />
