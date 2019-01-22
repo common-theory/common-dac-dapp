@@ -7,24 +7,13 @@ import ContractInfo from './ContractInfo';
 import CreatePayment from './CreatePayment';
 import PaymentCell from './PaymentCell';
 import SyndicateStore from '../stores/Syndicate';
+import Footer from './Footer';
 
 const HeaderText = styled.div`
   font-family: Helvetica;
   font-size: 20pt;
   text-align: center;
   color: white;
-`;
-
-const Footer = styled.div`
-  margin-top: 16px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const FooterLink = styled.a`
-  margin: 8px;
 `;
 
 @inject('syndicateStore')
@@ -50,14 +39,7 @@ export default class Home extends React.Component <{
               );
             })};
           </div>
-          <Footer>
-            <FooterLink href="https://github.com/common-theory" target="_blank">
-              <img title="common-theory source code" src="https://ipfs.io/ipns/commontheory.io/github-logo-white.png" width="40px" height="40px" />
-            </FooterLink>
-            <FooterLink href="https://discord.gg/4FFVg8a" target="_blank">
-              <img title="discord" src="https://ipfs.io/ipns/commontheory.io/discord-logo-white.png" width="40px" height="40px" />
-            </FooterLink>
-          </Footer>
+          <Footer />
         </Container>
       </>
     );
