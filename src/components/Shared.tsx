@@ -6,15 +6,12 @@ export const Container = styled.div`
 
 export const BlockContainer = styled.div`
   margin: 8px;
-  box-shadow: 0 1px 5px 1px #444444;
-  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 4px;
 `;
 
 export const BlockHeader = styled.div`
   padding: 8px;
   margin-bottom: 0px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
   border: 1px solid #eff0f4;
   background-color: ${(props: {
     backgroundColor?: string
@@ -37,8 +34,6 @@ export const BlockElement = styled.div`
 
 export const BlockFooter = styled.div`
   padding: 8px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
   background-color: white;
 `;
 
