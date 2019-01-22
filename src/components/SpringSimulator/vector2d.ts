@@ -117,7 +117,7 @@ export default class Vector2D implements IVector2D {
    * Generate a random number between floor and ceiling.
    **/
   static randomScalar(floor: number = 0, ceiling: number = 500) {
-    return Math.floor(Math.random() * ceiling + floor);
+    return Math.floor(Math.random() * (ceiling + -1 * Math.min(floor, 0)) + floor);
   }
 
   /**
