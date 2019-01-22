@@ -76,12 +76,13 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     this.connectors.push(new Connector({ x: 0, y: this.state.height }, Infinity));
     for (let x = 0; x < 75; x++) {
       this.connectors.push(new Connector(Vector2D.random({
-        floor: -100,
-        ceiling: this.state.width + 100,
+        floor: -500,
+        ceiling: this.state.width + 200,
       }, {
-        floor: -100,
-        ceiling: this.state.height + 100,
-      }), Vector2D.randomScalar(20, 100)));
+        floor: -500,
+        ceiling: this.state.height + 200,
+      }), Vector2D.randomScalar(100, 500)));
+      console.log(this.connectors[this.connectors.length -1]);
     }
     // Connect each to static connectors
     for (let x = 0; x < this.dynamicConnectors.length; x++) {
@@ -136,8 +137,8 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     ctx.fillStyle = '#222222';
     ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
     const gradient = ctx.createLinearGradient(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
-    gradient.addColorStop(0, 'rgba(38, 236, 255, 0.75');
-    gradient.addColorStop(1, 'rgba(44, 190, 234, 0.65)');
+    gradient.addColorStop(0, 'rgba(238, 238, 238, 0.8)');
+    gradient.addColorStop(1, 'rgba(248, 248, 248, 0.8)');
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
 
@@ -152,7 +153,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       ctx.moveTo(spring.connector1.x, spring.connector1.y);
       ctx.lineTo(spring.connector2.x, spring.connector2.y);
 
-      ctx.strokeStyle = `rgba(255, 255, 255, 0.1)`;
+      ctx.strokeStyle = `rgba(0, 0, 0, 0.5)`;
       ctx.lineWidth = 1;
       ctx.stroke();
     }
@@ -164,13 +165,16 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       ctx.arc(connector.x, connector.y, 5, 0, 2 * Math.PI);
 
       // Let's vary the alpha with velocity
-      const min = 0.3;
-      const max = 0.6;
+      // const min = 0.2;
+      // const max = 0.6;
       // And let's invert it, so as it goes faster it gets less visible
-      const alpha = min + (max - min) * (1 - connector.velocity.magnitude / connector.maxVelocity.magnitude)
-      ctx.fillStyle = `rgba(252, 232, 47, ${alpha})`;
+      // const alpha = min + (max - min) * (1 - connector.velocity.magnitude / connector.maxVelocity.magnitude)
+      ctx.fillStyle = `rgba(255, 255, 255, 0.6)`;
       ctx.fill();
     }
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
 
     if (this.drawing) {
       requestAnimationFrame(this.draw);
