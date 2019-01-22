@@ -25,7 +25,7 @@ const HeaderContentContainer = styled.div`
   margin-bottom: 0px;
   padding-left: 8px;
   padding-right: 8px;
-  color: white;
+  color: black;
   font-family: Helvetica;
 `;
 
@@ -45,13 +45,13 @@ const RightText = styled.div`
 `;
 
 const HeaderA = styled.a`
-  color: white;
+  color: black;
   font-family: Helvetica;
   text-decoration: none;
 `;
 
 const LogoText = styled.span`
-  color: white;
+  color: black;
   font-family: Helvetica;
   font-size: 20pt;
 `;

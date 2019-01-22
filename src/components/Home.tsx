@@ -13,7 +13,7 @@ const HeaderText = styled.div`
   font-family: Helvetica;
   font-size: 20pt;
   text-align: center;
-  color: white;
+  color: black;
 `;
 
 @inject('syndicateStore')

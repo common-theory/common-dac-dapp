@@ -82,7 +82,6 @@ export default class SpringSimulator extends React.Component <{}, {}> {
         floor: -500,
         ceiling: this.state.height + 200,
       }), Vector2D.randomScalar(100, 500)));
-      console.log(this.connectors[this.connectors.length -1]);
     }
     // Connect each to static connectors
     for (let x = 0; x < this.dynamicConnectors.length; x++) {
