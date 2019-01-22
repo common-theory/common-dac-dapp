@@ -14,7 +14,9 @@ export default class ContractInfo extends React.Component <{
 }> {
 
   componentDidMount() {
-    this.props.syndicateStore.loadBalance(this.props.ethereumStore.activeAddress);
+    if (this.props.ethereumStore.authenticated()) {
+      this.props.syndicateStore.loadBalance(this.props.ethereumStore.activeAddress);
+    }
   }
 
   render() {

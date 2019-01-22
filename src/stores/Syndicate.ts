@@ -64,7 +64,8 @@ export default class SyndicateStore {
     this.payments = [];
     this.paymentCount = 0;
     this.balances = {};
-    this.loadPayments(0, 10);
+    this.loadPayments(0, 10)
+      .catch((err: any) => console.log('Error reloading contract: ', err));
     this.contract.events.PaymentCreated()
       .on('data', (event: any) => {
         const index = +event.returnValues.index;
@@ -172,7 +173,7 @@ export default class SyndicateStore {
 
   addressForNetwork(networkId: number): string {
     if (networkId === 1) {
-      return '0x992447bbd9d9e1d98deaa7d6237b3ebd0ced728e';
+      return '0x73c032996faee66e9970fd09621da92d8be4fff6';
     } else if (networkId === 4) {
       return '0x32fa7e03ebb7186ac191387f5d8e276f56d5a92b';
     } else {
