@@ -1,3 +1,5 @@
+import assert from 'assert';
+
 export interface IVector2D {
   x: number;
   y: number;
@@ -117,7 +119,8 @@ export default class Vector2D implements IVector2D {
    * Generate a random number between floor and ceiling.
    **/
   static randomScalar(floor: number = 0, ceiling: number = 500) {
-    return Math.floor(Math.random() * (ceiling + -1 * Math.min(floor, 0)) + floor);
+    assert(ceiling > floor, 'Receieved ceiling value less than floor in vector2d.randomScalar');
+    return Math.floor(Math.random() * (ceiling - floor)) + floor;
   }
 
   /**
