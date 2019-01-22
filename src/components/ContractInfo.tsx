@@ -4,7 +4,6 @@ import { observer, inject } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
 import Colors from './Colors';
-import WeiDisplay from './WeiDisplay';
 
 @inject('ethereumStore', 'syndicateStore')
 @observer
@@ -38,7 +37,7 @@ export default class ContractInfo extends React.Component <{
             </div>
             <div style={{
               display: 'inline-block',
-              backgroundColor: Colors.black(0.7),
+              backgroundColor: Colors.black(),
               borderRadius: 20,
               margin: 8,
               padding: 12,
@@ -52,17 +51,6 @@ export default class ContractInfo extends React.Component <{
               }} href={this.props.ethereumStore.etherscanUrl(contractAddress)} target="_blank">
                 {contractAddress}
               </a>
-            </div>
-            <div>
-              {
-              // Available Balance: <WeiDisplay wei={this.props.syndicateStore.balances[this.props.ethereumStore.activeAddress]} />
-              // <br />
-              }
-              <button type="button" onClick={() => {
-                this.props.syndicateStore.withdraw(
-                  this.props.ethereumStore.activeAddress
-                );
-              }}>Withdraw</button>
             </div>
           </div>
         </BlockElement>

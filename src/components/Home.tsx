@@ -8,6 +8,8 @@ import CreatePayment from './CreatePayment';
 import PaymentCell from './PaymentCell';
 import SyndicateStore from '../stores/Syndicate';
 import Footer from './Footer';
+import BalanceCell from './BalanceCell';
+import EthereumStore from '../stores/Ethereum';
 
 const HeaderText = styled.div`
   font-family: Helvetica;
@@ -16,10 +18,11 @@ const HeaderText = styled.div`
   color: black;
 `;
 
-@inject('syndicateStore')
+@inject('syndicateStore', 'ethereumStore')
 @observer
 export default class Home extends React.Component <{
-  syndicateStore?: SyndicateStore
+  syndicateStore?: SyndicateStore,
+  ethereumStore?: EthereumStore
 }> {
 
   render() {
@@ -28,6 +31,7 @@ export default class Home extends React.Component <{
         <Header />
         <Container>
           <ContractInfo />
+          <BalanceCell address={this.props.ethereumStore.activeAddress} />
           <CreatePayment />
           <HeaderText>
             Payments

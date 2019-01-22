@@ -78,6 +78,12 @@ export default class SyndicateStore {
         this.loadPayments(index, 1);
       })
       .on('error', console.log);
+    this.contract.events.BalanceUpdated()
+      .on('data', (event: any) => {
+        const address = event.returnValues.target;
+        this.loadBalance(address);
+      })
+      .on('error', console.log);
   }
 
   /**
