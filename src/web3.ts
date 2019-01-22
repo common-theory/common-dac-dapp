@@ -7,7 +7,7 @@ if (typeof web3 !== 'undefined') {
 } else {
   // Set the provider you want from Web3.providers
   console.log('Consider installing metamask!');
-  global.web3 = new Web3(new Web3.providers.HttpProvider('https://homestead.commontheory.io'));
+  global.web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/6d3a403359fb4784b12a4cf6ed9f8ddd'));
 }
 
 if (window.ethereum) {
