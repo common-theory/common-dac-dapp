@@ -37,7 +37,7 @@ export default class Home extends React.Component <{
               return (
                 <PaymentCell payment={payment} key={i} />
               );
-            })};
+            })}
           </div>
           <Footer />
         </Container>
