@@ -31,7 +31,13 @@ export default class Home extends React.Component <{
         <Header />
         <Container>
           <ContractInfo />
-          <BalanceCell address={this.props.ethereumStore.activeAddress} />
+          {
+            this.props.ethereumStore.authenticated()
+            ?
+            <BalanceCell address={this.props.ethereumStore.activeAddress} />
+            :
+            null
+          }
           <CreatePayment />
           <HeaderText>
             Payments
