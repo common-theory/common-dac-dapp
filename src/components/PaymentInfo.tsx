@@ -3,7 +3,7 @@ import { Payment } from '../stores/Syndicate';
 import TimerDisplay from './TimerDisplay';
 import WeiDisplay from './WeiDisplay';
 import SyndicateStore from '../stores/Syndicate';
-import { HFlex } from './Shared';
+import { HFlex, VFlex } from './Shared';
 import { inject, observer } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import AddressDisplay from './AddressDisplay';
@@ -36,16 +36,23 @@ export default class PaymentInfo extends React.Component<{
       <Container>
         <HFlex>
           <AddressDisplay address={this.props.payment.sender} />
-          <ion-icon size="medium" name="arrow-round-forward" />
+          <VFlex>
+            <HFlex>
+              <WeiDisplay showUSD={false} wei={this.props.payment.weiValue} />
+            </HFlex>
+            <HFlex>
+              <ion-icon size="medium" name="arrow-round-forward" />
+            </HFlex>
+            <HFlex>
+              <TimerDisplay seconds={+this.props.payment.time} />
+            </HFlex>
+          </VFlex>
           <AddressDisplay address={this.props.payment.receiver} />
         </HFlex>
-        Time: <TimerDisplay seconds={+this.props.payment.time} />
         <br />
-        Total Value: <WeiDisplay wei={this.props.payment.weiValue} />
+        Settled: <WeiDisplay wei={this.props.payment.weiPaid} />
         <br />
-        Total Paid: <WeiDisplay wei={this.props.payment.weiPaid} />
-        <br />
-        Total Available: <WeiDisplay wei={this.props.payment.weiOwed} />
+        Owed: <WeiDisplay wei={this.props.payment.weiOwed} />
         {
           this.props.payment.settled ? null : (
             <>
