@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { HFlex, VFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { GrayContainer, HFlex, VFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import styled from 'styled-components';
 import SyndicateStore, { Payment } from '../stores/Syndicate';
 import EthereumStore from '../stores/Ethereum';
@@ -40,7 +40,9 @@ export default class PaymentCell extends React.Component <{
     return (
       <HFlex>
         <VFlex>
-          <PaymentInfo payment={this.props.payment} />
+          <GrayContainer>
+            <PaymentInfo payment={this.props.payment} />
+          </GrayContainer>
         </VFlex>
         <VFlex>
           <ForkControls payment={this.props.payment} />

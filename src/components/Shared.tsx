@@ -50,3 +50,9 @@ export const VFlex = styled.div`
   align-items: center;
   justify-content: space-evenly;
 `;
+
+export const GrayContainer = styled.div`
+  background-color: #EEE;
+  padding: 4px;
+  margin: 4px;
+`;
