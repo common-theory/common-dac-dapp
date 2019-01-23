@@ -11,6 +11,12 @@ export default class BalanceCell extends React.Component<{
   syndicateStore?: SyndicateStore
 }> {
 
+  componentDidMount() {
+    if (this.props.address) {
+      this.props.syndicateStore.loadBalance(this.props.address);
+    }
+  }
+
   componentDidUpdate(oldProps: { address: string }) {
     if (oldProps.address !== this.props.address) {
       this.props.syndicateStore.loadBalance(this.props.address);
