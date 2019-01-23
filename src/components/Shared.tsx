@@ -40,7 +40,6 @@ export const BlockFooter = styled.div`
 export const HFlex = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 2px;
   align-items: center;
   justify-content: space-evenly;
 `;
@@ -48,4 +47,6 @@ export const HFlex = styled.div`
 export const VFlex = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 `;
