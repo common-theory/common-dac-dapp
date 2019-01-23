@@ -1,5 +1,5 @@
 import React from 'react';
-import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
+import { VFlex, InternalCell, BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
 import { observer, inject } from 'mobx-react';
 import SyndicateStore from '../stores/Syndicate';
 import WeiDisplay from './WeiDisplay';
@@ -30,12 +30,14 @@ export default class BalanceCell extends React.Component<{
           My Balance
         </BlockHeader>
         <BlockElement>
-          <p>
-            <WeiDisplay wei={this.props.syndicateStore.balances[this.props.address] || '0'} />
-          </p>
-          <button type="button" onClick={() => {
-            this.props.syndicateStore.withdraw(this.props.address);
-          }}>Withdraw</button>
+          <InternalCell>
+            <VFlex>
+              <WeiDisplay wei={this.props.syndicateStore.balances[this.props.address] || '0'} />
+              <button type="button" onClick={() => {
+                this.props.syndicateStore.withdraw(this.props.address);
+              }}>Withdraw</button>
+            </VFlex>
+          </InternalCell>
         </BlockElement>
         <BlockFooter />
       </BlockContainer>

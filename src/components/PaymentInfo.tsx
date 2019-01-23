@@ -42,7 +42,7 @@ export default class PaymentInfo extends React.Component<{
             <AddressDisplay address={this.props.payment.sender} />
             <VFlex>
               <HFlex>
-                <WeiDisplay showUSD={false} wei={this.props.payment.weiValue} />
+                <WeiDisplay wei={this.props.payment.weiValue} />
               </HFlex>
               <HFlex>
                 <ProgressBar percent={percent} />
@@ -57,13 +57,15 @@ export default class PaymentInfo extends React.Component<{
         <br />
         <InternalCell>
           <VFlex>
-            Available: <WeiDisplay wei={this.props.payment.weiOwed} />
-            <br />
-            Settled: <WeiDisplay wei={this.props.payment.weiPaid} />
+            <span>
+              Available: <WeiDisplay wei={this.props.payment.weiOwed} />
+            </span>
+            <span>
+              Settled: <WeiDisplay wei={this.props.payment.weiPaid} />
+            </span>
             {
               this.props.payment.settled ? null : (
                 <>
-                  <br />
                   <button type="button" onClick={() => {
                     this.props.ethereumStore.assertAuthenticated();
                     this.props.syndicateStore.settlePayment(

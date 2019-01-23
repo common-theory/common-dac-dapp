@@ -22,7 +22,7 @@ export default class ForkControls extends React.Component <{
   render() {
     return (
       <InternalCell>
-        Max Forkable Value: <WeiDisplay showUSD={false} wei={+this.props.payment.weiValue - +this.props.payment.weiPaid} />
+        Max Forkable Value: <WeiDisplay wei={+this.props.payment.weiValue - +this.props.payment.weiPaid} />
         <br />
         Amount:
         <WeiField onChange={weiValue => this.setState({ weiValue })} />
