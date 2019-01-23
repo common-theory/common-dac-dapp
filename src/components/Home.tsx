@@ -10,6 +10,7 @@ import SyndicateStore from '../stores/Syndicate';
 import Footer from './Footer';
 import BalanceCell from './BalanceCell';
 import EthereumStore from '../stores/Ethereum';
+import MetamaskCell from './MetamaskCell';
 
 const HeaderText = styled.div`
   font-family: Helvetica;
@@ -41,7 +42,7 @@ export default class Home extends React.Component <{
               </>
             )
             :
-            null
+            <MetamaskCell />
           }
           <HeaderText>
             Payments
