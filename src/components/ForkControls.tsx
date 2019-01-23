@@ -6,7 +6,7 @@ import WeiDisplay from './WeiDisplay';
 import AddressField from './AddressField';
 import SyndicateStore from '../stores/Syndicate';
 import WeiField from './WeiField';
-import { GrayContainer } from './Shared';
+import { InternalCell } from './Shared';
 
 @inject('ethereumStore', 'syndicateStore')
 @observer
@@ -21,7 +21,7 @@ export default class ForkControls extends React.Component <{
   };
   render() {
     return (
-      <GrayContainer>
+      <InternalCell>
         Max Forkable Value: <WeiDisplay showUSD={false} wei={+this.props.payment.weiValue - +this.props.payment.weiPaid} />
         <br />
         Amount:
@@ -42,7 +42,7 @@ export default class ForkControls extends React.Component <{
             this.state.weiValue
           );
         }}>Fork Payment</button>
-      </GrayContainer>
+      </InternalCell>
     );
   }
 }

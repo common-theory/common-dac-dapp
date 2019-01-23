@@ -54,8 +54,8 @@ export const VFlex = styled.div`
   line-height: 150%;
 `;
 
-export const GrayContainer = styled.div`
-  background-color: #EEE;
+export const InternalCell = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 4px;
   padding: 4px;
   margin: 4px;
   border-radius: 8px;

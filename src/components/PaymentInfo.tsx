@@ -3,7 +3,7 @@ import { Payment } from '../stores/Syndicate';
 import TimerDisplay from './TimerDisplay';
 import WeiDisplay from './WeiDisplay';
 import SyndicateStore from '../stores/Syndicate';
-import { HFlex, VFlex, GrayContainer } from './Shared';
+import { HFlex, VFlex, InternalCell } from './Shared';
 import { inject, observer } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import AddressDisplay from './AddressDisplay';
@@ -37,7 +37,7 @@ export default class PaymentInfo extends React.Component<{
     const percent = 100 * (+payment.time - +payment.timeRemaining) / +payment.time;
     return (
       <Container>
-        <GrayContainer>
+        <InternalCell>
           <HFlex>
             <AddressDisplay address={this.props.payment.sender} />
             <VFlex>
@@ -53,9 +53,9 @@ export default class PaymentInfo extends React.Component<{
             </VFlex>
             <AddressDisplay address={this.props.payment.receiver} />
           </HFlex>
-        </GrayContainer>
+        </InternalCell>
         <br />
-        <GrayContainer>
+        <InternalCell>
           <VFlex>
             Owed: <WeiDisplay wei={this.props.payment.weiOwed} />
             <br />
@@ -75,7 +75,7 @@ export default class PaymentInfo extends React.Component<{
               )
             }
           </VFlex>
-        </GrayContainer>
+        </InternalCell>
       </Container>
     );
   }
