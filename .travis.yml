@@ -18,4 +18,4 @@ jobs:
       script: npm run build:production
     - stage: deploy
       if: branch = master
-      script: ./scripts/deploy.sh
+      script: source ./scripts/deploy.sh
