@@ -20,6 +20,13 @@ export default class PaymentInfo extends React.Component<{
   ethereumStore?: EthereumStore,
   syndicateStore?: SyndicateStore
 }> {
+  /**
+   * This breaks mobx @observer; that should be alright as the PaymentCell
+   * updates every second (so we don't need to have events pushed to us)
+   *
+   * If this is used in a non-autoupdating component this will need to be
+   * refactored.
+   **/
   shouldComponentUpdate() {
     return true;
   }
