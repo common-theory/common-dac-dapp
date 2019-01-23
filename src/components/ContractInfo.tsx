@@ -3,7 +3,6 @@ import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared
 import { observer, inject } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
-import Colors from './Colors';
 
 @inject('ethereumStore', 'syndicateStore')
 @observer
@@ -37,7 +36,7 @@ export default class ContractInfo extends React.Component <{
             </div>
             <div style={{
               display: 'inline-block',
-              backgroundColor: Colors.black(),
+              backgroundColor: '#000',
               borderRadius: 20,
               margin: 8,
               padding: 12,
