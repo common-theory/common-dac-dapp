@@ -33,7 +33,7 @@ export default class ForkControls extends React.Component <{
     // if (this.props.payment.receiver !== this.props.ethereumStore.activeAddress) return null;
     return (
       <Container>
-        Max Forkable Value: <WeiDisplay wei={+this.props.payment.weiValue - +this.props.payment.weiOwed} />
+        Max Forkable Value: <WeiDisplay wei={+this.props.payment.weiValue - +this.props.payment.weiPaid} />
         <br />
         Fork to address:
         <AddressField
