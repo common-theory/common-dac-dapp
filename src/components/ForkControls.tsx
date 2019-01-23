@@ -5,8 +5,8 @@ import { inject, observer } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import WeiDisplay from './WeiDisplay';
 import AddressField from './AddressField';
-import web3 from 'web3';
 import SyndicateStore from '../stores/Syndicate';
+import AmountField from './AmountField';
 
 const Container = styled.div`
   background-color: #EEE;
@@ -21,7 +21,7 @@ export default class ForkControls extends React.Component <{
 }> {
   state = {
     toAddress: '',
-    amount: '0'
+    weiValue: '0'
   };
   shouldComponentUpdate() {
     return true;
@@ -42,24 +42,15 @@ export default class ForkControls extends React.Component <{
         />
         <br />
         Amount:
-        <input
-          type="number"
-          name="amount"
-          step="any"
-          min="0"
-          onChange={event => this.setState({
-            amount: event.target.value.toString() || '0'
-          })}
-          value={this.state.amount}
-        />
-        <WeiDisplay wei={web3.utils.toWei(this.state.amount.toString())} />
+        <AmountField onChange={weiValue => this.setState({ weiValue })} />
+        <WeiDisplay wei={this.state.weiValue} />
         <br />
         <button type="button" onClick={() => {
           this.props.syndicateStore.paymentFork(
             this.props.ethereumStore.activeAddress,
             this.props.payment.index,
             this.state.toAddress,
-            web3.utils.toWei(this.state.amount.toString())
+            this.state.weiValue
           );
         }}>Fork Payment</button>
       </Container>

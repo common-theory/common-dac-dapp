@@ -6,6 +6,8 @@ import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
 import GDAXStore from '../stores/GDAX';
 import AddressField from './AddressField';
+import WeiDisplay from './WeiDisplay';
+import AmountField from './AmountField';
 
 @inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
@@ -17,12 +19,12 @@ export default class CreatePayment extends React.Component <{
 
   state: {
     toAddress: string,
-    amount: number,
+    weiValue: number|string,
     timeUnit: 'seconds' | 'minutes' | 'hours' | 'days' | 'months',
     time: number
   } = {
     toAddress: '',
-    amount: 0,
+    weiValue: 0,
     timeUnit: 'seconds',
     time: 0
   };
@@ -33,12 +35,11 @@ export default class CreatePayment extends React.Component <{
       alert('No active Ethereum account detected!');
       return;
     }
-    const weiAmount = web3.utils.toWei(this.state.amount, 'ether');
     this.props.syndicateStore.deposit(
       this.props.ethereumStore.activeAddress,
       this.state.toAddress,
       this.timeInSeconds(),
-      weiAmount
+      this.state.weiValue
     )
       .then(this.resetForm)
       .catch((err: any) => {
@@ -95,18 +96,13 @@ export default class CreatePayment extends React.Component <{
             <br />
             <label>
               Amount:
-              <input
-                type="number"
-                name="amount"
-                step="any"
-                min="0"
-                onChange={event => this.setState({
-                  amount: event.target.value
+              <AmountField
+                onChange={weiValue => this.setState({
+                  weiValue
                 })}
-                value={this.state.amount}
               />
             </label>
-            {` ether ~= $${Math.round(1e2 * this.state.amount * this.props.gdaxStore.ethPrice) / 1e2}`}
+            <WeiDisplay wei={this.state.weiValue} />
             <br />
             <label>
               Time:

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const AddressInput = styled.input`
+  margin: 4px;
   font-family: Helvetica;
   width: 44ch;
   border-radius: 3px;
@@ -10,7 +11,6 @@ const AddressInput = styled.input`
 
 export default class AddressField extends React.Component<{
   address: string,
-  isAddressValid: boolean
   onChange: (newAddress: string) => void
 }> {
   state = {
@@ -27,12 +27,12 @@ export default class AddressField extends React.Component<{
   renderAddressValidity() {
     if (!this.props.address) return null;
     if (this.state.isAddressValid) {
-      return ' Valid Address';
+      return 'Valid Address';
     } else {
-      return ' Invalid Address';
+      return 'Invalid Address';
     }
   }
-  
+
   render() {
     return (
       <>
