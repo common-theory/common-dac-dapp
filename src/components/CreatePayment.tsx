@@ -7,6 +7,7 @@ import GDAXStore from '../stores/GDAX';
 import AddressField from './AddressField';
 import WeiDisplay from './WeiDisplay';
 import WeiField from './WeiField';
+import TextInput from './TextInput';
 
 @inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
@@ -105,10 +106,7 @@ export default class CreatePayment extends React.Component <{
             <br />
             <label>
               Time:
-              <input
-                type="number"
-                name="time"
-                min="0"
+              <TextInput
                 onChange={event => this.setState({
                   time: event.target.value
                 })}
