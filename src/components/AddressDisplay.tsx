@@ -10,7 +10,7 @@ export default class AddressDisplay extends React.Component<{
   ethereumStore?: EthereumStore
 }> {
   render() {
-    const DISPLAY_LENGTH = 8;
+    const DISPLAY_LENGTH = 7;
     const formatted = this.props.address.indexOf('0x') === 0
       ? this.props.address.slice(0, DISPLAY_LENGTH)
       : this.props.address.slice(2, DISPLAY_LENGTH + 2);
