@@ -49,11 +49,28 @@ export default class PaymentCell extends React.Component <{
     );
   };
 
+  renderHeaderText = () => {
+    if (this.props.payment.settled) {
+      return (
+        <HFlex>
+          <TextSpan>Payment {this.props.payment.index} - </TextSpan>
+          <ion-icon color="primary" size="medium" name="checkmark-circle" />
+          <TextSpan> - Completed</TextSpan>
+        </HFlex>
+      );
+    }
+    return (
+      <HFlex>
+        <TextSpan>Payment {this.props.payment.index} - {`${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
+      </HFlex>
+    );
+  };
+
   render() {
     return (
       <BlockContainer>
         <BlockHeader>
-          <TextSpan>Payment {this.props.payment.index} - {this.props.payment.settled ? 'settled' : `${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
+          {this.renderHeaderText()}
         </BlockHeader>
         <BlockElement>
           {
