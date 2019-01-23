@@ -13,7 +13,7 @@ fi
 npm run build:production
 
 # Install jsipfs
-npm i -g ipfs cidhook dnslink
+npm i -g ipfs
 
 # Start a local IPFS node
 jsipfs init
@@ -26,12 +26,11 @@ OLD_CID=$(jsipfs dns commontheory.io)
 # Load the new CID by adding it to the local IPFS node
 NEW_CID=$(jsipfs add -Qr ./static)
 
-echo $CIDHOOK_SECRET
 # Unpin the old version
-cidhook cidhookd.commontheory.io $OLD_CID unpin
+npx cidhook cidhookd.commontheory.io $OLD_CID unpin
 
 # Pin the new version
-cidhook cidhookd.commontheory.io $NEW_CID
+npx cidhook cidhookd.commontheory.io $NEW_CID
 
 # Update the DNS record
-dnslink update commontheory.io $NEW_CID
+npx dnslink update commontheory.io $NEW_CID
