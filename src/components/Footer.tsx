@@ -18,7 +18,7 @@ export default class Footer extends React.Component {
   render() {
     return (
       <Container>
-        <FooterLink href="https://github.com/common-theory" target="_blank">
+        <FooterLink href="https://github.com/common-theory/contracts" target="_blank">
           <GithubLogo />
         </FooterLink>
         <FooterLink href="https://discord.gg/4FFVg8a" target="_blank">
