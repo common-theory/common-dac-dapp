@@ -21,12 +21,12 @@ export default class CreatePayment extends React.Component <{
     toAddress: string,
     weiValue: number|string,
     timeUnit: 'seconds' | 'minutes' | 'hours' | 'days' | 'months',
-    time: number
+    time: number|string
   } = {
     toAddress: '',
     weiValue: 0,
-    timeUnit: 'seconds',
-    time: 0
+    timeUnit: 'days',
+    time: ''
   };
 
   createPayment = (e: any) => {
@@ -107,6 +107,7 @@ export default class CreatePayment extends React.Component <{
             <label>
               Time:
               <TextInput
+                placeholder={'10'}
                 onChange={event => this.setState({
                   time: event.target.value
                 })}

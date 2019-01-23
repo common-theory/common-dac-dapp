@@ -10,6 +10,11 @@ export class Payment {
   time: string|number|BN;
   weiValue: string|number|BN;
   weiPaid: string|number|BN;
+  isFork: boolean;
+  parentIndex: string|number|BN;
+  isForked: boolean;
+  fork1Index: string|number|BN;
+  fork2Index: string|number|BN;
 
   constructor(obj: any) {
     this.index = obj.index;
@@ -19,6 +24,11 @@ export class Payment {
     this.time = obj.time;
     this.weiValue = obj.weiValue;
     this.weiPaid = obj.weiPaid;
+    this.isFork = obj.isFork;
+    this.parentIndex = obj.parentIndex;
+    this.isForked = obj.isForked;
+    this.fork1Index = obj.fork1Index;
+    this.fork2Index = obj.fork2Index;
   }
 
   get weiOwed() {
@@ -115,7 +125,6 @@ export default class SyndicateStore {
     this.payments = [...(await Promise.all(promises)), ...this.payments]
       .filter((payment: Payment) => {
         if (loadedIndexes[payment.index]) return false;
-        if (+payment.weiValue === 0) return false;
         loadedIndexes[payment.index] = true;
         return loadedIndexes;
       })
@@ -155,6 +164,7 @@ export default class SyndicateStore {
       from,
       gas: 500000
     });
+    await this.loadPayments(index, 1);
   }
 
   async withdraw(from: string) {
@@ -181,7 +191,7 @@ export default class SyndicateStore {
     if (networkId === 1) {
       return '0x73c032996faee66e9970fd09621da92d8be4fff6';
     } else if (networkId === 4) {
-      return '0x3ddc5487ff4865ab4292e7bc5acca64a60c89488';
+      return '0x296c6bc0bba6120e447ac3e881b07c3585136491';
     } else {
       throw new Error(`Invalid networkId: ${networkId} supplied to addressForNetwork`);
     }

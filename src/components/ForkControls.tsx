@@ -24,10 +24,6 @@ export default class ForkControls extends React.Component <{
     toAddress: '',
     weiValue: '0'
   };
-  shouldComponentUpdate() {
-    return true;
-  }
-
   render() {
     return (
       <Container>

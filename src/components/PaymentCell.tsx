@@ -32,6 +32,23 @@ export default class PaymentCell extends React.Component <{
     clearTimeout(this.timer);
   }
 
+  renderForked = () => {
+    return `Payment forked to payments ${this.props.payment.fork1Index} and ${this.props.payment.fork2Index}.`;
+  };
+
+  renderUnforked = () => {
+    return (
+      <HFlex>
+        <VFlex>
+          <PaymentInfo payment={this.props.payment} />
+        </VFlex>
+        <VFlex>
+          <ForkControls payment={this.props.payment} />
+        </VFlex>
+      </HFlex>
+    );
+  };
+
   render() {
     return (
       <BlockContainer>
@@ -39,14 +56,13 @@ export default class PaymentCell extends React.Component <{
           <TextSpan>Payment {this.props.payment.index} - {this.props.payment.settled ? 'settled' : `${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
         </BlockHeader>
         <BlockElement>
-          <HFlex>
-            <VFlex>
-              <PaymentInfo payment={this.props.payment} />
-            </VFlex>
-            <VFlex>
-              <ForkControls payment={this.props.payment} />
-            </VFlex>
-          </HFlex>
+          {
+            this.props.payment.isForked
+            ?
+            this.renderForked()
+            :
+            this.renderUnforked()
+          }
         </BlockElement>
         <BlockFooter>
         </BlockFooter>
