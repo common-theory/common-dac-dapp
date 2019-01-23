@@ -8,6 +8,7 @@ import { inject, observer } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import AddressDisplay from './AddressDisplay';
 import styled from 'styled-components';
+import ProgressBar from './ProgressBar';
 
 const Container = styled.div`
   min-width: 400px;
@@ -32,6 +33,8 @@ export default class PaymentInfo extends React.Component<{
   }
 
   render() {
+    const { payment } = this.props;
+    const percent = 100 * (+payment.time - +payment.timeRemaining) / +payment.time;
     return (
       <Container>
         <GrayContainer>
@@ -42,7 +45,7 @@ export default class PaymentInfo extends React.Component<{
                 <WeiDisplay showUSD={false} wei={this.props.payment.weiValue} />
               </HFlex>
               <HFlex>
-                <ion-icon size="medium" name="arrow-round-forward" />
+                <ProgressBar percent={percent} />
               </HFlex>
               <HFlex>
                 <TimerDisplay seconds={+this.props.payment.time} />
