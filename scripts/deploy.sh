@@ -34,3 +34,5 @@ npx cidhook cidhookd.commontheory.io $NEW_CID
 
 # Update the DNS record
 npx dnslink update commontheory.io $NEW_CID
+
+wget commontheory.io
