@@ -1,6 +1,5 @@
 import React from 'react';
 import { Payment } from '../stores/Syndicate';
-import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import WeiDisplay from './WeiDisplay';
@@ -23,7 +22,7 @@ export default class ForkControls extends React.Component <{
   render() {
     return (
       <GrayContainer>
-        Max Forkable Value: <WeiDisplay wei={+this.props.payment.weiValue - +this.props.payment.weiPaid} />
+        Max Forkable Value: <WeiDisplay showUSD={false} wei={+this.props.payment.weiValue - +this.props.payment.weiPaid} />
         <br />
         Amount:
         <WeiField onChange={weiValue => this.setState({ weiValue })} />
