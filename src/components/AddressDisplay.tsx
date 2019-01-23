@@ -1,6 +1,12 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
+import styled from 'styled-components';
+
+const DarkLink = styled.a`
+  color: black;
+  font-family: 'Helvetica';
+`;
 
 @inject('ethereumStore')
 @observer
@@ -15,9 +21,9 @@ export default class AddressDisplay extends React.Component<{
       : this.props.address.slice(2, DISPLAY_LENGTH + 2);
     return (
       <>
-        <a href={this.props.ethereumStore.etherscanUrl(this.props.address)} target="_blank">
+        <DarkLink href={this.props.ethereumStore.etherscanUrl(this.props.address)} target="_blank">
           {formatted}
-        </a>
+        </DarkLink>
       </>
     );
   }
