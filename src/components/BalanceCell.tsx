@@ -21,12 +21,9 @@ export default class BalanceCell extends React.Component<{
     return (
       <BlockContainer>
         <BlockHeader>
-          User Balance
+          My Balance
         </BlockHeader>
         <BlockElement>
-          <p>
-            Your available contract balance. Payments to your address are settled to here.
-          </p>
           <p>
             <WeiDisplay wei={this.props.syndicateStore.balances[this.props.address] || '0'} />
           </p>
