@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { GithubLogo, DiscordLogo } from './Shared';
 
 const Container = styled.div`
   margin-top: 16px;
@@ -13,19 +14,15 @@ const FooterLink = styled.a`
   margin: 8px;
 `;
 
-const DarkImage = styled.img`
-  filter: brightness(0.1);
-`;
-
 export default class Footer extends React.Component {
   render() {
     return (
       <Container>
         <FooterLink href="https://github.com/common-theory" target="_blank">
-          <DarkImage title="common-theory source code" src="./github-logo-white.png" width="40px" height="40px" />
+          <GithubLogo />
         </FooterLink>
         <FooterLink href="https://discord.gg/4FFVg8a" target="_blank">
-          <DarkImage title="discord" src="./discord-logo-white.png" width="40px" height="40px" />
+          <DiscordLogo />
         </FooterLink>
       </Container>
     );
