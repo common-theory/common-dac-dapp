@@ -33,7 +33,7 @@ export default class PaymentCell extends React.Component <{
   }
 
   renderForked = () => {
-    return `Payment forked to payments ${this.props.payment.fork1Index} and ${this.props.payment.fork2Index}.`;
+    return `Forked to payments ${this.props.payment.fork1Index} and ${this.props.payment.fork2Index}.`;
   };
 
   renderUnforked = () => {
