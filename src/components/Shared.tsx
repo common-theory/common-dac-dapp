@@ -57,4 +57,5 @@ export const GrayContainer = styled.div`
   background-color: #EEE;
   padding: 4px;
   margin: 4px;
+  border-radius: 8px;
 `;
