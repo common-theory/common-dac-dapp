@@ -59,3 +59,8 @@ export const GrayContainer = styled.div`
   margin: 4px;
   border-radius: 8px;
 `;
+
+export const DarkLink = styled.a`
+  color: black;
+  font-family: Helvetica;
+`;
