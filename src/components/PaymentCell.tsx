@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { HFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { HFlex, VFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import styled from 'styled-components';
 import SyndicateStore, { Payment } from '../stores/Syndicate';
 import EthereumStore from '../stores/Ethereum';
@@ -39,8 +39,14 @@ export default class PaymentCell extends React.Component <{
           <TextSpan>Payment {this.props.payment.index} - {this.props.payment.settled ? 'settled' : `${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
         </BlockHeader>
         <BlockElement>
-          <PaymentInfo payment={this.props.payment} />
-          <ForkControls payment={this.props.payment} />
+          <HFlex>
+            <VFlex>
+              <PaymentInfo payment={this.props.payment} />
+            </VFlex>
+            <VFlex>
+              <ForkControls payment={this.props.payment} />
+            </VFlex>
+          </HFlex>
         </BlockElement>
         <BlockFooter>
         </BlockFooter>

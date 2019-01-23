@@ -7,6 +7,11 @@ import { HFlex } from './Shared';
 import { inject, observer } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import AddressDisplay from './AddressDisplay';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  min-width: 400px;
+`;
 
 @inject('ethereumStore', 'syndicateStore')
 @observer
@@ -21,7 +26,7 @@ export default class PaymentInfo extends React.Component<{
 
   render() {
     return (
-      <>
+      <Container>
         <HFlex>
           <AddressDisplay address={this.props.payment.sender} />
           <ion-icon size="medium" name="arrow-round-forward" />
@@ -48,7 +53,7 @@ export default class PaymentInfo extends React.Component<{
             </>
           )
         }
-      </>
+      </Container>
     );
   }
 }

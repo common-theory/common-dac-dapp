@@ -44,3 +44,8 @@ export const HFlex = styled.div`
   align-items: center;
   justify-content: space-evenly;
 `;
+
+export const VFlex = styled.div`
+  display: flex;
+  flex-direction: column;
+`;

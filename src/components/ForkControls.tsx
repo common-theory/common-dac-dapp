@@ -10,6 +10,7 @@ import WeiField from './WeiField';
 
 const Container = styled.div`
   background-color: #EEE;
+  padding: 4px;
 `;
 
 @inject('ethereumStore', 'syndicateStore')
@@ -28,9 +29,6 @@ export default class ForkControls extends React.Component <{
   }
 
   render() {
-    if (this.props.payment.settled) return null;
-    // Temporarily show forking logic for all users
-    // if (this.props.payment.receiver !== this.props.ethereumStore.activeAddress) return null;
     return (
       <Container>
         Max Forkable Value: <WeiDisplay wei={+this.props.payment.weiValue - +this.props.payment.weiPaid} />
