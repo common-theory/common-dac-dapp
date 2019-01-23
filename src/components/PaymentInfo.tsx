@@ -51,11 +51,11 @@ export default class PaymentInfo extends React.Component<{
         </HFlex>
         <br />
         Settled: <WeiDisplay wei={this.props.payment.weiPaid} />
-        <br />
-        Owed: <WeiDisplay wei={this.props.payment.weiOwed} />
         {
           this.props.payment.settled ? null : (
             <>
+              <br />
+              Owed: <WeiDisplay wei={this.props.payment.weiOwed} />
               <br />
               <button type="button" onClick={() => {
                 this.props.ethereumStore.assertAuthenticated();
