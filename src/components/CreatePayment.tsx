@@ -1,13 +1,12 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
-import styled from 'styled-components';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
 import GDAXStore from '../stores/GDAX';
 import AddressField from './AddressField';
 import WeiDisplay from './WeiDisplay';
-import AmountField from './AmountField';
+import WeiField from './WeiField';
 
 @inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
@@ -96,7 +95,7 @@ export default class CreatePayment extends React.Component <{
             <br />
             <label>
               Amount:
-              <AmountField
+              <WeiField
                 onChange={weiValue => this.setState({
                   weiValue
                 })}
@@ -132,7 +131,7 @@ export default class CreatePayment extends React.Component <{
               </select>
             </label>
             <br />
-            <input type="submit" value="Send" />
+            <input type="submit" value="Create" />
           </form>
         </BlockElement>
         <BlockFooter>

@@ -1,15 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
+import TextInput from './TextInput';
 
-const AmountInput = styled.input`
-  margin: 4px;
-  font-family: Helvetica;
-  width: 44ch;
-  border-radius: 3px;
-  border: 1px solid black;
-`;
-
-export default class AmountField extends React.Component<{
+export default class WeiField extends React.Component<{
   onChange: (newWeiValue: string) => void
 }> {
   state = {
@@ -23,7 +15,7 @@ export default class AmountField extends React.Component<{
   };
   render() {
     return (
-      <AmountInput
+      <TextInput
         placeholder="0.5"
         name="amount"
         onChange={event => this.amountChanged(event.target.value)}

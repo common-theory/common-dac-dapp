@@ -6,7 +6,7 @@ import EthereumStore from '../stores/Ethereum';
 import WeiDisplay from './WeiDisplay';
 import AddressField from './AddressField';
 import SyndicateStore from '../stores/Syndicate';
-import AmountField from './AmountField';
+import WeiField from './WeiField';
 
 const Container = styled.div`
   background-color: #EEE;
@@ -42,7 +42,7 @@ export default class ForkControls extends React.Component <{
         />
         <br />
         Amount:
-        <AmountField onChange={weiValue => this.setState({ weiValue })} />
+        <WeiField onChange={weiValue => this.setState({ weiValue })} />
         <WeiDisplay wei={this.state.weiValue} />
         <br />
         <button type="button" onClick={() => {

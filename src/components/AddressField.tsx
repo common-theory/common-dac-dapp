@@ -1,13 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const AddressInput = styled.input`
-  margin: 4px;
-  font-family: Helvetica;
-  width: 44ch;
-  border-radius: 3px;
-  border: 1px solid black;
-`;
+import TextInput from './TextInput';
 
 export default class AddressField extends React.Component<{
   address: string,
@@ -36,7 +28,7 @@ export default class AddressField extends React.Component<{
   render() {
     return (
       <>
-        <AddressInput
+        <TextInput
           placeholder="0x7726A9b0E93dE68bf24d40b37F6D0DC4e4caF47C"
           name="address"
           onChange={event => this.addressChanged(event.target.value)}
