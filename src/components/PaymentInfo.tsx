@@ -54,9 +54,9 @@ export default class PaymentInfo extends React.Component<{
         <br />
         <GrayContainer>
           <VFlex>
-            Settled: <WeiDisplay wei={this.props.payment.weiPaid} />
-            <br />
             Owed: <WeiDisplay wei={this.props.payment.weiOwed} />
+            <br />
+            Settled: <WeiDisplay wei={this.props.payment.weiPaid} />
             {
               this.props.payment.settled ? null : (
                 <>

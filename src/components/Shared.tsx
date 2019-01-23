@@ -49,6 +49,8 @@ export const VFlex = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  text-align: center;
+  line-height: 150%;
 `;
 
 export const GrayContainer = styled.div`
