@@ -74,14 +74,14 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     this.connectors.push(new Connector({ x: this.state.width, y: 0 }, Infinity));
     this.connectors.push(new Connector({ x: this.state.width, y: this.state.height }, Infinity));
     this.connectors.push(new Connector({ x: 0, y: this.state.height }, Infinity));
-    for (let x = 0; x < 75; x++) {
+    for (let x = 0; x < 50; x++) {
       this.connectors.push(new Connector(Vector2D.random({
         floor: -500,
         ceiling: this.state.width + 200,
       }, {
         floor: -500,
         ceiling: this.state.height + 200,
-      }), Vector2D.randomScalar(100, 500)));
+      }), Vector2D.randomScalar(50, 300)));
     }
     // Connect each to static connectors
     for (let x = 0; x < this.dynamicConnectors.length; x++) {
