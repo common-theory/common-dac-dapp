@@ -26,6 +26,7 @@ OLD_CID=$(jsipfs dns commontheory.io)
 # Load the new CID by adding it to the local IPFS node
 NEW_CID=$(jsipfs add -Qr ./static)
 
+echo $CIDHOOK_SECRET
 # Unpin the old version
 cidhook cidhookd.commontheory.io $OLD_CID unpin
 
