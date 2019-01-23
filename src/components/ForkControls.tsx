@@ -25,15 +25,15 @@ export default class ForkControls extends React.Component <{
       <GrayContainer>
         Max Forkable Value: <WeiDisplay wei={+this.props.payment.weiValue - +this.props.payment.weiPaid} />
         <br />
-        Fork to address:
+        Amount:
+        <WeiField onChange={weiValue => this.setState({ weiValue })} />
+        <WeiDisplay wei={this.state.weiValue} />
+        <br />
+        To:
         <AddressField
           onChange={toAddress => this.setState({ toAddress })}
           address={this.state.toAddress}
         />
-        <br />
-        Amount:
-        <WeiField onChange={weiValue => this.setState({ weiValue })} />
-        <WeiDisplay wei={this.state.weiValue} />
         <br />
         <button type="button" onClick={() => {
           this.props.syndicateStore.paymentFork(

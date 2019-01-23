@@ -67,7 +67,7 @@ export default class PaymentInfo extends React.Component<{
                       this.props.ethereumStore.activeAddress,
                       this.props.payment.index
                     );
-                  }}>Settle</button>
+                  }}>Settle Payment</button>
                 </>
               )
             }
