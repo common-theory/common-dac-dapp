@@ -28,7 +28,7 @@ export default class WeiDisplay extends React.Component <{
         on="hover"
       >
         <>
-          {`$${usdValue} @ Coinbase`}
+          {`$${usdValue} @ $${this.props.gdaxStore.ethPrice} / Ether`}
         </>
       </Popup>
     );
