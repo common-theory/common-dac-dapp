@@ -40,9 +40,7 @@ export default class PaymentCell extends React.Component <{
     return (
       <HFlex>
         <VFlex>
-          <GrayContainer>
-            <PaymentInfo payment={this.props.payment} />
-          </GrayContainer>
+          <PaymentInfo payment={this.props.payment} />
         </VFlex>
         <VFlex>
           <ForkControls payment={this.props.payment} />

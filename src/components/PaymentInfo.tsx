@@ -3,7 +3,7 @@ import { Payment } from '../stores/Syndicate';
 import TimerDisplay from './TimerDisplay';
 import WeiDisplay from './WeiDisplay';
 import SyndicateStore from '../stores/Syndicate';
-import { HFlex, VFlex } from './Shared';
+import { HFlex, VFlex, GrayContainer } from './Shared';
 import { inject, observer } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import AddressDisplay from './AddressDisplay';
@@ -34,39 +34,45 @@ export default class PaymentInfo extends React.Component<{
   render() {
     return (
       <Container>
-        <HFlex>
-          <AddressDisplay address={this.props.payment.sender} />
-          <VFlex>
-            <HFlex>
-              <WeiDisplay showUSD={false} wei={this.props.payment.weiValue} />
-            </HFlex>
-            <HFlex>
-              <ion-icon size="medium" name="arrow-round-forward" />
-            </HFlex>
-            <HFlex>
-              <TimerDisplay seconds={+this.props.payment.time} />
-            </HFlex>
-          </VFlex>
-          <AddressDisplay address={this.props.payment.receiver} />
-        </HFlex>
+        <GrayContainer>
+          <HFlex>
+            <AddressDisplay address={this.props.payment.sender} />
+            <VFlex>
+              <HFlex>
+                <WeiDisplay showUSD={false} wei={this.props.payment.weiValue} />
+              </HFlex>
+              <HFlex>
+                <ion-icon size="medium" name="arrow-round-forward" />
+              </HFlex>
+              <HFlex>
+                <TimerDisplay seconds={+this.props.payment.time} />
+              </HFlex>
+            </VFlex>
+            <AddressDisplay address={this.props.payment.receiver} />
+          </HFlex>
+        </GrayContainer>
         <br />
-        Settled: <WeiDisplay wei={this.props.payment.weiPaid} />
-        {
-          this.props.payment.settled ? null : (
-            <>
-              <br />
-              Owed: <WeiDisplay wei={this.props.payment.weiOwed} />
-              <br />
-              <button type="button" onClick={() => {
-                this.props.ethereumStore.assertAuthenticated();
-                this.props.syndicateStore.settlePayment(
-                  this.props.ethereumStore.activeAddress,
-                  this.props.payment.index
-                );
-              }}>Settle</button>
-            </>
-          )
-        }
+        <GrayContainer>
+          <VFlex>
+            Settled: <WeiDisplay wei={this.props.payment.weiPaid} />
+            <br />
+            Owed: <WeiDisplay wei={this.props.payment.weiOwed} />
+            {
+              this.props.payment.settled ? null : (
+                <>
+                  <br />
+                  <button type="button" onClick={() => {
+                    this.props.ethereumStore.assertAuthenticated();
+                    this.props.syndicateStore.settlePayment(
+                      this.props.ethereumStore.activeAddress,
+                      this.props.payment.index
+                    );
+                  }}>Settle</button>
+                </>
+              )
+            }
+          </VFlex>
+        </GrayContainer>
       </Container>
     );
   }
