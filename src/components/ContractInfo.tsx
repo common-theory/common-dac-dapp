@@ -1,8 +1,17 @@
 import React from 'react';
-import { BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
+import { InternalCell, HFlex, VFlex, BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
 import { observer, inject } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
+import styled from 'styled-components';
+
+const HLine = styled.div`
+  width: 80%;
+  height: 1px;
+  background-color: #000;
+  margin-top: 2px;
+  margin-bottom: 8px;
+`;
 
 @inject('ethereumStore', 'syndicateStore')
 @observer
@@ -30,28 +39,22 @@ export default class ContractInfo extends React.Component <{
           }}>
             Common Theory allows Ether to be paid to addresses over time. Ether sent is guaranteed to be paid and can be withdrawn with 1 second resolution.
           </p>
-          <div style={{ textAlign: 'center' }}>
-            <div>
-              Contract Address
-            </div>
-            <div style={{
-              display: 'inline-block',
-              backgroundColor: '#000',
-              borderRadius: 20,
-              margin: 8,
-              padding: 12,
-              textAlign: 'center'
-            }}>
-              <a style={{
-                color: '#fff',
-                fontFamily: 'helvetica',
-                fontWeight: 600,
-                fontSize: 16
-              }} href={this.props.ethereumStore.etherscanUrl(contractAddress)} target="_blank">
-                {contractAddress}
-              </a>
-            </div>
-          </div>
+          <VFlex>
+            <InternalCell>
+              <VFlex>
+                Contract Address
+                <HLine />
+                <a style={{
+                  color: '#000',
+                  fontFamily: 'helvetica',
+                  fontWeight: 600,
+                  fontSize: 16
+                }} href={this.props.ethereumStore.etherscanUrl(contractAddress)} target="_blank">
+                  {contractAddress}
+                </a>
+              </VFlex>
+            </InternalCell>
+          </VFlex>
         </BlockElement>
         <BlockFooter />
       </BlockContainer>
