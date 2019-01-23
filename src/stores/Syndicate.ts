@@ -74,7 +74,7 @@ export default class SyndicateStore {
     this.payments = [];
     this.paymentCount = 0;
     this.balances = {};
-    this.loadPayments(0, 10)
+    this.loadPayments(0, 100)
       .catch((err: any) => console.log('Error reloading contract: ', err));
     this.contract.events.PaymentCreated()
       .on('data', (event: any) => {
