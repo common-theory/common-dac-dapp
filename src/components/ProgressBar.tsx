@@ -10,11 +10,13 @@ const Background = styled.div`
 `;
 
 const Content = styled.div<{ percent: number }>`
+  position: relative;
   background: #18B23A;
   width: ${props => props.percent}%;
   height: 100%;
   border-radius: inherit;
   transition: width 0.2s;
+  border: 0px;
 `;
 
 export default class ProgressBar extends React.Component<{
@@ -23,7 +25,7 @@ export default class ProgressBar extends React.Component<{
   render() {
     return (
       <Background>
-        <Content percent={this.props.percent} />
+        <Content percent={Math.max(5, Math.round(this.props.percent))} />
       </Background>
     );
   }
