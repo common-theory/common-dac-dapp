@@ -61,9 +61,6 @@ export default class SyndicateStore {
   private contract: any;
   @observable payments: Payment[] = [];
   @observable paymentCount: number = 0;
-  @observable balances: {
-    [key: string]: string
-  } = {};
 
   constructor(networkId: number) {
     this.reloadContract(networkId);
@@ -73,7 +70,6 @@ export default class SyndicateStore {
     this.contract = new web3.eth.Contract(ABI, this.addressForNetwork(networkId));
     this.payments = [];
     this.paymentCount = 0;
-    this.balances = {};
     this.loadPayments(0, 100)
       .catch((err: any) => console.log('Error reloading contract: ', err));
     this.contract.events.PaymentCreated()
@@ -86,12 +82,6 @@ export default class SyndicateStore {
       .on('data', (event: any) => {
         const index = +event.returnValues.index;
         this.loadPayments(index, 1);
-      })
-      .on('error', console.log);
-    this.contract.events.BalanceUpdated()
-      .on('data', (event: any) => {
-        const address = event.returnValues.target;
-        this.loadBalance(address);
       })
       .on('error', console.log);
   }
@@ -134,18 +124,13 @@ export default class SyndicateStore {
       .reverse();
   }
 
-  async loadBalance(address: string) {
-    const balance = await this.contract.methods.balances(address).call();
-    this.balances[address] = balance;
-  }
-
   async deposit(
     from: string,
     to: string,
     time: number|string,
     weiValue: string|number
   ) {
-    return await this.contract.methods.deposit(to, time).send({
+    return await this.contract.methods.pay(to, time).send({
       from,
       value: weiValue,
       gas: 300000
@@ -165,13 +150,6 @@ export default class SyndicateStore {
       gas: 500000
     });
     await this.loadPayments(index, 1);
-  }
-
-  async withdraw(from: string) {
-    await this.contract.methods.withdraw().send({
-      from,
-      gas: 300000
-    });
   }
 
   async payment(index: number): Promise<Payment> {
