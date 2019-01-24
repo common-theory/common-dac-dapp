@@ -4,25 +4,6 @@ export default [
     "inputs": [
       {
         "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "balances",
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "",
         "type": "uint256"
       }
     ],
@@ -78,6 +59,29 @@ export default [
     "type": "function"
   },
   {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "",
+        "type": "address"
+      },
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "delegates",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -102,33 +106,21 @@ export default [
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "name": "target",
-        "type": "address"
-      }
-    ],
-    "name": "BalanceUpdated",
-    "type": "event"
-  },
-  {
     "constant": false,
     "inputs": [
       {
-        "name": "_receiver",
+        "name": "_delegate",
         "type": "address"
       },
       {
-        "name": "_time",
-        "type": "uint256"
+        "name": "delegated",
+        "type": "bool"
       }
     ],
-    "name": "deposit",
+    "name": "delegate",
     "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -139,18 +131,14 @@ export default [
         "type": "address"
       },
       {
-        "name": "_weiValue",
-        "type": "uint256"
-      },
-      {
         "name": "_time",
         "type": "uint256"
       }
     ],
-    "name": "pay",
+    "name": "paymentCreate",
     "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
+    "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -235,51 +223,24 @@ export default [
         "type": "uint256"
       }
     ],
-    "name": "assertPaymentIndexInRange",
+    "name": "requirePaymentIndexInRange",
     "outputs": [],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "constant": false,
+    "constant": true,
     "inputs": [
       {
-        "name": "target",
-        "type": "address"
-      },
-      {
-        "name": "weiValue",
-        "type": "uint256"
-      }
-    ],
-    "name": "withdraw",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [],
-    "name": "withdraw",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "target",
+        "name": "receiver",
         "type": "address"
       }
     ],
-    "name": "withdraw",
+    "name": "requireExecutionAllowed",
     "outputs": [],
     "payable": false,
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -296,4 +257,4 @@ export default [
     "stateMutability": "view",
     "type": "function"
   }
-]
+];
