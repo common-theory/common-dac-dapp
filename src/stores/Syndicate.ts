@@ -124,20 +124,20 @@ export default class SyndicateStore {
       .reverse();
   }
 
-  async deposit(
+  async paymentCreate(
     from: string,
     to: string,
     time: number|string,
     weiValue: string|number
   ) {
-    return await this.contract.methods.pay(to, time).send({
+    return await this.contract.methods.paymentCreate(to, time).send({
       from,
       value: weiValue,
       gas: 300000
     });
   }
 
-  async settlePayment(from: string, index: number) {
+  async paymentSettle(from: string, index: number) {
     await this.contract.methods.paymentSettle(index).send({
       from,
       gas: 300000

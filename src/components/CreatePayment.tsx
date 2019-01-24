@@ -35,7 +35,7 @@ export default class CreatePayment extends React.Component <{
       alert('No active Ethereum account detected!');
       return;
     }
-    this.props.syndicateStore.deposit(
+    this.props.syndicateStore.createPayment(
       this.props.ethereumStore.activeAddress,
       this.state.toAddress,
       this.timeInSeconds(),

@@ -68,7 +68,7 @@ export default class PaymentInfo extends React.Component<{
                 <>
                   <button type="button" onClick={() => {
                     this.props.ethereumStore.assertAuthenticated();
-                    this.props.syndicateStore.settlePayment(
+                    this.props.syndicateStore.paymentSettle(
                       this.props.ethereumStore.activeAddress,
                       this.props.payment.index
                     );
