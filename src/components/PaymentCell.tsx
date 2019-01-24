@@ -1,6 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { ClockIcon, CheckIcon, HFlex, VFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { ForkIcon, ClockIcon, CheckIcon, HFlex, VFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import styled from 'styled-components';
 import SyndicateStore, { Payment } from '../stores/Syndicate';
 import EthereumStore from '../stores/Ethereum';
@@ -40,10 +40,14 @@ export default class PaymentCell extends React.Component <{
   renderUnforked = () => {
     return (
       <HFlex>
-        <VFlex>
+        <VFlex style={{ flex: 1 }}>
           <PaymentInfo payment={this.props.payment} />
         </VFlex>
-        <VFlex>
+        <ForkIcon style={{
+          height: 50,
+          width: 50
+        }} />
+        <VFlex style={{ flex: 1 }}>
           <ForkControls payment={this.props.payment} />
         </VFlex>
       </HFlex>

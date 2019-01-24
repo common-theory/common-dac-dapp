@@ -3,11 +3,14 @@ import styled from 'styled-components';
 import Colors from './Colors';
 
 const Background = styled.div`
+  display: flex;
+  flex: 1;
   position: relative;
   height: 10px;
-  width: 200px;
+  min-width: 30px;
   border-radius: 50px;
   border: 1px solid #000;
+  margin: 8px;
 `;
 
 const Content = styled.div<{ percent: number }>`
