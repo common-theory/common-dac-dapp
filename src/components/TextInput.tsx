@@ -11,7 +11,7 @@ const Input = styled.input`
 
 export default (props: any) => (
   // Set an random string to get chrome to not autocomplete
-  <Input { ...props } type="none" autocomplete="rutjfkde">
+  <Input { ...props } type="none" autoComplete="rutjfkde">
     {props.children}
   </Input>
 );
