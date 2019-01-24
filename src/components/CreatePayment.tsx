@@ -168,9 +168,10 @@ export default class CreatePayment extends React.Component <{
               <InIcon style={{
                 fill: Colors.gray,
                 height: 30,
-                width: 30
+                width: 30,
+                marginRight: 2
               }} />
-              <TextSpan>{` | Syndicate`}</TextSpan>
+              <TextSpan>{`| Syndicate`}</TextSpan>
             </HFlex>
             <TextSpan>Distribute <DarkLink href="https://coinbase.com" target="_blank">Ether</DarkLink> in time</TextSpan>
           </HFlex>
