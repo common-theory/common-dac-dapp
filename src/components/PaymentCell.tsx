@@ -53,24 +53,36 @@ export default class PaymentCell extends React.Component <{
   renderHeaderText = () => {
     if (this.props.payment.settled) {
       return (
-        <HFlex>
-          <CheckIcon style={{
-            fill: Colors.greenDark,
-            width: 30,
-            height: 30
-          }} />
-          <TextSpan>{this.props.payment.index} | Completed</TextSpan>
+        <HFlex style={{
+          justifyContent: 'space-between',
+          flex: 1
+        }}>
+          <HFlex>
+            <CheckIcon style={{
+              fill: Colors.greenDark,
+              width: 30,
+              height: 30
+            }} />
+            <TextSpan>{' | Completed'}</TextSpan>
+          </HFlex>
+          <TextSpan>#{this.props.payment.index}</TextSpan>
         </HFlex>
       );
     }
     return (
-      <HFlex>
-        <ClockIcon style={{
-          fill: Colors.blue,
-          height: 30,
-          width: 30
-        }} />
-        <TextSpan>{this.props.payment.index} | {`${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
+      <HFlex style={{
+        justifyContent: 'space-between',
+        flex: 1
+      }}>
+        <HFlex>
+          <ClockIcon style={{
+            fill: Colors.blue,
+            height: 30,
+            width: 30
+          }} />
+          <TextSpan>{` | ${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
+        </HFlex>
+        <TextSpan>#{this.props.payment.index}</TextSpan>
       </HFlex>
     );
   };
