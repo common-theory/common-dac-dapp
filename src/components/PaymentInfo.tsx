@@ -36,13 +36,13 @@ export default class PaymentInfo extends React.Component<{
         <HFlex>
           <AddressDisplay address={this.props.payment.sender} />
           <VFlex style={{ flex: 1 }}>
-            <HFlex>
+            <HFlex style={{ flex: 1, justifyContent: 'center' }}>
               <WeiDisplay wei={this.props.payment.weiValue} />
             </HFlex>
             <HFlex style={{ flex: 1 }}>
               <ProgressBar percent={percent} />
             </HFlex>
-            <HFlex>
+            <HFlex style={{ flex: 1, justifyContent: 'center' }}>
               <TimerDisplay seconds={+this.props.payment.time} />
             </HFlex>
           </VFlex>

@@ -57,7 +57,6 @@ export default class PaymentCell extends React.Component <{
             {`Part of a payment can be forked to another address. Forking marks the parent payment as settled and creates two new payments.`}
           </>
         </Popup>
-
         <VFlex style={{ flex: 1 }}>
           <ForkControls payment={this.props.payment} />
         </VFlex>

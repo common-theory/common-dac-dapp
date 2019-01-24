@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import TextInput from './TextInput';
+import { CheckIcon, CloseIcon } from './Shared';
+import Colors from './Colors';
 
 const AddressTextInput = styled(TextInput)`
   width: 44ch;
@@ -22,11 +24,19 @@ export default class AddressField extends React.Component<{
   };
 
   renderAddressValidity() {
-    if (!this.props.address) return null;
+    if (!this.props.address) return <div style={{ width: 30, height: 30 }} />;
     if (this.state.isAddressValid) {
-      return 'Valid Address';
+      return <CheckIcon style={{
+        fill: Colors.greenDark,
+        width: 30,
+        height: 30
+      }} />;
     } else {
-      return 'Invalid Address';
+      return <CloseIcon style={{
+        fill: Colors.red,
+        width: 30,
+        height: 30
+      }} />;
     }
   }
 
@@ -36,7 +46,7 @@ export default class AddressField extends React.Component<{
         <AddressTextInput
           placeholder="0x7726A9b0E93dE68bf24d40b37F6D0DC4e4caF47C"
           name="address"
-          onChange={event => this.addressChanged(event.target.value)}
+          onChange={(event: any) => this.addressChanged(event.target.value)}
           value={this.props.address}
         />
         {this.renderAddressValidity()}

@@ -135,12 +135,11 @@ export default class CreatePayment extends React.Component <{
     const contractAddress = this.props.syndicateStore.addressForNetwork(this.props.ethereumStore.networkId);
     return (
       <InternalCell>
-        <VFlex>
-          <HFlex>
-            <TextSpan>Contract Address</TextSpan>
-          </HFlex>
-          <HLine />
-          <HFlex>
+        <HFlex style={{ justifyContent: 'center' }}>
+          <TextSpan>Contract Address</TextSpan>
+        </HFlex>
+        <HLine />
+        <HFlex style={{ justifyContent: 'center' }}>
           <DarkLink
             style={{ fontSize: 15 }}
             href={this.props.ethereumStore.etherscanUrl(contractAddress)}
@@ -148,11 +147,10 @@ export default class CreatePayment extends React.Component <{
           >
             {contractAddress}
           </DarkLink>
-          </HFlex>
-          <HFlex>
+        </HFlex>
+        <HFlex style={{ justifyContent: 'center' }}>
           <WeiDisplay wei={this.props.syndicateStore.balance} />
-          </HFlex>
-        </VFlex>
+        </HFlex>
       </InternalCell>
     );
   };
