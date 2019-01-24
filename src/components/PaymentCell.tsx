@@ -1,7 +1,6 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { ForkIcon, ClockIcon, CheckIcon, HFlex, VFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
-import styled from 'styled-components';
+import { TextSpan, ForkIcon, OutIcon, CheckIcon, HFlex, VFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import SyndicateStore, { Payment } from '../stores/Syndicate';
 import EthereumStore from '../stores/Ethereum';
 import TimerDisplay from './TimerDisplay';
@@ -9,11 +8,6 @@ import ForkControls from './ForkControls';
 import PaymentInfo from './PaymentInfo';
 import Colors from './Colors';
 import Popup from 'reactjs-popup';
-
-const TextSpan = styled.span`
-  margin-left: 4px;
-  margin-right: 4px;
-`;
 
 @inject('syndicateStore', 'ethereumStore')
 @observer
@@ -89,7 +83,7 @@ export default class PaymentCell extends React.Component <{
         flex: 1
       }}>
         <HFlex>
-          <ClockIcon style={{
+          <OutIcon style={{
             fill: Colors.blue,
             height: 30,
             width: 30

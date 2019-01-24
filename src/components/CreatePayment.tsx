@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { DarkLink, VFlex, HLine, ClipboardIcon, HFlex, InternalCell, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { InIcon, DarkLink, VFlex, HLine, ClipboardIcon, HFlex, InternalCell, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
 import GDAXStore from '../stores/GDAX';
@@ -160,7 +160,20 @@ export default class CreatePayment extends React.Component <{
     return (
       <BlockContainer>
         <BlockHeader>
-          Syndicate - distribute ether in time
+          <HFlex style={{
+            justifyContent: 'space-between',
+            flex: 1
+          }}>
+            <HFlex>
+              <InIcon style={{
+                fill: Colors.gray,
+                height: 30,
+                width: 30
+              }} />
+              <TextSpan>{` | Syndicate`}</TextSpan>
+            </HFlex>
+            <TextSpan>Distribute <DarkLink href="https://coinbase.com" target="_blank">Ether</DarkLink> in time</TextSpan>
+          </HFlex>
         </BlockHeader>
         <BlockElement>
           <HFlex>
