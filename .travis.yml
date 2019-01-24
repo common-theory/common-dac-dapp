@@ -17,5 +17,5 @@ jobs:
       if: branch != master
       script: npm run build:production
     - stage: deploy
-      if: branch = master
+      if: branch == master
       script: ./scripts/deploy.sh
