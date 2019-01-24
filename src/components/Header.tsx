@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { observer, inject } from 'mobx-react';
 import { Link, withRouter } from 'react-router-dom';
 import EthereumStore from '../stores/Ethereum';
+import Colors from './Colors';
 
 const HeaderContainer = styled.div`
   display: flex;
@@ -42,6 +43,7 @@ const RightText = styled.div`
   margin-top: 4px;
   font-size: 10pt;
   text-align: right;
+  color: ${Colors.gray};
 `;
 
 const HeaderA = styled.a`
@@ -51,13 +53,9 @@ const HeaderA = styled.a`
 `;
 
 const LogoText = styled.span`
-  color: black;
+  color: ${Colors.gray};
   font-family: Helvetica;
   font-size: 20pt;
-`;
-
-const LinkContainer = styled.div`
-  padding-top: 8px;
 `;
 
 const HeaderLink = styled(Link)`

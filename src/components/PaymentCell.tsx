@@ -45,7 +45,8 @@ export default class PaymentCell extends React.Component <{
         </VFlex>
         <ForkIcon style={{
           height: 50,
-          width: 50
+          width: 50,
+          fill: Colors.gray
         }} />
         <VFlex style={{ flex: 1 }}>
           <ForkControls payment={this.props.payment} />

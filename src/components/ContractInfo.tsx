@@ -3,6 +3,7 @@ import { InternalCell, HLine, VFlex, BlockContainer, BlockElement, BlockFooter, 
 import { observer, inject } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
+import Colors from './Colors';
 
 @inject('ethereumStore', 'syndicateStore')
 @observer
@@ -40,7 +41,7 @@ export default class ContractInfo extends React.Component <{
                   <HLine />
                 </VFlex>
                 <a style={{
-                  color: '#000',
+                  color: Colors.gray,
                   fontFamily: 'helvetica',
                   fontWeight: 600,
                   fontSize: 16
