@@ -12,9 +12,7 @@ import Button from './Button';
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
 
-const TextSpan = styled.span`
-
-`;
+const TextSpan = styled.span``;
 
 @inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
@@ -144,7 +142,7 @@ export default class CreatePayment extends React.Component <{
           <HLine />
           <HFlex>
           <DarkLink
-            style={{ fontSize: 14 }}
+            style={{ fontSize: 15 }}
             href={this.props.ethereumStore.etherscanUrl(contractAddress)}
             target='_blank'
           >
@@ -167,7 +165,9 @@ export default class CreatePayment extends React.Component <{
         </BlockHeader>
         <BlockElement>
           <HFlex>
-            {this.renderContract()}
+            <VFlex style={{ flex: 1 }}>
+              {this.renderContract()}
+            </VFlex>
             <Popup
               trigger={<ClipboardIcon style={{
                 width: 40,
@@ -176,11 +176,13 @@ export default class CreatePayment extends React.Component <{
               position="top center"
               on="hover"
             >
-            <>
-              The Syndicate contract allows Ether to be paid over time to other addresses. These are called payments.
-            </>
+              <>
+                The Syndicate contract allows Ether to be paid over time to other addresses. These are called payments.
+              </>
             </Popup>
-            {this.renderCreation()}
+            <VFlex style={{ flex: 1 }}>
+              {this.renderCreation()}
+            </VFlex>
           </HFlex>
         </BlockElement>
         <BlockFooter>
