@@ -1,17 +1,8 @@
 import React from 'react';
-import { InternalCell, HFlex, VFlex, BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
+import { InternalCell, HLine, VFlex, BlockContainer, BlockElement, BlockFooter, BlockHeader } from './Shared';
 import { observer, inject } from 'mobx-react';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
-import styled from 'styled-components';
-
-const HLine = styled.div`
-  width: 80%;
-  height: 1px;
-  background-color: #000;
-  margin-top: 2px;
-  margin-bottom: 8px;
-`;
 
 @inject('ethereumStore', 'syndicateStore')
 @observer

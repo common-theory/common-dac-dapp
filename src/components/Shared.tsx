@@ -66,6 +66,14 @@ export const DarkLink = styled.a`
   font-family: Helvetica;
 `;
 
+export const HLine = styled.div`
+  width: 80%;
+  height: 1px;
+  background-color: #000;
+  margin-top: 2px;
+  margin-bottom: 8px;
+`;
+
 const Logo = styled.div`
   width: 40px;
   height: 40px;
