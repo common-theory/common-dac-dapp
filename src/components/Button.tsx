@@ -30,10 +30,10 @@ export default class Button extends React.Component<{
     let backgroundColor = '#fff';
     let color = '#000';
     if (this.state.mouseDown) {
-      backgroundColor = Colors.greenDark;
+      backgroundColor = Colors.green;
       color = '#fff';
     } else if (this.state.mouseOn) {
-      backgroundColor = Colors.green;
+      backgroundColor = Colors.greenDark;
       color = '#fff';
     }
     return (

@@ -55,12 +55,11 @@ export default class PaymentCell extends React.Component <{
       return (
         <HFlex>
           <CheckIcon style={{
-            fill: Colors.green,
+            fill: Colors.greenDark,
             width: 30,
             height: 30
           }} />
-          <TextSpan>Payment {this.props.payment.index}</TextSpan>
-          <TextSpan>Completed</TextSpan>
+          <TextSpan>{this.props.payment.index} | Completed</TextSpan>
         </HFlex>
       );
     }
@@ -71,7 +70,7 @@ export default class PaymentCell extends React.Component <{
           height: 30,
           width: 30
         }} />
-        <TextSpan>Payment {this.props.payment.index} - {`${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
+        <TextSpan>{this.props.payment.index} | {`${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
       </HFlex>
     );
   };
