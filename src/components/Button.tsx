@@ -27,10 +27,13 @@ export default class Button extends React.Component<{
 
   render() {
     let backgroundColor = '#fff';
+    let color = '#000';
     if (this.state.mouseDown) {
       backgroundColor = '#107F28';
+      color = '#fff';
     } else if (this.state.mouseOn) {
       backgroundColor = '#18B23A';
+      color = '#fff';
     }
     return (
       <Container
@@ -40,7 +43,8 @@ export default class Button extends React.Component<{
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
         style={{
-          backgroundColor
+          backgroundColor,
+          color
         }}
       >
         {this.props.children}
