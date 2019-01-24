@@ -42,13 +42,13 @@ export const HFlex = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
 `;
 
 export const VFlex = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: space-evenly;
+  align-items: space-around;
   justify-content: center;
   text-align: center;
   line-height: 150%;
