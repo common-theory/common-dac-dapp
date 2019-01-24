@@ -37,8 +37,8 @@ export default class PaymentInfo extends React.Component<{
     const { payment } = this.props;
     const percent = 100 * (+payment.time - +payment.timeRemaining) / +payment.time;
     return (
-      <Container>
-        <InternalCell>
+      <InternalCell>
+        <Container>
           <HFlex>
             <AddressDisplay address={this.props.payment.sender} />
             <VFlex>
@@ -54,8 +54,12 @@ export default class PaymentInfo extends React.Component<{
             </VFlex>
             <AddressDisplay address={this.props.payment.receiver} />
           </HFlex>
-          <VFlex>
+          <VFlex style={{
+            alignItems: 'center'
+          }}>
             <HLine />
+          </VFlex>
+          <VFlex>
             <div>
               Available: <WeiDisplay wei={this.props.payment.weiOwed} />
             </div>
@@ -73,8 +77,8 @@ export default class PaymentInfo extends React.Component<{
               )
             }
           </VFlex>
-        </InternalCell>
-      </Container>
+        </Container>
+      </InternalCell>
     );
   }
 }

@@ -34,7 +34,11 @@ export default class ContractInfo extends React.Component <{
             <InternalCell>
               <VFlex>
                 Contract Address
-                <HLine />
+                <VFlex style={{
+                  alignItems: 'center'
+                }}>
+                  <HLine />
+                </VFlex>
                 <a style={{
                   color: '#000',
                   fontFamily: 'helvetica',
