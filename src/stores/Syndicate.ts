@@ -61,9 +61,6 @@ export default class SyndicateStore {
   private contract: any;
   @observable payments: Payment[] = [];
   @observable paymentCount: number = 0;
-  @observable balances: {
-    [key: string]: string
-  } = {};
 
   constructor(networkId: number) {
     this.reloadContract(networkId);
@@ -73,7 +70,6 @@ export default class SyndicateStore {
     this.contract = new web3.eth.Contract(ABI, this.addressForNetwork(networkId));
     this.payments = [];
     this.paymentCount = 0;
-    this.balances = {};
     this.loadPayments(0, 100)
       .catch((err: any) => console.log('Error reloading contract: ', err));
     this.contract.events.PaymentCreated()
@@ -86,12 +82,6 @@ export default class SyndicateStore {
       .on('data', (event: any) => {
         const index = +event.returnValues.index;
         this.loadPayments(index, 1);
-      })
-      .on('error', console.log);
-    this.contract.events.BalanceUpdated()
-      .on('data', (event: any) => {
-        const address = event.returnValues.target;
-        this.loadBalance(address);
       })
       .on('error', console.log);
   }
@@ -134,25 +124,20 @@ export default class SyndicateStore {
       .reverse();
   }
 
-  async loadBalance(address: string) {
-    const balance = await this.contract.methods.balances(address).call();
-    this.balances[address] = balance;
-  }
-
-  async deposit(
+  async paymentCreate(
     from: string,
     to: string,
     time: number|string,
     weiValue: string|number
   ) {
-    return await this.contract.methods.deposit(to, time).send({
+    return await this.contract.methods.paymentCreate(to, time).send({
       from,
       value: weiValue,
       gas: 300000
     });
   }
 
-  async settlePayment(from: string, index: number) {
+  async paymentSettle(from: string, index: number) {
     await this.contract.methods.paymentSettle(index).send({
       from,
       gas: 300000
@@ -165,13 +150,6 @@ export default class SyndicateStore {
       gas: 500000
     });
     await this.loadPayments(index, 1);
-  }
-
-  async withdraw(from: string) {
-    await this.contract.methods.withdraw().send({
-      from,
-      gas: 300000
-    });
   }
 
   async payment(index: number): Promise<Payment> {
@@ -189,9 +167,9 @@ export default class SyndicateStore {
 
   addressForNetwork(networkId: number): string {
     if (networkId === 1) {
-      return '0x939aa1eca62ddd3f782a61c1b346b53687252ef6';
+      return '0xf3c17ce17874aa64738ca46872a31e3d8590efd0';
     } else if (networkId === 4) {
-      return '0x296c6bc0bba6120e447ac3e881b07c3585136491';
+      return '0x3ca4fb13a8d4b59327c57d8743d4ee39ec2eb494';
     } else {
       throw new Error(`Invalid networkId: ${networkId} supplied to addressForNetwork`);
     }

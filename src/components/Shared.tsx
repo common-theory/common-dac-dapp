@@ -48,14 +48,14 @@ export const HFlex = styled.div`
 export const VFlex = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
+  align-items: space-evenly;
+  justify-content: center;
   text-align: center;
   line-height: 150%;
 `;
 
 export const InternalCell = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 4px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 4px;
   padding: 4px;
   margin: 4px;
   border-radius: 8px;
@@ -64,6 +64,14 @@ export const InternalCell = styled.div`
 export const DarkLink = styled.a`
   color: black;
   font-family: Helvetica;
+`;
+
+export const HLine = styled.div`
+  width: 80%;
+  height: 1px;
+  background-color: #000;
+  margin-top: 2px;
+  margin-bottom: 8px;
 `;
 
 const Logo = styled.div`

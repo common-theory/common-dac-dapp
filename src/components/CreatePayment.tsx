@@ -8,6 +8,7 @@ import AddressField from './AddressField';
 import WeiDisplay from './WeiDisplay';
 import WeiField from './WeiField';
 import TextInput from './TextInput';
+import Button from './Button';
 
 @inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
@@ -29,13 +30,12 @@ export default class CreatePayment extends React.Component <{
     time: ''
   };
 
-  createPayment = (e: any) => {
-    e.preventDefault();
+  createPayment = () => {
     if (!this.props.ethereumStore.activeAddress) {
       alert('No active Ethereum account detected!');
       return;
     }
-    this.props.syndicateStore.deposit(
+    this.props.syndicateStore.paymentCreate(
       this.props.ethereumStore.activeAddress,
       this.state.toAddress,
       this.timeInSeconds(),
@@ -52,15 +52,15 @@ export default class CreatePayment extends React.Component <{
   timeInSeconds = () => {
     switch (this.state.timeUnit) {
       case 'seconds':
-        return this.state.time;
+        return +this.state.time;
       case 'minutes':
-        return this.state.time * 60;
+        return +this.state.time * 60;
       case 'hours':
-        return this.state.time * 60 * 60;
+        return +this.state.time * 60 * 60;
       case 'days':
-        return this.state.time * 60 * 60 * 24;
+        return +this.state.time * 60 * 60 * 24;
       case 'months':
-        return this.state.time * 60 * 60 * 30;
+        return +this.state.time * 60 * 60 * 30;
       default:
         throw new Error(`Invalid time unit specified ${this.state.timeUnit}`);
     }
@@ -79,59 +79,50 @@ export default class CreatePayment extends React.Component <{
     return (
       <BlockContainer>
         <BlockHeader>
-          Create Payment
+          Create Payment - Send Ether to an address over time
         </BlockHeader>
         <BlockElement>
-          <p>
-            Send Ether to an address over time.
-          </p>
-          <form onSubmit={this.createPayment}>
-            <label>
-              To:
-              <AddressField
-                onChange={toAddress => this.setState({ toAddress })}
-                address={this.state.toAddress}
-              />
-            </label>
-            <br />
-            <label>
-              Amount:
-              <WeiField
-                onChange={weiValue => this.setState({
-                  weiValue
-                })}
-              />
-            </label>
-            <WeiDisplay wei={this.state.weiValue} />
-            <br />
-            <label>
-              Time:
-              <TextInput
-                placeholder={'10'}
-                onChange={event => this.setState({
-                  time: event.target.value
-                })}
-                value={this.state.time}
-              />
-            </label>
-            <label>
-              <select
-                value={this.state.timeUnit}
-                onChange={event => this.setState({
-                  timeUnit: event.target.value
-                })}
-              >
-                <option value="seconds">Seconds</option>
-                <option value="minutes">Minutes</option>
-                <option value="hours">Hours</option>
-                <option value="days">Days</option>
-                <option value="weeks">Weeks</option>
-                <option value="months">Months</option>
-              </select>
-            </label>
-            <br />
-            <input type="submit" value="Create" />
-          </form>
+            To:
+            <AddressField
+              onChange={toAddress => this.setState({ toAddress })}
+              address={this.state.toAddress}
+            />
+          <br />
+            Amount:
+            <WeiField
+              onChange={weiValue => this.setState({
+                weiValue
+              })}
+            />
+          <WeiDisplay wei={this.state.weiValue} />
+          <br />
+            Time:
+            <TextInput
+              placeholder={'10'}
+              onChange={event => this.setState({
+                time: event.target.value
+              })}
+              value={this.state.time}
+            />
+            <select
+              value={this.state.timeUnit}
+              onChange={event => this.setState({
+                timeUnit: event.target.value
+              })}
+            >
+              <option value="seconds">Seconds</option>
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+              <option value="days">Days</option>
+              <option value="weeks">Weeks</option>
+              <option value="months">Months</option>
+            </select>
+          <br />
+          <Button onClick={() => {
+            this.createPayment();
+          }}>
+            Create Payment
+          </Button>
         </BlockElement>
         <BlockFooter>
         </BlockFooter>
