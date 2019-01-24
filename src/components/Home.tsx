@@ -8,7 +8,6 @@ import CreatePayment from './CreatePayment';
 import PaymentCell from './PaymentCell';
 import SyndicateStore from '../stores/Syndicate';
 import Footer from './Footer';
-import BalanceCell from './BalanceCell';
 import EthereumStore from '../stores/Ethereum';
 import MetamaskCell from './MetamaskCell';
 
@@ -37,7 +36,6 @@ export default class Home extends React.Component <{
             ?
             (
               <>
-                <BalanceCell address={this.props.ethereumStore.activeAddress} />
                 <CreatePayment />
               </>
             )
