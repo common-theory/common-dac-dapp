@@ -7,6 +7,7 @@ import { Connector, Spring } from './physics';
 import Vector2D from './vector2d';
 import { debounce } from 'debounce';
 import idx from 'idx';
+import Colors from '../Colors';
 
 export default class SpringSimulator extends React.Component <{}, {}> {
   state = {
@@ -35,8 +36,8 @@ export default class SpringSimulator extends React.Component <{}, {}> {
   }
 
   componentDidUpdate() {
-    const width = this.canvasRef.current.clientWidth;
-    const height = this.canvasRef.current.clientHeight;
+    const width = this.canvasRef.current.clientWidth * window.devicePixelRatio;
+    const height = this.canvasRef.current.clientHeight * window.devicePixelRatio;
     if (this.state.width !== width || this.state.height !== height) {
       this.setState({
         width,
@@ -57,8 +58,8 @@ export default class SpringSimulator extends React.Component <{}, {}> {
 
   updateDimensions = (forceUpdate?: boolean) => {
     this.setState({
-      width: this.canvasRef.current.clientWidth,
-      height: this.canvasRef.current.clientHeight,
+      width: this.canvasRef.current.clientWidth * window.devicePixelRatio,
+      height: this.canvasRef.current.clientHeight * window.devicePixelRatio,
     }, () => {
       this.initializeSystem();
       if (forceUpdate) this.initializeSystem.flush();
@@ -77,10 +78,10 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     for (let x = 0; x < 50; x++) {
       this.connectors.push(new Connector(Vector2D.random({
         floor: -500,
-        ceiling: this.state.width + 200,
+        ceiling: this.state.width + 500,
       }, {
         floor: -500,
-        ceiling: this.state.height + 200,
+        ceiling: this.state.height + 500,
       }), Vector2D.randomScalar(50, 300)));
     }
     // Connect each to static connectors
@@ -131,15 +132,11 @@ export default class SpringSimulator extends React.Component <{}, {}> {
     this.lastStep = now;
 
     const ctx = this.canvasRef.current.getContext('2d');
+    const { width, height } = this.state;
 
     // Clear the drawing space
-    ctx.fillStyle = '#222222';
-    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
-    const gradient = ctx.createLinearGradient(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
-    gradient.addColorStop(0, 'rgba(238, 238, 238, 0.8)');
-    gradient.addColorStop(1, 'rgba(248, 248, 248, 0.8)');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, width, height);
 
     // Then render the springs
     for (let spring of this.springs) {
@@ -152,7 +149,7 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       ctx.moveTo(spring.connector1.x, spring.connector1.y);
       ctx.lineTo(spring.connector2.x, spring.connector2.y);
 
-      ctx.strokeStyle = `rgba(0, 0, 0, 0.5)`;
+      ctx.strokeStyle = Colors.gray;
       ctx.lineWidth = 1;
       ctx.stroke();
     }
@@ -168,12 +165,12 @@ export default class SpringSimulator extends React.Component <{}, {}> {
       // const max = 0.6;
       // And let's invert it, so as it goes faster it gets less visible
       // const alpha = min + (max - min) * (1 - connector.velocity.magnitude / connector.maxVelocity.magnitude)
-      ctx.fillStyle = `rgba(255, 255, 255, 0.6)`;
+      ctx.fillStyle = `rgba(255, 255, 255, 1)`;
       ctx.fill();
     }
 
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    ctx.fillRect(0, 0, this.canvasRef.current.width, this.canvasRef.current.height);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
+    ctx.fillRect(0, 0, width, height);
 
     if (this.drawing) {
       requestAnimationFrame(this.draw);

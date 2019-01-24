@@ -3,5 +3,5 @@ export default {
   greenDark: '#6CBF00',
   blue: '#0098E5',
   gray: '#000C26',
-  red: '#D8002B'
+  red: 'rgba(216, 0, 43, 1)'
 }
