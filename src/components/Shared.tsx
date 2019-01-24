@@ -56,8 +56,8 @@ export const VFlex = styled.div`
 
 export const InternalCell = styled.div`
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 4px;
-  padding: 4px;
-  margin: 4px;
+  padding: 8px;
+  margin: 8px;
   border-radius: 8px;
 `;
 
