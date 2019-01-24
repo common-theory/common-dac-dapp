@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Colors from './Colors';
 
 const Background = styled.div`
   position: relative;
@@ -11,7 +12,7 @@ const Background = styled.div`
 
 const Content = styled.div<{ percent: number }>`
   position: relative;
-  background: #18B23A;
+  background: ${Colors.greenDark};
   width: ${props => props.percent}%;
   height: 100%;
   border-radius: inherit;

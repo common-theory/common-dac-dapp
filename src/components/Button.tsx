@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Colors from './Colors';
 
 const Container = styled.div`
   display: flex;
@@ -29,10 +30,10 @@ export default class Button extends React.Component<{
     let backgroundColor = '#fff';
     let color = '#000';
     if (this.state.mouseDown) {
-      backgroundColor = '#107F28';
+      backgroundColor = Colors.greenDark;
       color = '#fff';
     } else if (this.state.mouseOn) {
-      backgroundColor = '#18B23A';
+      backgroundColor = Colors.green;
       color = '#fff';
     }
     return (

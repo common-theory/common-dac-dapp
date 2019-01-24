@@ -1,12 +1,13 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { VLine, InternalCell, HFlex, VFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { ClockIcon, CheckIcon, HFlex, VFlex, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import styled from 'styled-components';
 import SyndicateStore, { Payment } from '../stores/Syndicate';
 import EthereumStore from '../stores/Ethereum';
 import TimerDisplay from './TimerDisplay';
 import ForkControls from './ForkControls';
 import PaymentInfo from './PaymentInfo';
+import Colors from './Colors';
 
 const TextSpan = styled.span`
   margin-left: 4px;
@@ -53,14 +54,23 @@ export default class PaymentCell extends React.Component <{
     if (this.props.payment.settled) {
       return (
         <HFlex>
-          <TextSpan>Payment {this.props.payment.index} - </TextSpan>
-          <ion-icon color="primary" size="medium" name="checkmark-circle" />
-          <TextSpan> - Completed</TextSpan>
+          <CheckIcon style={{
+            fill: Colors.green,
+            width: 30,
+            height: 30
+          }} />
+          <TextSpan>Payment {this.props.payment.index}</TextSpan>
+          <TextSpan>Completed</TextSpan>
         </HFlex>
       );
     }
     return (
       <HFlex>
+        <ClockIcon style={{
+          fill: Colors.blue,
+          height: 30,
+          width: 30
+        }} />
         <TextSpan>Payment {this.props.payment.index} - {`${TimerDisplay.formatSeconds(this.props.payment.timeRemaining)} remaining`}</TextSpan>
       </HFlex>
     );
