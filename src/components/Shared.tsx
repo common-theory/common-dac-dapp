@@ -64,6 +64,7 @@ export const InternalCell = styled.div`
 export const DarkLink = styled.a`
   color: black;
   font-family: Helvetica;
+  margin: 4px;
 `;
 
 export const HLine = styled.div`
