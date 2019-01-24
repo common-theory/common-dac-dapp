@@ -8,6 +8,7 @@ import TimerDisplay from './TimerDisplay';
 import ForkControls from './ForkControls';
 import PaymentInfo from './PaymentInfo';
 import Colors from './Colors';
+import Popup from 'reactjs-popup';
 
 const TextSpan = styled.span`
   margin-left: 4px;
@@ -43,11 +44,20 @@ export default class PaymentCell extends React.Component <{
         <VFlex style={{ flex: 1 }}>
           <PaymentInfo payment={this.props.payment} />
         </VFlex>
-        <ForkIcon style={{
-          height: 50,
-          width: 50,
-          fill: Colors.gray
-        }} />
+        <Popup
+          trigger={<ForkIcon style={{
+            height: 50,
+            width: 50,
+            fill: Colors.gray
+          }} />}
+          position="top center"
+          on="hover"
+        >
+          <>
+            {`Part of a payment can be forked to another address. Forking marks the current payment (#${this.props.payment.index}) as settled and creates two new payments.`}
+          </>
+        </Popup>
+
         <VFlex style={{ flex: 1 }}>
           <ForkControls payment={this.props.payment} />
         </VFlex>
