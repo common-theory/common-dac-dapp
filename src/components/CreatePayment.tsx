@@ -11,6 +11,7 @@ import TextInput from './TextInput';
 import Button from './Button';
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
+import Colors from './Colors';
 
 const TextSpan = styled.span``;
 
@@ -169,7 +170,8 @@ export default class CreatePayment extends React.Component <{
             <Popup
               trigger={<ClipboardIcon style={{
                 width: 40,
-                height: 40
+                height: 40,
+                fill: Colors.gray
               }} />}
               position="top center"
               on="hover"

@@ -46,8 +46,8 @@ export default class PaymentCell extends React.Component <{
         </VFlex>
         <Popup
           trigger={<ForkIcon style={{
-            height: 50,
-            width: 50,
+            height: 40,
+            width: 40,
             fill: Colors.gray
           }} />}
           position="top center"
