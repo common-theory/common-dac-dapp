@@ -7,6 +7,7 @@ import AddressField from './AddressField';
 import SyndicateStore from '../stores/Syndicate';
 import WeiField from './WeiField';
 import { InternalCell } from './Shared';
+import Button from './Button';
 
 @inject('ethereumStore', 'syndicateStore')
 @observer
@@ -34,14 +35,16 @@ export default class ForkControls extends React.Component <{
           address={this.state.toAddress}
         />
         <br />
-        <button type="button" onClick={() => {
+        <Button onClick={() => {
           this.props.syndicateStore.paymentFork(
             this.props.ethereumStore.activeAddress,
             this.props.payment.index,
             this.state.toAddress,
             this.state.weiValue
           );
-        }}>Fork Payment</button>
+        }}>
+          Fork Payment
+        </Button>
       </InternalCell>
     );
   }

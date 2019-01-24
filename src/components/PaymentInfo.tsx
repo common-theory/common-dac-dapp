@@ -9,6 +9,7 @@ import EthereumStore from '../stores/Ethereum';
 import AddressDisplay from './AddressDisplay';
 import styled from 'styled-components';
 import ProgressBar from './ProgressBar';
+import Button from './Button';
 
 const Container = styled.div`
   min-width: 400px;
@@ -60,15 +61,15 @@ export default class PaymentInfo extends React.Component<{
             </div>
             {
               this.props.payment.settled ? null : (
-                <>
-                  <button type="button" onClick={() => {
-                    this.props.ethereumStore.assertAuthenticated();
-                    this.props.syndicateStore.paymentSettle(
-                      this.props.ethereumStore.activeAddress,
-                      this.props.payment.index
-                    );
-                  }}>Withdraw</button>
-                </>
+                <Button onClick={() => {
+                  this.props.ethereumStore.assertAuthenticated();
+                  this.props.syndicateStore.paymentSettle(
+                    this.props.ethereumStore.activeAddress,
+                    this.props.payment.index
+                  );
+                }}>
+                Withdraw
+                </Button>
               )
             }
           </VFlex>
