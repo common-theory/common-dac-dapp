@@ -32,10 +32,11 @@ export default class Home extends React.Component <{
           {
             this.props.ethereumStore.authenticated()
             ?
-            <CreatePayment />
+            null
             :
             <MetamaskCell />
           }
+          <CreatePayment />
           <HeaderText>
             Payments
           </HeaderText>
