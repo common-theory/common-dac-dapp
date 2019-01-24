@@ -52,15 +52,15 @@ export default class CreatePayment extends React.Component <{
   timeInSeconds = () => {
     switch (this.state.timeUnit) {
       case 'seconds':
-        return this.state.time;
+        return +this.state.time;
       case 'minutes':
-        return this.state.time * 60;
+        return +this.state.time * 60;
       case 'hours':
-        return this.state.time * 60 * 60;
+        return +this.state.time * 60 * 60;
       case 'days':
-        return this.state.time * 60 * 60 * 24;
+        return +this.state.time * 60 * 60 * 24;
       case 'months':
-        return this.state.time * 60 * 60 * 30;
+        return +this.state.time * 60 * 60 * 30;
       default:
         throw new Error(`Invalid time unit specified ${this.state.timeUnit}`);
     }
@@ -79,12 +79,9 @@ export default class CreatePayment extends React.Component <{
     return (
       <BlockContainer>
         <BlockHeader>
-          Create Payment
+          Create Payment - Send Ether to an address over time
         </BlockHeader>
         <BlockElement>
-        <p>
-          Send Ether to an address over time.
-        </p>
             To:
             <AddressField
               onChange={toAddress => this.setState({ toAddress })}
@@ -124,7 +121,7 @@ export default class CreatePayment extends React.Component <{
           <Button onClick={() => {
             this.createPayment();
           }}>
-          Create Payment
+            Create Payment
           </Button>
         </BlockElement>
         <BlockFooter>
