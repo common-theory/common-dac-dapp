@@ -13,7 +13,10 @@ npm run build:production
 # Ensure jsipfs executable is present
 which jsipfs > /dev/null
 
+export IPFS_PATH=$(mktemp -u)
+
 # Start a local IPFS node
+jsipfs init
 jsipfs daemon &
 JSPID=$!
 

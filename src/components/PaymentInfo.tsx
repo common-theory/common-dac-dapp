@@ -35,11 +35,11 @@ export default class PaymentInfo extends React.Component<{
       <InternalCell>
         <HFlex>
           <AddressDisplay address={this.props.payment.sender} />
-          <VFlex>
+          <VFlex style={{ flex: 1 }}>
             <HFlex>
               <WeiDisplay wei={this.props.payment.weiValue} />
             </HFlex>
-            <HFlex>
+            <HFlex style={{ flex: 1 }}>
               <ProgressBar percent={percent} />
             </HFlex>
             <HFlex>
