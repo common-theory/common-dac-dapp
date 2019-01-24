@@ -54,7 +54,7 @@ export default class PaymentCell extends React.Component <{
           on="hover"
         >
           <>
-            {`Part of a payment can be forked to another address. Forking marks the current payment (#${this.props.payment.index}) as settled and creates two new payments.`}
+            {`Part of a payment can be forked to another address. Forking marks the parent payment as settled and creates two new payments.`}
           </>
         </Popup>
 
