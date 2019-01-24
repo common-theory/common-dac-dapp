@@ -34,17 +34,20 @@ export default class ForkControls extends React.Component <{
           onChange={toAddress => this.setState({ toAddress })}
           address={this.state.toAddress}
         />
-        <br />
-        <Button onClick={() => {
-          this.props.syndicateStore.paymentFork(
-            this.props.ethereumStore.activeAddress,
-            this.props.payment.index,
-            this.state.toAddress,
-            this.state.weiValue
-          );
-        }}>
-          Fork Payment
-        </Button>
+        {
+          this.props.payment.settled ? null : (
+            <Button onClick={() => {
+              this.props.syndicateStore.paymentFork(
+                this.props.ethereumStore.activeAddress,
+                this.props.payment.index,
+                this.state.toAddress,
+                this.state.weiValue
+              );
+            }}>
+              Fork Payment
+            </Button>
+          )
+        }
       </InternalCell>
     );
   }
