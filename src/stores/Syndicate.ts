@@ -61,6 +61,7 @@ export default class SyndicateStore {
   private contract: any;
   @observable payments: Payment[] = [];
   @observable paymentCount: number = 0;
+  @observable balance: string|BN = '0';
 
   constructor(networkId: number) {
     this.reloadContract(networkId);
@@ -70,20 +71,27 @@ export default class SyndicateStore {
     this.contract = new web3.eth.Contract(ABI, this.addressForNetwork(networkId));
     this.payments = [];
     this.paymentCount = 0;
+    this.loadBalance();
     this.loadPayments(0, 100)
       .catch((err: any) => console.log('Error reloading contract: ', err));
     this.contract.events.PaymentCreated()
       .on('data', (event: any) => {
         const index = +event.returnValues.index;
         this.loadPayments(index, 1);
+        this.loadBalance();
       })
       .on('error', console.log);
     this.contract.events.PaymentUpdated()
       .on('data', (event: any) => {
         const index = +event.returnValues.index;
         this.loadPayments(index, 1);
+        this.loadBalance();
       })
       .on('error', console.log);
+  }
+
+  async loadBalance() {
+    this.balance = await web3.eth.getBalance(this.contract._address);
   }
 
   /**

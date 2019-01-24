@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { DarkLink, VFlex, HLine, ClipboardIcon, HFlex, InternalCell, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
 import GDAXStore from '../stores/GDAX';
@@ -9,6 +9,12 @@ import WeiDisplay from './WeiDisplay';
 import WeiField from './WeiField';
 import TextInput from './TextInput';
 import Button from './Button';
+import styled from 'styled-components';
+import Popup from 'reactjs-popup';
+
+const TextSpan = styled.span`
+
+`;
 
 @inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
@@ -75,54 +81,107 @@ export default class CreatePayment extends React.Component <{
     });
   }
 
+  renderCreation = () => (
+    <InternalCell>
+      <VFlex style={{ flex: 1 }}>
+        <TextSpan>Create Payment</TextSpan>
+        <HFlex>
+          <TextSpan>To:</TextSpan>
+          <AddressField
+            onChange={toAddress => this.setState({ toAddress })}
+            address={this.state.toAddress}
+          />
+        </HFlex>
+        <HFlex>
+          <TextSpan>Amount:</TextSpan>
+          <WeiField
+            onChange={weiValue => this.setState({
+              weiValue
+            })}
+          />
+          <WeiDisplay wei={this.state.weiValue} />
+        </HFlex>
+        <HFlex>
+          <TextSpan>Time:</TextSpan>
+          <TextInput
+            placeholder={'10'}
+            onChange={event => this.setState({
+              time: event.target.value
+            })}
+            value={this.state.time}
+          />
+          <select
+            value={this.state.timeUnit}
+            onChange={event => this.setState({
+              timeUnit: event.target.value
+            })}
+          >
+            <option value="seconds">Seconds</option>
+            <option value="minutes">Minutes</option>
+            <option value="hours">Hours</option>
+            <option value="days">Days</option>
+            <option value="weeks">Weeks</option>
+            <option value="months">Months</option>
+          </select>
+        </HFlex>
+        <Button onClick={() => {
+          this.createPayment();
+        }}>
+          Create Payment
+        </Button>
+      </VFlex>
+    </InternalCell>
+  );
+
+  renderContract = () => {
+    const contractAddress = this.props.syndicateStore.addressForNetwork(this.props.ethereumStore.networkId);
+    return (
+      <InternalCell>
+        <VFlex>
+          <HFlex>
+            <TextSpan>Contract Address</TextSpan>
+          </HFlex>
+          <HLine />
+          <HFlex>
+          <DarkLink
+            style={{ fontSize: 14 }}
+            href={this.props.ethereumStore.etherscanUrl(contractAddress)}
+            target='_blank'
+          >
+            {contractAddress}
+          </DarkLink>
+          </HFlex>
+          <HFlex>
+          <WeiDisplay wei={this.props.syndicateStore.balance} />
+          </HFlex>
+        </VFlex>
+      </InternalCell>
+    );
+  };
+
   render() {
     return (
       <BlockContainer>
         <BlockHeader>
-          Create Payment - Send Ether to an address over time
+          Syndicate - distribute ether in time
         </BlockHeader>
         <BlockElement>
-            To:
-            <AddressField
-              onChange={toAddress => this.setState({ toAddress })}
-              address={this.state.toAddress}
-            />
-          <br />
-            Amount:
-            <WeiField
-              onChange={weiValue => this.setState({
-                weiValue
-              })}
-            />
-          <WeiDisplay wei={this.state.weiValue} />
-          <br />
-            Time:
-            <TextInput
-              placeholder={'10'}
-              onChange={event => this.setState({
-                time: event.target.value
-              })}
-              value={this.state.time}
-            />
-            <select
-              value={this.state.timeUnit}
-              onChange={event => this.setState({
-                timeUnit: event.target.value
-              })}
+          <HFlex>
+            {this.renderContract()}
+            <Popup
+              trigger={<ClipboardIcon style={{
+                width: 40,
+                height: 40
+              }} />}
+              position="top center"
+              on="hover"
             >
-              <option value="seconds">Seconds</option>
-              <option value="minutes">Minutes</option>
-              <option value="hours">Hours</option>
-              <option value="days">Days</option>
-              <option value="weeks">Weeks</option>
-              <option value="months">Months</option>
-            </select>
-          <br />
-          <Button onClick={() => {
-            this.createPayment();
-          }}>
-            Create Payment
-          </Button>
+            <>
+              The Syndicate contract allows Ether to be paid over time to other addresses. These are called payments.
+            </>
+            </Popup>
+            {this.renderCreation()}
+          </HFlex>
         </BlockElement>
         <BlockFooter>
         </BlockFooter>
