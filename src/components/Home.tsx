@@ -3,7 +3,6 @@ import Header from './Header';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import { Container } from './Shared';
-import ContractInfo from './ContractInfo';
 import CreatePayment from './CreatePayment';
 import PaymentCell from './PaymentCell';
 import SyndicateStore from '../stores/Syndicate';
@@ -30,15 +29,10 @@ export default class Home extends React.Component <{
       <>
         <Header />
         <Container>
-          <ContractInfo />
           {
             this.props.ethereumStore.authenticated()
             ?
-            (
-              <>
-                <CreatePayment />
-              </>
-            )
+            <CreatePayment />
             :
             <MetamaskCell />
           }
