@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import { InIcon, DarkLink, VFlex, HLine, ClipboardIcon, HFlex, InternalCell, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
+import { InIcon, DarkLink, VFlex, HLine, ContractIcon, HFlex, InternalCell, BlockContainer, BlockElement, BlockHeader, BlockFooter } from './Shared';
 import EthereumStore from '../stores/Ethereum';
 import SyndicateStore from '../stores/Syndicate';
 import GDAXStore from '../stores/GDAX';
@@ -185,7 +185,7 @@ export default class CreatePayment extends React.Component <{
             <Popup
               trigger={
                 <Bounce>
-                  <ClipboardIcon style={{
+                  <ContractIcon style={{
                     width: 40,
                     height: 40,
                     fill: Colors.gray

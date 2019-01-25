@@ -15,6 +15,6 @@ const grow = keyframes`
 `;
 
 export default styled.div`
-  animation: ${grow} 1.5s ease-in-out 1;
+  animation: ${grow} 1.3s ease-in-out 1;
   animation-delay: 3s;
 `;
