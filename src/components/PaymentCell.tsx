@@ -8,7 +8,6 @@ import ForkControls from './ForkControls';
 import PaymentInfo from './PaymentInfo';
 import Colors from './Colors';
 import Popup from 'reactjs-popup';
-import Bounce from './BounceAnimation';
 
 @inject('syndicateStore', 'ethereumStore')
 @observer
@@ -41,13 +40,11 @@ export default class PaymentCell extends React.Component <{
         </VFlex>
         <Popup
           trigger={
-            <Bounce>
-              <ForkIcon style={{
-                height: 40,
-                width: 40,
-                fill: Colors.gray
-              }} />
-            </Bounce>
+            <ForkIcon style={{
+              height: 40,
+              width: 40,
+              fill: Colors.gray
+            }} />
           }
           position="top center"
           on="hover"
