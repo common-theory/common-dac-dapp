@@ -174,7 +174,7 @@ export default class CreatePayment extends React.Component <{
               }} />
               <TextSpan>{`| Syndicate`}</TextSpan>
             </HFlex>
-            <TextSpan>Distribute <DarkLink href="https://coinbase.com" target="_blank">Ether</DarkLink> in time</TextSpan>
+            <TextSpan>Distribute <DarkLink href="https://coinmarketcap.com/currencies/ethereum/" target="_blank">Ether</DarkLink> in time</TextSpan>
           </HFlex>
         </BlockHeader>
         <BlockElement>
