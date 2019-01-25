@@ -83,6 +83,7 @@ export const TextSpan = styled.span`
 const Logo = styled.div`
   width: 40px;
   height: 40px;
+  cursor: pointer;
 `;
 
 export const DiscordLogo = (props: any) => (
