@@ -20,7 +20,9 @@ jsipfs init
 jsipfs daemon &
 JSPID=$!
 
+# Wait for ipfs node to spin up
 sleep 10
+
 # Check that the process is up
 ps -ax | grep $JSPID | grep -v grep > /dev/null
 
@@ -33,15 +35,24 @@ OLD_CID=$(npx dnslink resolve $DOMAIN)
 # Load the new CID by adding it to the local IPFS node
 NEW_CID=$(jsipfs add -Qr ./static)
 
-# Unpin the old version
-npx cidhook $CIDHOOKD_URL $OLD_CID unpin
-
 # Pin the new version
-npx cidhook $CIDHOOKD_URL $NEW_CID
+npx cidhook pin $NEW_CID -s $CIDHOOKD_URL
+
+# Don't unpin if the current version is up to date
+if [ $OLD_CID = $NEW_CID ];
+then
+  echo "DNS record already up to date"
+  kill $JSPID
+  exit 0
+fi
+
+# Unpin the old version
+npx cidhook unpin $OLD_CID -s $CIDHOOKD_URL
 
 # Update the DNS record
 npx dnslink update $DOMAIN $NEW_CID
 
+# Pull the domain over http
 curl $DOMAIN > /dev/null 2> /dev/null
 
 kill $JSPID
