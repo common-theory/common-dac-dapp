@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import EthereumStore from './stores/Ethereum';
 import SyndicateStore from './stores/Syndicate';
 import GDAXStore from './stores/GDAX';
+import Colors from './components/Colors';
 
 const ethereumStore = new EthereumStore();
 const syndicateStore = new SyndicateStore(4);
@@ -25,6 +26,7 @@ Object.assign(document.body.style, {
   'background-color': '#222',
   'max-width': '900px',
   'font-family': 'Helvetica',
+  'color': Colors.gray
 });
 
 ReactDOM.render(

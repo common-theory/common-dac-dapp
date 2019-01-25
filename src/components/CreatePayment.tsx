@@ -12,6 +12,7 @@ import Button from './Button';
 import styled from 'styled-components';
 import Popup from 'reactjs-popup';
 import Colors from './Colors';
+import Bounce from './BounceAnimation';
 
 const TextSpan = styled.span``;
 
@@ -104,7 +105,7 @@ export default class CreatePayment extends React.Component <{
           <TextSpan>Time:</TextSpan>
           <TextInput
             placeholder={'10'}
-            onChange={event => this.setState({
+            onChange={(event: any) => this.setState({
               time: event.target.value
             })}
             value={this.state.time}
@@ -182,11 +183,15 @@ export default class CreatePayment extends React.Component <{
               {this.renderContract()}
             </VFlex>
             <Popup
-              trigger={<ClipboardIcon style={{
-                width: 40,
-                height: 40,
-                fill: Colors.gray
-              }} />}
+              trigger={
+                <Bounce>
+                  <ClipboardIcon style={{
+                    width: 40,
+                    height: 40,
+                    fill: Colors.gray
+                  }} />
+                </Bounce>
+              }
               position="top center"
               on="hover"
             >
