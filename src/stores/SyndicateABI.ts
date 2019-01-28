@@ -40,18 +40,6 @@ export default [
       {
         "name": "parentIndex",
         "type": "uint256"
-      },
-      {
-        "name": "isForked",
-        "type": "bool"
-      },
-      {
-        "name": "fork1Index",
-        "type": "uint256"
-      },
-      {
-        "name": "fork2Index",
-        "type": "uint256"
       }
     ],
     "payable": false,
@@ -63,18 +51,18 @@ export default [
     "inputs": [
       {
         "name": "",
-        "type": "address"
+        "type": "uint256"
       },
       {
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
-    "name": "delegates",
+    "name": "paymentForks",
     "outputs": [
       {
         "name": "",
-        "type": "bool"
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -104,24 +92,6 @@ export default [
     ],
     "name": "PaymentCreated",
     "type": "event"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_delegate",
-        "type": "address"
-      },
-      {
-        "name": "delegated",
-        "type": "bool"
-      }
-    ],
-    "name": "delegate",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "constant": false,
@@ -204,6 +174,44 @@ export default [
         "type": "uint256"
       }
     ],
+    "name": "isPaymentForked",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "paymentForkCount",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
     "name": "isPaymentSettled",
     "outputs": [
       {
@@ -224,20 +232,6 @@ export default [
       }
     ],
     "name": "requirePaymentIndexInRange",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "receiver",
-        "type": "address"
-      }
-    ],
-    "name": "requireExecutionAllowed",
     "outputs": [],
     "payable": false,
     "stateMutability": "view",
