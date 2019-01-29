@@ -28,38 +28,6 @@ export default class PaymentCell extends React.Component <{
     clearTimeout(this.timer);
   }
 
-  renderForked = () => {
-    return `Forked to payments ${this.props.payment.fork1Index} and ${this.props.payment.fork2Index}.`;
-  };
-
-  renderUnforked = () => {
-    return (
-      <HFlex>
-        <VFlex style={{ flex: 1 }}>
-          <PaymentInfo payment={this.props.payment} />
-        </VFlex>
-        <Popup
-          trigger={
-            <ForkIcon style={{
-              height: 40,
-              width: 40,
-              fill: Colors.gray
-            }} />
-          }
-          position="top center"
-          on="hover"
-        >
-          <>
-            {`Part of a payment can be forked to another address. Forking removes the value from the payment and creates a new payment that completes at the same time as the parent.`}
-          </>
-        </Popup>
-        <VFlex style={{ flex: 1 }}>
-          <ForkControls payment={this.props.payment} />
-        </VFlex>
-      </HFlex>
-    );
-  };
-
   renderHeaderText = () => {
     if (this.props.payment.settled) {
       return (
@@ -106,13 +74,29 @@ export default class PaymentCell extends React.Component <{
           {this.renderHeaderText()}
         </BlockHeader>
         <BlockElement>
-          {
-            this.props.payment.isForked
-            ?
-            this.renderForked()
-            :
-            this.renderUnforked()
-          }
+          <HFlex>
+            <VFlex style={{ flex: 1 }}>
+              <PaymentInfo payment={this.props.payment} />
+            </VFlex>
+            <Popup
+              trigger={
+                <ForkIcon style={{
+                  height: 40,
+                  width: 40,
+                  fill: Colors.gray
+                }} />
+              }
+              position="top center"
+              on="hover"
+            >
+              <>
+                {`Part of a payment can be forked to another address. Forking removes the value from the payment and creates a new payment that completes at the same time as the parent.`}
+              </>
+            </Popup>
+            <VFlex style={{ flex: 1 }}>
+              <ForkControls payment={this.props.payment} />
+            </VFlex>
+          </HFlex>
         </BlockElement>
         <BlockFooter>
         </BlockFooter>
