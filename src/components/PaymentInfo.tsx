@@ -66,7 +66,7 @@ export default class PaymentInfo extends React.Component<{
                   this.props.payment.index
                 );
               }}>
-              Withdraw
+              Settle Payment
               </Button>
             )
           }
