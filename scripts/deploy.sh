@@ -26,8 +26,17 @@ sleep 10
 # Check that the process is up
 ps -ax | grep $JSPID | grep -v grep > /dev/null
 
-DOMAIN=commontheory.io
-CIDHOOKD_URL=cidhookd.commontheory.io
+# Set default domain
+if [ -z "$DOMAIN" ];
+then
+  DOMAIN=commontheory.io
+fi
+
+# Set default cidhook url
+if [ -z "$CIDHOOKD_URL" ];
+then
+  CIDHOOKD_URL=cidhookd.commontheory.io
+fi
 
 # Load the old CID based on the current dnslinked value
 OLD_CID=$(npx dnslink resolve $DOMAIN)
