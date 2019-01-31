@@ -18,7 +18,7 @@ const TextSpan = styled.span``;
 
 @inject('syndicateStore', 'ethereumStore', 'gdaxStore')
 @observer
-export default class CreatePayment extends React.Component <{
+export default class SyndicateCell extends React.Component <{
   syndicateStore?: SyndicateStore,
   ethereumStore?: EthereumStore,
   gdaxStore?: GDAXStore

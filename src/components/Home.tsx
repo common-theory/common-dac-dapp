@@ -3,7 +3,7 @@ import Header from './Header';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import { Container } from './Shared';
-import CreatePayment from './CreatePayment';
+import SyndicateCell from './SyndicateCell';
 import PaymentCell from './PaymentCell';
 import SyndicateStore from '../stores/Syndicate';
 import Footer from './Footer';
@@ -36,7 +36,7 @@ export default class Home extends React.Component <{
             :
             <MetamaskCell />
           }
-          <CreatePayment />
+          <SyndicateCell />
           <HeaderText>
             Payments
           </HeaderText>
