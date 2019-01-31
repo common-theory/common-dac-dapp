@@ -1,11 +1,12 @@
 #/bin/sh
 
+# Exit on non-zero return code
 set -e
 
 # Load from .env
-set -o allexport
+set -a
 [ -f .env ] && source .env
-set +o allexport
+set +a
 
 # Build the web app in ./static
 npm run build:production
@@ -27,16 +28,10 @@ sleep 10
 ps -ax | grep $JSPID | grep -v grep > /dev/null
 
 # Set default domain
-if [ -z "$DOMAIN" ];
-then
-  DOMAIN=commontheory.io
-fi
+[ -z "$DOMAIN" ] && DOMAIN=commontheory.io
 
 # Set default cidhook url
-if [ -z "$CIDHOOKD_URL" ];
-then
-  CIDHOOKD_URL=cidhookd.commontheory.io
-fi
+[ -z "$CIDHOOKD_URL" ] && CIDHOOKD_URL=cidhookd.commontheory.io
 
 # Load the old CID based on the current dnslinked value
 OLD_CID=$(npx dnslink resolve $DOMAIN)
