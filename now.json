@@ -3,10 +3,10 @@
   "name": "common-dapp",
   "alias": ["commontheory.io", "ctheory.io"],
   "builds": [
-    { "src": "package.json", "use": "@now/static-build", "config": { "distDir": "static" }  }
+    { "src": "static/index.html", "use": "@now/html-minifier" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/(.*)", "dest": "/static/index.html" }
   ]
 }
 
