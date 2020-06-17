@@ -1,12 +1,17 @@
 {
   "version": 2,
-  "name": "common-dapp",
-  "alias": ["commontheory.io", "ctheory.io"],
   "builds": [
     { "src": "static/index.html", "use": "@now/html-minifier" }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/static/index.html" }
+    {
+      "src": "/(.*)",
+      "dest": "/static/index.html",
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
+        "Access-Control-Allow-Headers": "Origin, Content-Type, Access-Control-Allow-Origin"
+      }
+    }
   ]
 }
-
